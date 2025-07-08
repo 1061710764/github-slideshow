@@ -93,7 +93,7 @@ const goToBasicInformationManagement = () => {
 
 const password = ref('');
 const passwordInput = ref(null);
-const phone = ref('');
+const phone = ref('  ');
 const phoneInput = ref(null);
 const forbiddenChars = /['"\\\/<>;|=%\s]/g;
 
@@ -101,9 +101,10 @@ const forbiddenChars = /['"\\\/<>;|=%\s]/g;
 watch(phone, (newVal, oldVal) => {
   // 过滤非数字字符
   const filteredValue = newVal.replace(forbiddenChars, '');
-  phone.value = filteredValue;
-
-
+  let finalValue = filteredValue.startsWith('  ') ? filteredValue : `  ${filteredValue}`;
+   if (phone.value !== finalValue) {
+    phone.value = finalValue;
+   }
 });
 
 watch(password, (newVal, oldVal) => {
@@ -111,7 +112,7 @@ watch(password, (newVal, oldVal) => {
   const filteredValue = newVal.replace(forbiddenChars, '');
   password.value = filteredValue;
 
-  // 确保光标位置正确
+  
 });
 </script>
 
