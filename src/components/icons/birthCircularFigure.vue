@@ -124,11 +124,11 @@ export default {
       outerTexts: [],
       middleTexts: [
       '太阴湿土\n四之气', 
-      '少阳相火\n三之气',  
       '阳明燥金\n五之气',
       '太阳寒水\n终之气',
       '厥阴风木\n初之气',
-      '少阴君火\n二之气'
+      '少阴君火\n二之气',
+      '少阳相火\n三之气', 
     ],
     // 颜色映射表
     middleColorMap: {

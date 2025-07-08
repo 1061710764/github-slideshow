@@ -51,19 +51,25 @@
 </template>
 
 <script setup lang="ts">
-
 import { useRouter } from 'vue-router'
 import { ref ,watch, nextTick } from 'vue';
 import { ElInput, ElButton } from 'element-plus';
 import axios from 'axios';
+
+const phone = ref('  ');
+const password = ref('  ');
+const realPassword = ref('');
+const forbiddenChars = /['"\\\/<>;|=%]/g;
+const phoneInput = ref(null);
+const passwordInput = ref(null);
 
 const handleLogin = async () => {
   try {
     const response = await axios.post(
       "/ljkj_cloud/user/login",
       {
-        userName: phone.value,    // 用户名 //需要沟通最后账号形式
-        password: password.value    // 密码
+        userName: phone.value.replace(/ /g, ''),     // 用户名 //需要沟通最后账号形式
+        password: password.value.replace(/ /g, ''),   // 密码
       },
       {
         headers: {
@@ -91,11 +97,7 @@ const goToBasicInformationManagement = () => {
  
 }
 
-const password = ref('');
-const passwordInput = ref(null);
-const phone = ref('  ');
-const phoneInput = ref(null);
-const forbiddenChars = /['"\\\/<>;|=%\s]/g;
+
 
 
 watch(phone, (newVal, oldVal) => {
