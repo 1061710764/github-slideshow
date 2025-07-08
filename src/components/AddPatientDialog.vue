@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="dialog-overlay">
+  <div v-if="visible" class="dialog-overlay" @click.self="$emit('close')">
     <div class="dialog-content">
       <form @submit.prevent="save"> 
       <h3>新增患者信息</h3>
