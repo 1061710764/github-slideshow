@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
-    <h1 class="welcome-title">医学管理系统<span>欢迎您！</span></h1>
+    <h1 class="welcome-title">医学管理系统欢迎您</h1>
     <div class="login-form">
       <h2 class="login-title">登录</h2>
-      
+
       <div class="form-group">
         <label class="form-label">账号：</label>
         <el-input
@@ -14,7 +14,7 @@
           class="input-field"
         />
       </div>
-      
+
       <div class="form-group">
         <label class="form-label">密码：</label>
         <el-input
@@ -26,20 +26,20 @@
           class="input-field"
         />
       </div>
-      
+
       <div style="display: flex; gap: 10px;">
-        <el-button 
-          type="primary" 
-          size="large" 
+        <el-button
+          type="primary"
+          size="large"
           class="login-button"
           @click="handleLogin"
         >
         登录
         </el-button>
 
-        <el-button 
-          type="primary" 
-          size="large" 
+        <el-button
+          type="primary"
+          size="large"
           class="login-button"
           @click="goToRegister"
          >
@@ -51,25 +51,19 @@
 </template>
 
 <script setup lang="ts">
+
 import { useRouter } from 'vue-router'
 import { ref ,watch, nextTick } from 'vue';
 import { ElInput, ElButton } from 'element-plus';
 import axios from 'axios';
-
-const phone = ref('  ');
-const password = ref('  ');
-const realPassword = ref('');
-const forbiddenChars = /['"\\\/<>;|=%]/g;
-const phoneInput = ref(null);
-const passwordInput = ref(null);
 
 const handleLogin = async () => {
   try {
     const response = await axios.post(
       "/ljkj_cloud/user/login",
       {
-        userName: phone.value.replace(/ /g, ''),     // 用户名 //需要沟通最后账号形式
-        password: password.value.replace(/ /g, ''),   // 密码
+        userName: phone.value,    // 用户名 //需要沟通最后账号形式
+        password: password.value    // 密码
       },
       {
         headers: {
@@ -86,27 +80,27 @@ const handleLogin = async () => {
   }
 };
 
-handleLogin().then(data => {
-});
+
 const router = useRouter() // 添加这行
 
 const goToRegister = () => {
   router.push('/register') // 添加这行
 }
-const goToBasicInformationManagement = () => {
- 
-}
 
 
+const password = ref('');
+const passwordInput = ref(null);
+const phone = ref('');
+const phoneInput = ref(null);
+const forbiddenChars = /['"\\\/<>;|=%\s]/g;
 
 
 watch(phone, (newVal, oldVal) => {
   // 过滤非数字字符
   const filteredValue = newVal.replace(forbiddenChars, '');
-  let finalValue = filteredValue.startsWith('  ') ? filteredValue : `  ${filteredValue}`;
-   if (phone.value !== finalValue) {
-    phone.value = finalValue;
-   }
+  phone.value = filteredValue;
+
+
 });
 
 watch(password, (newVal, oldVal) => {
@@ -114,7 +108,6 @@ watch(password, (newVal, oldVal) => {
   const filteredValue = newVal.replace(forbiddenChars, '');
   password.value = filteredValue;
 
-  
 });
 </script>
 
@@ -138,7 +131,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center; /* 新增：水平居中 */
-  background-image: url("/123.png"); 
+  background-image: url("/123.png");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -198,7 +191,15 @@ body {
 }
 
 .input-field {
-  width:100vw;
+  width: 100%; border-radius: 4px;
+  transition: border-color 0.3s ease;
+  padding-left: 10px;
+}
+
+/* 聚焦状态样式 */
+:deep(.el-input__wrapper:focus-within) {
+  border-color: #409eff;
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2);
 }
 
 .login-button {
@@ -212,14 +213,11 @@ body {
 
 /* 下划线输入框样式 */
 :deep(.el-input) {
-  /* 去除默认边框 */
   .el-input__wrapper {
     background: transparent !important;
-    border-bottom: 4px solid #f7f7f8 !important;  /* 默认下划线颜色 */
-    padding-left: 0;
+    border-bottom: 4px solid #f7f7f8 !important;
+    padding-left: 15px !important;
   }
-
-
 
   /* 输入文字样式 */
   .el-input__inner {
