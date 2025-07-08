@@ -26,7 +26,12 @@
         <div class="form-row">
           <div class="form-group">
             <label>出生日期：</label>
-            <input v-model="formData.birthDate" type="date" required>
+            <input 
+              v-model="formData.birthDate" 
+              type="date" 
+              required
+              :max="maxDate"  
+            >
           </div>
         </div>
 
@@ -68,6 +73,7 @@ export default {
   props: ['visible', 'patientId'], // 添加 patientId prop
   data() {
     return {
+      maxDate: new Date().toISOString().split('T')[0], // 添加最大日期限制
       formData: {
         patientId: this.patientId || '', // 初始化时接收父组件传递的ID
         // 修正字段映射

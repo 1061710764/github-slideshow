@@ -21,7 +21,7 @@
       <div class="form-row">
         <div class="form-group">
           <label>出生年月：</label>
-          <input v-model="formData.birthDate" type="date" required>
+          <input v-model="formData.birthDate" type="date" :max="currentDate" required>
         </div>
         <div class="form-group">
           <label>分析日期：</label>
@@ -62,6 +62,11 @@ export default {
         diagnosisDate: '', // 新增分析日期字段
         symptoms: ''    // 新增症状字段
       }
+    }
+  },
+  computed: {
+    currentDate() {
+      return new Date().toISOString().split('T')[0]
     }
   },
   methods: {
