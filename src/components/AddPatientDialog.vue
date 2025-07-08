@@ -109,7 +109,7 @@ export default {
 .dialog-overlay {
   position: fixed;
   top: 0;
-  left: 240px;
+  left: 0px;
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.5);
