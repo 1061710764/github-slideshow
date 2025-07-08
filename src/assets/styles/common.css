@@ -1,0 +1,146 @@
+/* 基础布局样式 */
+.shared-sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, #2c3e50, #1a2530);
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.shared-sidebar .logo {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 24px 20px;
+  text-align: center;
+  background-color: rgba(0,0,0,0.15);
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 10px;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, #2c3e50, #1a2530);
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: auto;
+  background-color: #f5f8fd;
+}
+
+/* 公共组件样式 */
+.content-header {
+  background-color: white;
+  padding: 18px 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+}
+
+.patient-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+  transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+/* 患者信息通用样式 */
+.card-header {
+  background: linear-gradient(to right, #3a7bd5, #00d2ff);
+  color: white;
+  padding: 20px;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .patient-avatar {
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 32px !important;
+  }
+}
+
+.patient-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border: 2px solid white;
+}
+
+.patient-detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #000000;
+  font-size: 14px;
+}
+
+/* 状态标签 */
+.badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255,255,255,0.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-admitted {
+  background: rgba(46, 204, 113, 0.15);
+  color: #27ae60;
+}
+
+.status-awaiting {
+  background: rgba(241, 196, 15, 0.15);
+  color: #f39c12;
+}
+
+.status-discharged {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+}

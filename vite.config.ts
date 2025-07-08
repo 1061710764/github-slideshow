@@ -15,4 +15,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    proxy: {
+      '/ljkj_cloud': {
+        target: 'http://192.168.16.254:4285',
+        changeOrigin: true,
+        
+      }
+    }
+  }
 })

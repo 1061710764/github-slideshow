@@ -1,0 +1,84 @@
+// 布局相关混入
+@mixin shared-layout-styles {
+  .app-container {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #2c3e50, #1a2530);
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+    z-index: 10;
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+    background-color: #f5f8fd;
+  }
+}
+
+// 公共组件样式混入
+@mixin shared-component-styles {
+  .content-header {
+    background-color: white;
+    padding: 18px 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+  }
+
+  .patient-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    transition: all 0.3s ease;
+  }
+
+  .primary-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+}
+
+// 患者卡片细节样式
+@mixin patient-detail-styles {
+  .patient-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  .detail-label {
+    font-weight: 500;
+    color: #000000;
+    font-size: 14px;
+  }
+
+  .detail-value {
+    font-weight: 500;
+  }
+}
