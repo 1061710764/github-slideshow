@@ -156,6 +156,9 @@ export default {
 .dialog-actions {
   text-align: right;
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
 }
 
 /* 恢复原始按钮样式 */

@@ -105,6 +105,7 @@ export default {
     const index = this.patients.findIndex(p => p.id === updatedData.patientId);
     // 或者直接重新获取数据（推荐）
     this.fetchPatients();
+     this.showEditDialog = false; 
   },
   // 合并后的 fetchPatients 方法
   async fetchPatients() {
