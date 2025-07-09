@@ -68,6 +68,7 @@
           fill="#666" 
           fill-opacity="0.5"
           font-size="30"
+          font
           dominant-baseline="middle"
         >
           主气
