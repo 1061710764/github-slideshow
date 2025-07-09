@@ -47,104 +47,97 @@
         <div class="main-panel">
           <!-- 优化后的五运六气卡片 -->
           <div class="medical-card five-elements-card">
-            <h3 class="card-title">
+            <!-- <h3 class="card-title">
               <i class="fas fa-yin-yang icon-spin"></i> 
               五运六气分析
               <span class="card-subtitle">中医运气学说分析报告</span>
-            </h3>
+            </h3> -->
             <div class="five-elements-grid">
 
               <!-- 五运分析优化 -->
-<div class="result-card">
+<!-- <div class="result-card">
     <h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
     
     <p><strong>出生季节：</strong> <span>{{ currentPatient.lunarData.birthSeason }}</span></p>
     <p><strong>先天不足：</strong> <span>{{ currentPatient.lunarData.birthDisease }}</span></p>
     <p><strong>疾病：</strong> <span>{{ currentPatient.lunarData.diseaseName }}</span></p>
     <p><strong>疾病分析：</strong> <span>{{ currentPatient.lunarData.desc }}</span></p>
-</div>
+</div> -->
 <div class="result-card">
     <h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
   <div class="analysis-wrapper">
+
     <!-- 出生时分析 -->
-    <div class="analysis-section">
-      <div class="section-header">
-        <h4>出生时分析</h4>
-        <span class="section-tip">{{ currentPatient.lunarData.birth5y6q.solarDate }}</span>
-      </div>
-      <div class="yun-grid">
-        <div class="yun-item">
-          <span class="highlight-text">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</span>
-          <span class="emphasis">{{ currentPatient.lunarData.birth5y6q.zangElement }}</span>
-          <span class="emphasis">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</span>
-          <div class="zang-list">
-            <span
-              v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
-              :key="zang"
-              class="emphasis"
-            >{{ zang }}</span>
+    <div class="left_part">
+      <div class="analysis-section">
+        <div class="section-header">
+          <h4>出生时分析</h4>
+          <span class="section-tip">{{ currentPatient.lunarData.birth5y6q.solarDate }}</span>
+        </div>
+        <div class="yun-grid">
+          <div class="yun-item">
+            <span class="highlight-text">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</span>
+            <span class="emphasis">{{ currentPatient.lunarData.birth5y6q.zangElement }}</span>
+            <span class="emphasis">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</span>
+            <div class="zang-list">
+              <span
+                v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
+                :key="zang"
+                class="emphasis"
+              >{{ zang }}</span>
+            </div>
+            <span class="emphasis">{{ currentPatient.lunarData.birthSeason }}</span>
+            <span class="emphasis">{{ currentPatient.lunarData.birthDisease }}</span>
           </div>
-          <span class="emphasis">{{ currentPatient.lunarData.birthSeason }}</span>
-          <span class="emphasis">{{ currentPatient.lunarData.birthDisease }}</span>
         </div>
-        <!-- <div class="yun-item">
-          <label>天干地支：</label>
-          <span class="highlight-text">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</span>
+      </div>
+
+      <!-- 当前分析 -->
+      <div class="analysis-section">
+        <div class="section-header">
+          <h4>当前分析</h4>
+          <span class="section-tip">{{ currentPatient.lunarData.now5y6q.lunarDate }}</span>
         </div>
-        <div class="yun-item">
-          <label>脏元素：</label>
-          <span class="emphasis">{{ currentPatient.lunarData.birth5y6q.zangElement }}</span>
-        </div>
-        <div class="yunqi-item">
-          <label>易受影响的内脏器官：</label>
-          <div class="zang-list">
-            <span
-              v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
-              :key="zang"
-              class="emphasis"
-            >{{ zang }}</span>
+        <div class="yun-grid">
+                  <div class="yun-item">
+            <span class="highlight-text">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</span>
+            <span class="emphasis">{{ currentPatient.lunarData.now5y6q.zangElement }}</span>
+            <span class="emphasis">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</span>
+            <span class="emphasis">{{ currentPatient.lunarData.diseaseName }}</span>
           </div>
-        </div> -->
+          <!-- <div class="yun-item">
+            <label>天干地支：</label>
+            <span class="highlight-text">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</span>
+          </div>
+          <div class="yun-item">
+            <label>脏元素：</label>
+            <span class="emphasis">{{ currentPatient.lunarData.now5y6q.zangElement }}</span>
+          </div>
+          <div class="yun-item">
+            <label>司天在泉：</label>
+            <span class="warning">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</span>
+          </div>
+          <div class="yun-item">
+            <label>病症：</label>
+            <span class="warning">{{ currentPatient.lunarData.diseaseName }}</span>
+          </div> -->
+        </div>
       </div>
-    </div>
 
-    <!-- 当前分析 -->
-    <div class="analysis-section">
-      <div class="section-header">
-        <h4>当前分析</h4>
-        <span class="section-tip">{{ currentPatient.lunarData.now5y6q.lunarDate }}</span>
+      <div class="analysis-section">
+        <h4>疾病分析</h4>
+        <span class="emphasis"><p>{{ currentPatient.lunarData.desc }}</p></span>
       </div>
-      <div class="yun-grid">
-                <div class="yun-item">
-          <span class="highlight-text">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</span>
-          <span class="emphasis">{{ currentPatient.lunarData.now5y6q.zangElement }}</span>
-          <span class="emphasis">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</span>
-          <span class="emphasis">{{ currentPatient.lunarData.diseaseName }}</span>
-        </div>
-        <!-- <div class="yun-item">
-          <label>天干地支：</label>
-          <span class="highlight-text">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</span>
-        </div>
-        <div class="yun-item">
-          <label>脏元素：</label>
-          <span class="emphasis">{{ currentPatient.lunarData.now5y6q.zangElement }}</span>
-        </div>
-        <div class="yun-item">
-          <label>司天在泉：</label>
-          <span class="warning">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</span>
-        </div>
-        <div class="yun-item">
-          <label>病症：</label>
-          <span class="warning">{{ currentPatient.lunarData.diseaseName }}</span>
-        </div> -->
-      </div>
+      
     </div>
-
     <!-- 当前日期圆图 -->
-    <div class="chart-container">
-      <div class="chart-title">当前日期：{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
-      <now-circular-figure :patient-id="$route.params.id" />
+    <div class="right_part">
+      <div class="chart-container">
+        <div class="chart-title">当前日期：{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
+        <now-circular-figure :patient-id="$route.params.id" />
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -793,6 +786,15 @@ text[font-size="36"] {
   max-width: 300px;
   margin: 0 -5px;
   padding: 12px;
+}
+
+.disease-analysis{
+  width: 660px;  /* 或 640，根据两块分析区宽度设置 */
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  padding: 16px;
+  margin-top: 0; /* 保持紧凑 */
 }
 
 /* 移动端终极优化 */
