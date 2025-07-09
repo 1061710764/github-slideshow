@@ -4,22 +4,25 @@
     
     <div class="main-content">
       <!-- 头部区域 -->
+      <!-- 头部区域 -->
       <div class="detail-header">
         <div class="header-left">
-          <h1 class="patient-name">{{ currentPatient.name || '未获取到姓名' }}</h1>
+          <h1 class="patient-name">{{ currentPatient.name }}</h1>
           <div class="patient-meta">
-            <span class="patient-id">ID: {{ currentPatient.id || 'N/A' }}</span>
-            <span class="patient-age">{{ currentPatient.age }}岁</span>
-            <span class="patient-gender">{{ currentPatient.gender }}</span>
-            <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
-            <span class="patient-idnum">身份证：{{ currentPatient.idNumber }}</span>
-            <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
+  <span class="patient-id">ID: {{ currentPatient.id }}</span>
+  <span class="patient-age">{{ currentPatient.age }}岁</span>
+  <span class="patient-gender">{{ currentPatient.gender }}</span>
+  <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
+  <span class="patient-sickday">疾病时间：{{ currentPatient.sickDay }}</span>
+  <span class="patient-idnum">idCard：{{ currentPatient.idNumber }}</span>
+  <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
+  <span class="patient-living">居住地：{{ currentPatient.livingPlace }}</span>
           </div>
         </div>
         <div class="header-actions">
           <button class="action-btn medical-btn">病历文档</button>
           <button class="action-btn print-btn">打印报告</button>
-          <button class="action-btn back-btn" @click="$router.go(-1)">
+          <button class="action-btn back-btn" @click="$router.push('/patient-management')">
             <i class="fas fa-arrow-left"></i> 返回列表
           </button>
         </div>
@@ -69,11 +72,13 @@ export default {
   data() {
     return {
       currentPatient: {
-        id: null,
+        id: '',
         name: '加载中...',
         gender: '',
         birthDate: '',
         contact: '',
+        sickDay: '',
+        livingPlace: '',
         idNumber: ''
       },
       predictData: null,
@@ -109,20 +114,24 @@ export default {
         this.error = '报告加载失败: ' + err.message;
       }
     },
+
     async fetchPatientData() {
       try {
         const response = await axios.post(
           '/ljkj_cloud/patient/getPatient',
           { patientId: this.$route.params.id }
         );
-        
+        console.log('患者接口响应数据:', response.data);  // 添加调试日志
         if (response.data.code === 200) {
           this.currentPatient = {
             ...this.currentPatient,
             name: response.data.data.realName || response.data.data.name,
-            id: response.data.data.id,
-            gender: response.data.data.gender === 1 ? '男' : '女',
+            id: response.data.data.patientId,
+            gender: response.data.data.gender,
             birthDate: response.data.data.birthday,
+            age: Math.floor((Date.now() - new Date(response.data.data.birthday).getTime()) / 3.15576e+10),
+            sickDay: response.data.data.sickDay,
+            livingPlace: response.data.data.livingPlace,
             contact: response.data.data.phoneNumber,
             idNumber: response.data.data.idCard
           };
