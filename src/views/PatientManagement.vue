@@ -43,12 +43,12 @@
                 <span class="detail-value">{{ patient.age }}岁</span>
               </div>
               <div class="patient-detail">
-                <span class="detail-label">最后就诊</span>
-                <span class="detail-value">{{ patient.lastVisit }}</span>
+                <span class="detail-label">生病时间</span>
+                <span class="detail-value">{{ patient.sickDay }}</span>
               </div>
               <div class="patient-detail">
-                <span class="detail-label">诊断结果</span>
-                <span class="detail-value diagnosis">{{ patient.diagnosis }}</span>
+                <span class="detail-label">居住地址</span>
+                <span class="detail-value livingPlace">{{ patient.livingPlace }}</span>
               </div>
             </div>
             <div class="card-footer">
@@ -90,7 +90,7 @@ export default {
     return {
       showAddDialog: false,
       showEditDialog: false,  // 编辑对话框显示状态
-    selectedPatientId: null, // 当前编辑的患者ID
+      selectedPatientId: null, // 当前编辑的患者ID
       activeTab: 'patients',
       activeTabMap: { /* ... */ },
       patients: [] // 初始化为空数组
@@ -126,10 +126,10 @@ export default {
         name: patient.realName,
         age: this.calculateAge(patient.birthday),
         gender: patient.gender,
-        diagnosis: '待补充诊断信息',
-        statusText: '在院治疗',
+        livingPlace: patient.livingPlace,
+        statusText: '治疗中',
         priority: 'medium',
-        lastVisit: new Date(patient.lastVisit).toLocaleDateString()
+        sickDay: patient.sickDay
       }));
       
     } catch (error) {
