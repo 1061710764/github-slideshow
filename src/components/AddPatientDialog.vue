@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="dialog-overlay">
+  <div v-if="visible" class="dialog-overlay" @click.self="$emit('close')">
     <div class="dialog-content">
       <form @submit.prevent="save"> 
       <h3>新增患者信息</h3>
@@ -21,18 +21,25 @@
       <div class="form-row">
         <div class="form-group">
           <label>出生年月：</label>
-          <input v-model="formData.birthDate" type="date" required>
+          <input v-model="formData.birthDate" type="date" :max="currentDate" required>
         </div>
         <div class="form-group">
-          <label>分析日期：</label>
-          <input v-model="formData.diagnosisDate" type="date" required> <!-- 修正绑定字段 -->
+          <label>问诊时间：</label>
+          <input v-model="formData.sickDay" type="date" required> <!-- 修正绑定字段 -->
+        </div>
+        <div class="form-group">
+          <label>居住地：</label>
+          <input v-model="formData.livingPlace" type="text" required> <!-- 修正绑定字段 -->
+        </div>
+        <div class="form-group">
+          <label>联系电话：</label>
+          <input v-model="formData.contact" type="text" required>
+        </div>
+        <div class="form-group">
+          <label>身份证号：</label>
+          <input v-model="formData.idNumber" type="text" required>
         </div>
       </div>
-      
-      <div class="form-group">
-          <label>主要症状：</label>
-          <input v-model="formData.symptoms" type="text" required> <!-- 修正绑定字段 -->
-        </div>
       
       <!-- 移除入院日期、初步诊断、优先级、主治医生等字段 -->
       
@@ -54,14 +61,19 @@ export default {
     return {
       formData: {
         name: '',
-        // 移除 age 字段
         gender: 'male',
-        birthDate: '',  // 需要手动初始化
+        birthDate: '',  
         contact: '',
         idNumber: '',
-        diagnosisDate: '', // 新增分析日期字段
-        symptoms: ''    // 新增症状字段
+        livingPlace: '',
+        contact: '',
+        idNumber: ''
       }
+    }
+  },
+  computed: {
+    currentDate() {
+      return new Date().toISOString().split('T')[0]
     }
   },
   methods: {
@@ -73,6 +85,8 @@ export default {
         realName: this.formData.name,
         gender: this.formData.gender === 'male' ? '男' : '女',
         birthday: this.formData.birthDate,
+        sickDay:this.formData.sickDay,
+        livingPlace:this.formData.livingPlace,
         phoneNumber: this.formData.contact,
         idCard: this.formData.idNumber
       },
@@ -109,7 +123,7 @@ export default {
 .dialog-overlay {
   position: fixed;
   top: 0;
-  left: 240px;
+  left: 0px;
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.5);
@@ -142,6 +156,9 @@ export default {
 .dialog-actions {
   text-align: right;
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
 }
 
 /* 恢复原始按钮样式 */

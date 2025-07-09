@@ -11,8 +11,8 @@
   <span class="patient-age">{{ currentPatient.age }}岁</span>
   <span class="patient-gender">{{ currentPatient.gender }}</span>
   <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
-  <span class="patient-sickday">疾病时间：{{ currentPatient.sickDay }}</span>
-  <span class="patient-idnum">身份证：{{ currentPatient.idNumber }}</span>
+  <span class="patient-sickday">问诊时间：{{ currentPatient.sickDay }}</span>
+  <span class="patient-idnum">身份证号：{{ currentPatient.idNumber }}</span>
   <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
   <span class="patient-living">居住地：{{ currentPatient.livingPlace }}</span>
           </div>
@@ -326,8 +326,11 @@ export default {
 }
 
 .main-content {
-  flex: 1;
-  background: #f5f8fd;
+  flex: 1;  
+  width: auto; 
+  margin-left: 240px; 
+  min-width: 800px;  
+  max-width: calc(100% - 240px);  
 }
 
 /* 头部样式 */

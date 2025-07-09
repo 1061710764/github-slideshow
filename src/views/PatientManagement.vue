@@ -43,12 +43,12 @@
                 <span class="detail-value">{{ patient.age }}岁</span>
               </div>
               <div class="patient-detail">
-                <span class="detail-label">最后就诊</span>
-                <span class="detail-value">{{ patient.lastVisit }}</span>
+                <span class="detail-label">问诊时间</span>
+                <span class="detail-value">{{ patient.sickDay }}</span>
               </div>
               <div class="patient-detail">
-                <span class="detail-label">诊断结果</span>
-                <span class="detail-value diagnosis">{{ patient.diagnosis }}</span>
+                <span class="detail-label">居住地址</span>
+                <span class="detail-value livingPlace">{{ patient.livingPlace }}</span>
               </div>
             </div>
             <div class="card-footer">
@@ -90,7 +90,7 @@ export default {
     return {
       showAddDialog: false,
       showEditDialog: false,  // 编辑对话框显示状态
-    selectedPatientId: null, // 当前编辑的患者ID
+      selectedPatientId: null, // 当前编辑的患者ID
       activeTab: 'patients',
       activeTabMap: { /* ... */ },
       patients: [] // 初始化为空数组
@@ -105,6 +105,7 @@ export default {
     const index = this.patients.findIndex(p => p.id === updatedData.patientId);
     // 或者直接重新获取数据（推荐）
     this.fetchPatients();
+     this.showEditDialog = false; 
   },
   // 合并后的 fetchPatients 方法
   async fetchPatients() {
@@ -126,10 +127,10 @@ export default {
         name: patient.realName,
         age: this.calculateAge(patient.birthday),
         gender: patient.gender,
-        diagnosis: '待补充诊断信息',
-        statusText: '在院治疗',
+        livingPlace: patient.livingPlace,
+        statusText: '治疗中',
         priority: 'medium',
-        lastVisit: new Date(patient.lastVisit).toLocaleDateString()
+        sickDay: patient.sickDay
       }));
       
     } catch (error) {
@@ -316,14 +317,6 @@ export default {
 }
 
 /* 右侧主内容区 */
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  overflow-y: auto;
-  background-color: #f5f8fd;
-}
 
 .content-header {
   background-color: white;
@@ -682,19 +675,13 @@ export default {
 
 .main-content {
   flex: 1;  
-  width: auto; 
-  margin-right: 240px;
   min-width: 800px;  
   max-width: calc(100% - 240px);  
 }
 
 
 @media (max-width: 768px) {
-  .main-content {
-    margin-left: 0; /* 小屏幕时恢复默认布局 */
-    width: 100%;
-    padding: 15px;
-  }
+
   .patients-grid {
     grid-template-columns: 1fr;
   }

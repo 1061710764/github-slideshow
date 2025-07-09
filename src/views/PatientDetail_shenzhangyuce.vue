@@ -6,20 +6,22 @@
       <!-- 头部区域 -->
       <div class="detail-header">
         <div class="header-left">
-          <h1 class="patient-name">{{ currentPatient.name || '未获取到姓名' }}</h1>
+          <h1 class="patient-name">{{ currentPatient.name }}</h1>
           <div class="patient-meta">
-            <span class="patient-id">ID: {{ currentPatient.id || 'N/A' }}</span>
-            <span class="patient-age">{{ currentPatient.age }}岁</span>
-            <span class="patient-gender">{{ currentPatient.gender }}</span>
-            <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
-            <span class="patient-idnum">身份证：{{ currentPatient.idNumber }}</span>
-            <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
+  <span class="patient-id">ID: {{ currentPatient.id }}</span>
+  <span class="patient-age">{{ currentPatient.age }}岁</span>
+  <span class="patient-gender">{{ currentPatient.gender }}</span>
+  <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
+  <span class="patient-sickday">问诊时间：{{ currentPatient.sickDay }}</span>
+  <span class="patient-idnum">身份证号：{{ currentPatient.idNumber }}</span>
+  <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
+  <span class="patient-living">居住地：{{ currentPatient.livingPlace }}</span>
           </div>
         </div>
         <div class="header-actions">
           <button class="action-btn medical-btn">病历文档</button>
           <button class="action-btn print-btn">打印报告</button>
-          <button class="action-btn back-btn" @click="$router.go(-1)">
+          <button class="action-btn back-btn" @click="$router.push('/patient-management')">
             <i class="fas fa-arrow-left"></i> 返回列表
           </button>
         </div>
@@ -135,6 +137,8 @@ export default {
         birthDate: '',
         contact: '',
         idNumber: '',
+        sickDay: '',
+        livingPlace: '',
         organStatuses: [],
         guestMovementExplanation: [],
         qiInfluenceExplanation: [],
@@ -159,7 +163,10 @@ export default {
         const mapPatientData = (data) => ({
            name: data.realName || data.name,  // 添加备用字段
             id: data.id || data.patientId,      // 兼容不同ID字段
-           gender: data.gender === 1 ? '男' : '女', // 转换数字为中文
+            age: Math.floor((Date.now() - new Date(data.birthday).getTime()) / 3.15576e+10),
+            sickDay: data.sickDay.split('T')[0],
+            livingPlace: data.livingPlace,
+           gender: data.gender , // 转换数字为中文
             birthDate: data.birthday || data.birthDate, // 统一日期字段
            contact: data.phoneNumber || data.contact,
             idNumber: data.idCard || data.idNumber
@@ -204,8 +211,11 @@ export default {
 }
 
 .main-content {
-  flex: 1;
-  background: #f5f8fd;
+  flex: 1;  
+  width: auto; 
+  margin-left: 240px; 
+  min-width: 800px;  
+  max-width: calc(100% - 240px);  
 }
 
 /* 头部样式 */

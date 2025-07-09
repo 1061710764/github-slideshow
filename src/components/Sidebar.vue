@@ -337,25 +337,11 @@ const goToLogin = async () => {
   min-width: 240px;
   height: 100vh;
   position: fixed;
-  left: -230px; /* 初始隐藏左侧 */
-  transition: all 0.3s ease;
+  left: 0; /* 移除初始隐藏设置 */
   background: linear-gradient(180deg, #2c3e50, #1a2530);
-  /* 其他原有样式保持不变... */
+
 }
 
-.sidebar:hover {
-  left: 0;
-  box-shadow: 3px 0 15px rgba(0,0,0,0.3);
-}
 
-/* 添加悬停触发区域 */
-.sidebar::after {
-  content: '';
-  position: absolute;
-  right: -10px;
-  top: 0;
-  width: 10px;
-  height: 100%;
-}
 
 </style>
