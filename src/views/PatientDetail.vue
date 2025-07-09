@@ -145,10 +145,10 @@
 </div>
 
 <div class="circle-elements-grid">
-  <div class="chart-container">
+  <!-- <div class="chart-container">
     <div class="chart-title">出生日期：{{ currentPatient.birthDate }}</div>
     <birth-circular-figure :patient-id="$route.params.id"/>
-  </div>
+  </div> -->
   <div class="chart-container">
     <div class="chart-title">当前日期：{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
     <now-circular-figure :patient-id="$route.params.id"/>
