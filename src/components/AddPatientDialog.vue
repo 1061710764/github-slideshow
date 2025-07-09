@@ -36,7 +36,7 @@
           <input v-model="formData.contact" type="text" required>
         </div>
         <div class="form-group">
-          <label>idCard：</label>
+          <label>身份证号：</label>
           <input v-model="formData.idNumber" type="text" required>
         </div>
       </div>

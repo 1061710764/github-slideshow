@@ -2,7 +2,7 @@
   <div v-if="visible" class="dialog-overlay" @click.self="$emit('close')">
     <div class="dialog-content">
       <form @submit.prevent="save"> 
-      <h3>新增患者信息</h3>
+      <h3>修改患者信息</h3>
       <div class="form-row">
         <div class="form-group">
           <label>患者姓名：</label>
