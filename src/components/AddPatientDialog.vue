@@ -24,7 +24,7 @@
           <input v-model="formData.birthDate" type="date" :max="currentDate" required>
         </div>
         <div class="form-group">
-          <label>生病时间：</label>
+          <label>问诊时间：</label>
           <input v-model="formData.sickDay" type="date" required> <!-- 修正绑定字段 -->
         </div>
         <div class="form-group">

@@ -43,7 +43,7 @@
                 <span class="detail-value">{{ patient.age }}岁</span>
               </div>
               <div class="patient-detail">
-                <span class="detail-label">生病时间</span>
+                <span class="detail-label">问诊时间</span>
                 <span class="detail-value">{{ patient.sickDay }}</span>
               </div>
               <div class="patient-detail">
