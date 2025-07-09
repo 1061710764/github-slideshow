@@ -204,8 +204,11 @@ export default {
 }
 
 .main-content {
-  flex: 1;
-  background: #f5f8fd;
+  flex: 1;  
+  width: auto; 
+  margin-left: 240px; 
+  min-width: 800px;  
+  max-width: calc(100% - 240px);  
 }
 
 /* 头部样式 */

@@ -104,22 +104,27 @@ export default {
 <style scoped>
 /* 合并后的统一样式 */
 .app-container {
-  display: flex;
-  min-height: 100vh;
+    display: flex;
+  min-width: 1040px;
+  width: 100%;  
 }
 
 .main-content {
-  flex: 1;
-  background: #f5f8fd;
+  flex: 1;  
+  width: auto; 
+  margin-left: 240px; 
+  min-width: 800px;  
+  max-width: calc(100% - 240px);  
 }
 
 .content-header {
+  background-color: white;
+  padding: 18px 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 5;
 }
 
 .dashboard-layout {
@@ -242,7 +247,7 @@ export default {
   .dashboard-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .dashboard-right {
     order: -1;
     margin-bottom: 25px;
@@ -257,11 +262,6 @@ export default {
   
   .stat-card {
     padding: 15px;
-  }
-  
-  .content-header {
-    flex-direction: column;
-    gap: 15px;
   }
   
   .card-header-row {

@@ -358,13 +358,7 @@ export default {
   overflow: hidden;  
 }
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: #fff;
-  width: calc(100% - 240px); /* 添加宽度约束 */
-}
+
 
 .submenu .submenu-icon {
   font-size: 12px;
@@ -409,9 +403,11 @@ export default {
 
 /* ================= 右侧内容区域 ================= */
 .main-content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
+  flex: 1;  
+  width: auto; 
+  margin-left: 240px; 
+  min-width: 800px;  
+  max-width: calc(100% - 240px);  
 }
 
 .user-info-container {
