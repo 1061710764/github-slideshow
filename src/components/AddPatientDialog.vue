@@ -24,15 +24,22 @@
           <input v-model="formData.birthDate" type="date" :max="currentDate" required>
         </div>
         <div class="form-group">
-          <label>分析日期：</label>
-          <input v-model="formData.diagnosisDate" type="date" required> <!-- 修正绑定字段 -->
+          <label>生病时间：</label>
+          <input v-model="formData.sickDay" type="date" required> <!-- 修正绑定字段 -->
+        </div>
+        <div class="form-group">
+          <label>居住地：</label>
+          <input v-model="formData.livingPlace" type="text" required> <!-- 修正绑定字段 -->
+        </div>
+        <div class="form-group">
+          <label>联系电话：</label>
+          <input v-model="formData.contact" type="text" required>
+        </div>
+        <div class="form-group">
+          <label>idCard：</label>
+          <input v-model="formData.idNumber" type="text" required>
         </div>
       </div>
-      
-      <div class="form-group">
-          <label>主要症状：</label>
-          <input v-model="formData.symptoms" type="text" required> <!-- 修正绑定字段 -->
-        </div>
       
       <!-- 移除入院日期、初步诊断、优先级、主治医生等字段 -->
       
@@ -54,13 +61,13 @@ export default {
     return {
       formData: {
         name: '',
-        // 移除 age 字段
         gender: 'male',
-        birthDate: '',  // 需要手动初始化
+        birthDate: '',  
         contact: '',
         idNumber: '',
-        diagnosisDate: '', // 新增分析日期字段
-        symptoms: ''    // 新增症状字段
+        livingPlace: '',
+        contact: '',
+        idNumber: ''
       }
     }
   },
@@ -78,6 +85,8 @@ export default {
         realName: this.formData.name,
         gender: this.formData.gender === 'male' ? '男' : '女',
         birthday: this.formData.birthDate,
+        sickDay:this.formData.sickDay,
+        livingPlace:this.formData.livingPlace,
         phoneNumber: this.formData.contact,
         idCard: this.formData.idNumber
       },

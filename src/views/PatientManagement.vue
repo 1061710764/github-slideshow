@@ -316,14 +316,6 @@ export default {
 }
 
 /* 右侧主内容区 */
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  overflow-y: auto;
-  background-color: #f5f8fd;
-}
 
 .content-header {
   background-color: white;
@@ -682,19 +674,13 @@ export default {
 
 .main-content {
   flex: 1;  
-  width: auto; 
-  margin-right: 240px;
   min-width: 800px;  
   max-width: calc(100% - 240px);  
 }
 
 
 @media (max-width: 768px) {
-  .main-content {
-    margin-left: 0; /* 小屏幕时恢复默认布局 */
-    width: 100%;
-    padding: 15px;
-  }
+
   .patients-grid {
     grid-template-columns: 1fr;
   }
