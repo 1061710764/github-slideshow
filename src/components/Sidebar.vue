@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <div class="logo">医学管理系统</div>
+    <div class="logo">五运六气<br>协助诊疗系统</div>
     <div class="menu">
       <div 
         class="menu-item" 

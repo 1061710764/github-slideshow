@@ -29,7 +29,18 @@
         <div class="form-group">
           <label>居住地：</label>
           <input v-model="formData.livingPlace" type="text" required> <!-- 修正绑定字段 -->
+          <el-button type="primary" @click="mapVisible = true">
+          选择省份
+          </el-button>
+          
+          <ProvinceMap
+            v-if="mapVisible"
+            v-model="mapVisible"
+            @select="handleProvinceSelect"
+          />
+
         </div>
+
         <div class="form-group">
           <label>联系电话：</label>
           <input v-model="formData.contact" type="text" required>
@@ -53,20 +64,27 @@
 <script>
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import ProvinceMap from './ProvinceMap.vue'
+
 export default {
+  name: 'YourComponentName',
+  components: {
+    ProvinceMap
+  },
   props: ['visible'],
   data() {
     return {
       formData: {
         name: '',
         gender: 'male',
-        birthDate: '',  
+        birthDate: '',
         contact: '',
         idNumber: '',
         livingPlace: '',
-        contact: '',
-        idNumber: ''
-      }
+        sickDay: ''
+      },
+      selectedProvince: '',
+      mapVisible: false
     }
   },
   computed: {
@@ -77,44 +95,51 @@ export default {
   methods: {
     async save() {
       try {
-    const response = await axios.post(
-      "/ljkj_cloud/patient/createPatient",
-      {
-        realName: this.formData.name,
-        gender: this.formData.gender === 'male' ? '男' : '女',
-        birthday: this.formData.birthDate,
-        sickDay:this.formData.sickDay,
-        livingPlace:this.formData.livingPlace,
-        phoneNumber: this.formData.contact,
-        idCard: this.formData.idNumber
-      },
-      {
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
-    if(response.data.code === 200) {
-          ElMessage.success('新增患者成功');
+        const response = await axios.post(
+          "/ljkj_cloud/patient/createPatient",
+          {
+            realName: this.formData.name,
+            gender: this.formData.gender === 'male' ? '男' : '女',
+            birthday: this.formData.birthDate,
+            sickDay: this.formData.sickDay,
+            livingPlace: this.formData.livingPlace,
+            phoneNumber: this.formData.contact,
+            idCard: this.formData.idNumber
+          },
+          {
+            headers: { 'Content-Type': 'application/json' }
+          }
+        )
+        if (response.data.code === 200) {
+          ElMessage.success('新增患者成功')
           this.$emit('close')
           this.resetForm()
-          this.$emit('save-success') 
-    }
-  } catch (error) {
-    console.error('新增患者失败:', error);
-    throw error;
-  }
-  },
+          this.$emit('save-success')
+        }
+      } catch (error) {
+        console.error('新增患者失败:', error)
+        throw error
+      }
+    },
     resetForm() {
       this.formData = {
         name: '',
         gender: 'male',
-        birthDate: '',  
+        birthDate: '',
         contact: '',
-        idNumber: ''
+        idNumber: '',
+        livingPlace: '',
+        sickDay: ''
       }
+    },
+    handleProvinceSelect(name) {
+      this.formData.livingPlace = name
+      this.mapVisible = false
     }
   }
 }
 </script>
+
 
 <style scoped>
 .dialog-overlay {
