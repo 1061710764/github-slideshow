@@ -45,7 +45,7 @@
       
         <div class="dialog-actions">
           <button type="button" @click="$emit('close')">取消</button>
-          <button type="submit" class="primary-btn" @click="save">保存</button>
+          <button type="submit" class="primary-btn" >保存</button>
         </div>
         </form>
     </div>

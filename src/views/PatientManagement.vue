@@ -100,10 +100,7 @@ export default {
     this.fetchPatients();
   },
   methods: {
-    handleUpdateSuccess(updatedData) {
-    // 更新本地患者数据
-    const index = this.patients.findIndex(p => p.id === updatedData.patientId);
-    // 或者直接重新获取数据（推荐）
+    handleUpdateSuccess() {
     this.fetchPatients();
      this.showEditDialog = false; 
   },
