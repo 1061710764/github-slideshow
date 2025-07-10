@@ -8,7 +8,6 @@
           <label>患者姓名：</label>
           <input v-model="formData.name" type="text" required>
         </div>
-        <!-- 新增性别选择 -->
         <div class="form-group">
           <label>性别：</label>
           <select v-model="formData.gender">
@@ -41,7 +40,6 @@
         </div>
       </div>
       
-      <!-- 移除入院日期、初步诊断、优先级、主治医生等字段 -->
       
         <div class="dialog-actions">
           <button type="button" @click="$emit('close')">取消</button>
@@ -98,7 +96,7 @@ export default {
           ElMessage.success('新增患者成功');
           this.$emit('close')
           this.resetForm()
-          this.$emit('save-success') // 新增触发保存成功事件
+          this.$emit('save-success') 
     }
   } catch (error) {
     console.error('新增患者失败:', error);
@@ -108,9 +106,8 @@ export default {
     resetForm() {
       this.formData = {
         name: '',
-        // 移除 age 字段
         gender: 'male',
-        birthDate: '',  // 需要手动初始化
+        birthDate: '',  
         contact: '',
         idNumber: ''
       }
@@ -137,7 +134,7 @@ export default {
   background: white;
   padding: 20px;
   border-radius: 8px;
-  width: 500px; /* 恢复原始宽度 */
+  width: 500px; 
 }
 
 .form-group {
@@ -149,7 +146,7 @@ export default {
 .form-group select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd; /* 恢复原始边框 */
+  border: 1px solid #ddd; 
   border-radius: 4px;
 }
 
@@ -161,7 +158,6 @@ export default {
   gap: 15px;
 }
 
-/* 恢复原始按钮样式 */
 .dialog-actions button {
   padding: 6px 14px;
   border-radius: 4px;

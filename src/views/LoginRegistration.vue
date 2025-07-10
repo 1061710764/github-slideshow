@@ -93,7 +93,7 @@ import axios from 'axios';
 import { useRouter } from 'vue-router'
 import { ElInput, ElButton, ElMessage } from 'element-plus';
 const router = useRouter()
-const confirmPassword = ref('');  // 新增确认密码
+const confirmPassword = ref('');  
 const isPasswordMismatch = ref(false);
 const isPhoneValid = ref(true);
 
@@ -111,12 +111,11 @@ const phone = ref('');
 const phoneInput = ref(null);
 const forbiddenChars = /['"\\\/<>;|=%\s]/g;
 
-// 新增密码一致性监听
 watch([password, confirmPassword], ([newPwd, newConfirm]) => {
   isPasswordMismatch.value = newPwd !== newConfirm && newConfirm !== '';
 });
 
-// 修改后的手机号验证
+// 手机号验证
 watch(phone, (newVal) => {
   const filteredValue = newVal.replace(/[^\d]/g, '');
   phone.value = filteredValue.slice(0, 11);
@@ -130,14 +129,13 @@ watch(username, (newVal) => {
   adjustCursor(usernameInput, filteredValue);
 });
 
-// 新增姓名过滤逻辑（允许中文）
 watch(realName, (newVal) => {
   const filteredValue = newVal.replace(/[^a-zA-Z\u4e00-\u9fa5]/g, '');
   realName.value = filteredValue;
   adjustCursor(realNameInput, filteredValue);
 });
 
-// 通用光标位置调整方法
+
 const adjustCursor = (inputRef: any, value: string) => {
   nextTick(() => {
     if (inputRef.value) {
@@ -164,10 +162,9 @@ watch(phone, (newVal, oldVal) => {
 });
 
 watch(password, (newVal, oldVal) => {
-  // 过滤非数字字符
+
   const filteredValue = newVal.replace(forbiddenChars, '');
   password.value = filteredValue;
-
 
 });
 
@@ -181,7 +178,6 @@ const handleRegister = async () => {
     return;
   }
   try {
-    // 使用硬编码测试数据
     const response = await axios.post(
       "/ljkj_cloud/user/createUser",
       {
@@ -222,14 +218,14 @@ const handleRegister = async () => {
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden; /* 禁用全局滚动条 */
+  overflow: hidden;
 }
 
 /* 页面容器 - 确保全屏居中 */
 .login-container {
   display: flex;
   align-items: center;
-  justify-content: center; /* 新增：水平居中 */
+  justify-content: center; 
   background-image: url("/123.png"); 
   background-size: cover;
   background-position: center;
@@ -238,8 +234,8 @@ body {
   top: 20px;
   bottom:20px;
   left: 0;
-  justify-content: flex-end;  /* 主轴上右对齐 */
-  padding-right: 10%;         /* 按图片比例调整右侧间距 */
+  justify-content: flex-end;  
+  padding-right: 10%;         
 }
 
 .welcome-title {
@@ -258,8 +254,8 @@ body {
 }
 
 .login-form {
-  width: 400px;       /* 宽度增加，适应长条比例 */
-  min-height: 200px;  /* 固定高度（根据图片内容调整） */
+  width: 400px;       
+  min-height: 200px;  
   background: rgb(245, 242, 242);
   border-radius: 8px;
   padding: 20px;
@@ -274,14 +270,14 @@ body {
 }
 
 .form-group {
-  display: flex;          /* 启用弹性布局 */
-  align-items: center;    /* 垂直居中 */
-  gap: 12px;              /* 元素间距（现代浏览器支持） */
+  display: flex;          
+  align-items: center;    
+  gap: 12px;             
 }
 
 .form-label {
-  width: 80px;           /* 固定标签宽度 */
-  flex-shrink: 0;        /* 防止标签被压缩 */
+  width: 80px;           
+  flex-shrink: 0;       
   display: block;
   margin-bottom: 8px;
   font-size: 16px;
@@ -307,13 +303,12 @@ body {
   /* 去除默认边框 */
   .el-input__wrapper {
     background: transparent !important;
-    border-bottom: 4px solid #f7f7f8 !important;  /* 默认下划线颜色 */
+    border-bottom: 4px solid #f7f7f8 !important;  
     padding-left: 0;
   }
 
 
 
-  /* 输入文字样式 */
   .el-input__inner {
     padding: 8px 0 !important;
     font-size: 14px;

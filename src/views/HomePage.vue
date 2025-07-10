@@ -242,7 +242,6 @@ export default {
   transition: background 0.3s;
 }
 
-/* 响应式设计 */
 @media (max-width: 1200px) {
   .dashboard-layout {
     grid-template-columns: 1fr;

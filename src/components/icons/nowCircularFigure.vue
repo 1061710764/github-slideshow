@@ -159,8 +159,8 @@ export default {
   },
   middleColors() {
     return this.middleTexts.map(text => {
-      const key = text.split('\n')[0]; // 提取主文字部分
-      return this.middleColorMap[key] || '#CCCCCC'; // 默认灰色
+      const key = text.split('\n')[0]; 
+      return this.middleColorMap[key] || '#CCCCCC'; 
     });
   },
   outerTextColors() {
@@ -205,10 +205,9 @@ export default {
             '太阳寒水'  
           ];
 
-          // 找到当前起始索引
+
           const startIndex = sixQiCycle.indexOf(this.nowsiTianQi);
           
-          // 生成循环序列
           this.outerTexts = [];
           for (let i = 0; i < 6; i++) {
             const cycleIndex = (startIndex + i) % 6;

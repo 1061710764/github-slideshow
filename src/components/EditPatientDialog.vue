@@ -8,7 +8,7 @@
           <label>患者姓名：</label>
           <input v-model="formData.name" type="text" required>
         </div>
-        <!-- 新增性别选择 -->
+
         <div class="form-group">
           <label>性别：</label>
           <select v-model="formData.gender">
@@ -25,11 +25,11 @@
         </div>
         <div class="form-group">
           <label>问诊时间：</label>
-          <input v-model="formData.sickDay" type="date" required> <!-- 修正绑定字段 -->
+          <input v-model="formData.sickDay" type="date" required> 
         </div>
         <div class="form-group">
           <label>居住地：</label>
-          <input v-model="formData.livingPlace" type="text" required> <!-- 修正绑定字段 -->
+          <input v-model="formData.livingPlace" type="text" required> 
         </div>
         <div class="form-group">
           <label>联系电话：</label>
@@ -40,8 +40,6 @@
           <input v-model="formData.idNumber" type="text" required>
         </div>
       </div>
-      
-      <!-- 移除入院日期、初步诊断、优先级、主治医生等字段 -->
       
         <div class="dialog-actions">
           <button type="button" @click="$emit('close')">取消</button>
@@ -60,30 +58,30 @@ import { ElMessage } from 'element-plus'
 export default {
   props: {
     visible: Boolean,
-    patientId: String // 新增prop接收患者ID
+    patientId: String 
   },
   data() {
     return {
       formData: {
-        patientId: this.patientId, // 绑定患者ID
+        patientId: this.patientId, 
         name: '',
         gender: 'male',
         birthDate: '',
         contact: '',
         idNumber: '',
-        sickDay: '',    // 补充缺失字段
-        livingPlace: '' // 补充缺失字段
+        sickDay: '',    
+        livingPlace: '' 
       }
     }
   },
   watch: {
     patientId(newVal) {
       this.formData.patientId = newVal
-      this.fetchPatientData() // 当ID变化时加载数据
+      this.fetchPatientData() 
     }
   },
   methods: {
-    // 新增数据获取方法
+    // 数据获取方法
     async fetchPatientData() {
       try {
         const response = await axios.post('/ljkj_cloud/patient/getPatient', {
@@ -109,7 +107,7 @@ export default {
       }
     },
 
-    // 修正后的保存方法
+    // 保存方法
     async save() {
       try {
         const response = await axios.put("/ljkj_cloud/patient/updatePatient", 
@@ -118,8 +116,8 @@ export default {
           realName: this.formData.name,
           phoneNumber: this.formData.contact,
           birthday: this.formData.birthDate,
-          sickDay: this.formData.sickDay,      // 修正字段
-          livingPlace: this.formData.livingPlace, // 修正字段
+          sickDay: this.formData.sickDay,      
+          livingPlace: this.formData.livingPlace, 
           gender: this.formData.gender === 'male' ? '男' : '女',
           idCard: this.formData.idNumber
         },
@@ -127,8 +125,8 @@ export default {
         );
         if(response.data.code === 200) {
          ElMessage.success('修改成功');
-          this.$emit('close');  // 添加关闭弹窗事件
-           this.$emit('update-success');  // 触发父组件更新
+          this.$emit('close');  
+           this.$emit('update-success');  
 }
       } catch (error) {
         console.error('修改患者失败:', error);
@@ -157,7 +155,7 @@ export default {
   background: white;
   padding: 20px;
   border-radius: 8px;
-  width: 500px; /* 恢复原始宽度 */
+  width: 500px; 
 }
 
 .form-group {
@@ -169,7 +167,7 @@ export default {
 .form-group select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd; /* 恢复原始边框 */
+  border: 1px solid #ddd; 
   border-radius: 4px;
 }
 
@@ -181,7 +179,6 @@ export default {
   gap: 15px;
 }
 
-/* 恢复原始按钮样式 */
 .dialog-actions button {
   padding: 6px 14px;
   border-radius: 4px;

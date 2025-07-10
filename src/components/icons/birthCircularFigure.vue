@@ -33,7 +33,7 @@
     :d="getSectorPath(innerRadius1, innerRadius2, index * 60 + 30, (index + 1) * 60 + 30)"
     :fill="middleColors[index]"
   />
-  <!-- 新增弧形路径 -->
+  <!-- 弧形路径 -->
   <path 
     :id="'middleTextPath'+index"
     :d="getArcPath((innerRadius1 + innerRadius2)/2, index * 60 + 30, (index + 1) * 60 + 30)"
@@ -159,8 +159,8 @@ export default {
   },
   middleColors() {
     return this.middleTexts.map(text => {
-      const key = text.split('\n')[0]; // 提取主文字部分
-      return this.middleColorMap[key] || '#CCCCCC'; // 默认灰色
+      const key = text.split('\n')[0]; 
+      return this.middleColorMap[key] || '#CCCCCC'; 
     });
   },
   outerTextColors() {
@@ -247,7 +247,7 @@ export default {
         y: this.center.y + radius * Math.sin(rad)
       }
     },
-    // 新增方法：生成弧形路径
+    // 生成弧形路径
     getArcPath(radius, startAngle, endAngle) {
       const startRad = (startAngle - 90) * Math.PI / 180;
       const endRad = (endAngle - 90) * Math.PI / 180;

@@ -51,7 +51,7 @@
           <span>工作台</span>
         </div>
         <span class="submenu-icon">▼</span>
-        <!-- 新增二级菜单 -->
+        <!-- 二级菜单 -->
         <div v-show="isWorkbenchOpen" class="submenu-items">
           <div 
             class="submenu-item"
@@ -109,10 +109,8 @@ export default {
 
     async goToPatientManagement() {
       try {
-    // 移除 sessionStorage 相关操作
     this.$router.push('/patient-management'); 
   } catch (error) {
-    // ...错误处理保持不变...
   }
 },
      goToLogin() {
@@ -126,7 +124,6 @@ export default {
 
 const goToLogin = async () => {
   try {
-    // 使用硬编码测试数据
     const response = await axios.post(
       "/ljkj_cloud//user/logout",
       {
@@ -150,7 +147,7 @@ const goToLogin = async () => {
 </script>
 
 <style scoped>
-/* 新增子菜单样式 */
+/* 子菜单样式 */
 .submenu-items {
   padding-left: 40px;
   margin-top: 8px;
@@ -170,7 +167,6 @@ const goToLogin = async () => {
   transform: translateX(5px);
 }
 
-/* 调整原有submenu样式 */
 .menu-item.submenu {
   position: relative;
   flex-direction: column;
@@ -185,34 +181,17 @@ const goToLogin = async () => {
 
 .sidebar {
   width: 240px;
-  min-width: 240px; /* 新增最小宽度限制 */
+  min-width: 240px; 
   top: 0px;
-  height: 100vh; /* 新增视口高度 */
-  position: fixed; /* 改为固定定位 */
+  height: 100vh; 
+  position: fixed; 
   background: linear-gradient(180deg, #2c3e50, #1a2530);
   color: #ecf0f1;
   display: flex;
   flex-direction: column;
   box-shadow: 3px 0 15px rgba(0,0,0,0.1);
-  overflow-y: auto; /* 添加滚动条防止内容溢出 */
+  overflow-y: auto; 
 }
-
-
-/* @media (max-width: 768px) {
-  .sidebar {
-    width: 70px;
-  }
-  .logo span, 
-  .menu-item > span:not(.menu-icon) {
-    display: none;
-  }
-  .submenu-icon {
-    display: none;
-  }
-  .user-status .user-info {
-    display: none;
-  }
-} */
 
 .logo {
   white-space: nowrap;
@@ -245,7 +224,7 @@ const goToLogin = async () => {
 }
 
 .menu-item > span:not(.menu-icon) {
-  white-space: nowrap; /* 防止菜单文字换行 */
+  white-space: nowrap; 
 }
 
 .menu-item:hover {
@@ -273,12 +252,12 @@ const goToLogin = async () => {
   opacity: 0.7;
 }
 
-/* 优化用户状态区域 */
+
 .user-status {
   padding: 20px 15px;
   background: rgba(255, 255, 255, 0.08);
   border-top: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: none; /* 移除模糊效果 */
+  backdrop-filter: none; 
   display: flex;
   align-items: center;
 }
@@ -293,7 +272,7 @@ const goToLogin = async () => {
   justify-content: center;
   font-size: 20px;
   margin-right: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* 调整阴影 */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); 
 }
 
 .user-info {
@@ -307,14 +286,14 @@ const goToLogin = async () => {
 
 .status {
   font-size: 12px;
-  color: #7f8c8d; /* 增加状态文字对比度 */
+  color: #7f8c8d; 
 }
 
 .logout-container {
   padding: 10px 15px;
   margin: 15px 0 20px 0;
   display: flex;
-  justify-content: flex-end; /* 保持右对齐 */
+  justify-content: flex-end; 
 }
 
 .logout-button {
@@ -329,7 +308,7 @@ const goToLogin = async () => {
 .logout-button:hover {
   transform: translateY(-1px);
   background-color: #ff7875 !important;
-  box-shadow: 0 2px 8px rgba(255, 77, 79, 0.2); /* 红色阴影 */
+  box-shadow: 0 2px 8px rgba(255, 77, 79, 0.2); 
 }
 
 .sidebar {
@@ -337,7 +316,7 @@ const goToLogin = async () => {
   min-width: 240px;
   height: 100vh;
   position: fixed;
-  left: 0; /* 移除初始隐藏设置 */
+  left: 0; 
   background: linear-gradient(180deg, #2c3e50, #1a2530);
 
 }

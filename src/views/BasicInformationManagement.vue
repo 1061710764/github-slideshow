@@ -136,10 +136,10 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router' // 此导入可删除（不再需要）
+import { useRouter } from 'vue-router' 
 import Sidebar from '@/components/Sidebar.vue'
-import axios from 'axios' // 添加axios导入
-import { ElMessage } from 'element-plus' // 添加消息组件导入
+import axios from 'axios' 
+import { ElMessage } from 'element-plus' 
 import { ElButton } from 'element-plus'
 
 export default {
@@ -193,7 +193,7 @@ export default {
       "/ljkj_cloud/user/editUserDetail",
       {
         headers: {
-          'Content-Type': 'application/json' // 必须设置 JSON 格式
+          'Content-Type': 'application/json' 
         }
       }
     );
@@ -207,8 +207,8 @@ export default {
   }
   },
     async submitmessage() {
-       this.editDialogVisible = false; // 关闭弹窗
-      this.isEditing = false;          // 重置编辑状态
+       this.editDialogVisible = false; 
+      this.isEditing = false;          
       if (this.newPassword !== this.confirmPassword) {
         ElMessage.error('两次输入密码不一致')
         return
@@ -216,9 +216,9 @@ export default {
       
       try {
         const response = await axios.post(
-          "/ljkj_cloud/user/changeUserPassword", // 修复URL双斜杠问题
+          "/ljkj_cloud/user/changeUserPassword", 
           {
-            oldPassword: this.oldPassword, // 使用data中的真实值
+            oldPassword: this.oldPassword, 
             newPassword: this.newPassword
           },
           {
@@ -236,44 +236,37 @@ export default {
         ElMessage.error(`修改失败: ${error.response?.data?.message || error.message}`);
       }
     },
-    // 修复后的跳转方法
+
     goToPatientManagement() {
-      // 直接通过 this.$router 访问路由实例（Vue 3 选项式 API 正确方式）
       this.$router.push('/patient-management')
     },
     goToHomePage() {
-      // 直接通过 this.$router 访问路由实例（Vue 3 选项式 API 正确方式）
       this.$router.push('/home')
     },
 
     handleModifyAvatar() {
-      // 创建文件选择元素
-      const router = useRouter() // 添加这行
+      const router = useRouter() 
       const goToPatientManagement = () => {
-      router.push('/BasicInformationManagement/PatientManagement') // 添加这行
+      router.push('/BasicInformationManagement/PatientManagement') 
       }
       const goToHomePage = () => {
-      router.push('/BasicInformationManagement/home') // 添加这行
+      router.push('/BasicInformationManagement/home') 
       }
-
 
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
-      fileInput.accept = 'image/*'; // 只接受图片文件
-      fileInput.style.display = 'none'; // 隐藏文件输入元素
+      fileInput.accept = 'image/*'; 
+      fileInput.style.display = 'none'; 
       
-      // 添加文件选择事件
+
       fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
-          // 创建文件预览
           const reader = new FileReader();
           
           reader.onload = (e) => {
-            // 更新头像预览 - 现在通过操作DOM实现
             const avatarElement = document.querySelector('.avatar-placeholder');
             if (avatarElement) {
-              // 创建新的img元素
               const img = document.createElement('img');
               img.src = e.target.result;
               img.style.width = '100%';
@@ -281,11 +274,9 @@ export default {
               img.style.borderRadius = '50%';
               img.style.objectFit = 'cover';
               
-              // 清除现有内容并添加新图像
               avatarElement.innerHTML = '';
               avatarElement.appendChild(img);
               
-              // 重新添加编辑图标
               const editIcon = document.createElement('div');
               editIcon.className = 'edit-icon';
               editIcon.innerHTML = '<div class="edit-icon-inner">+</div>';
@@ -298,22 +289,18 @@ export default {
         }
       });
       
-      // 触发文件选择对话框
       document.body.appendChild(fileInput);
       fileInput.click();
-      // 移除临时文件输入元素
       document.body.removeChild(fileInput);
     }
   },
   mounted() {
       this.fetchUserDetail();
-    // 绑定修改头像按钮的点击事件
     const modifyBtn = document.querySelector('.modify-avatar-btn');
     if (modifyBtn) {
       modifyBtn.addEventListener('click', this.handleModifyAvatar);
     }
     
-    // 绑定编辑图标的点击事件
     const editIcon = document.querySelector('.edit-icon');
     if (editIcon) {
       editIcon.addEventListener('click', this.handleModifyAvatar);
@@ -323,7 +310,6 @@ export default {
 </script>
 
 <style scoped>
-/* 合并后的样式 */
 
 .password-confirm-wrapper {
   position: relative;
@@ -365,7 +351,6 @@ export default {
   opacity: 0.7;
 }
 
-/* 用户状态区域 */
 .user-status {
   display: flex;
   padding: 20px 15px;
