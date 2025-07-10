@@ -67,11 +67,11 @@
             </el-button>
             </div>
 
-    <el-dialog
-  title="修改密码"
-  :visible.sync="editDialogVisible"
-  width="30%"
->
+            <el-dialog
+          title="修改密码"
+          :visible.sync="editDialogVisible"
+          width="30%"
+        >
   <div class="settings-form">
     <div class="settings-form">
             <div class="form-item">

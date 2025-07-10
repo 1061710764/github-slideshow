@@ -249,20 +249,6 @@ export default {
 
 
 <style scoped>
-/* 删除以下冲突样式 */
-.sidebar {
-  width: 240px;
-  min-width: 240px; 
-  height: 100vh;
-  position: relative;
-  z-index: 1000; 
-  background: linear-gradient(180deg, #2c3e50, #1a2530);
-  color: #ecf0f1;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 3px 0 15px rgba(0,0,0,0.1);
-  z-index: 10;
-}
 
 .logo {
   font-size: 22px;
@@ -670,12 +656,15 @@ export default {
   display: flex;
   min-width: 1040px;
   width: 100%;  
+  min-height: 100vh;
   
 }
 
 .main-content {
   flex: 1;  
   min-width: 800px;  
+  margin-left: 240px;
+  width: auto; 
   max-width: calc(100% - 240px);  
 }
 

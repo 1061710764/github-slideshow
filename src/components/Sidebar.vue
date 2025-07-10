@@ -186,6 +186,7 @@ const goToLogin = async () => {
 .sidebar {
   width: 240px;
   min-width: 240px; /* 新增最小宽度限制 */
+  top: 0px;
   height: 100vh; /* 新增视口高度 */
   position: fixed; /* 改为固定定位 */
   background: linear-gradient(180deg, #2c3e50, #1a2530);
@@ -193,7 +194,6 @@ const goToLogin = async () => {
   display: flex;
   flex-direction: column;
   box-shadow: 3px 0 15px rgba(0,0,0,0.1);
-  z-index: 10;
   overflow-y: auto; /* 添加滚动条防止内容溢出 */
 }
 
