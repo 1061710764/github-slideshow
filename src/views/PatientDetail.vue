@@ -257,6 +257,7 @@ export default {
           birthSeason: data?.birthSeason || '',
           birthDisease: data?.birthDisease || '',
           diseaseName: data?.diseaseName || '',
+          sick: data?.sick || '',
           desc: data?.desc || ''
         })
 
@@ -269,7 +270,8 @@ export default {
           sickDay: data.sickDay.split('T')[0],
           livingPlace: data.livingPlace,
           contact: data.phoneNumber,
-          idNumber: data.idCard
+          idNumber: data.idCard,
+          sick:data.sick
         })
 
         const basicRes = await axios.post('/ljkj_cloud/patient/getPatient', { 

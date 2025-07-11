@@ -25,7 +25,7 @@
           </div>
           <div class="form-group">
             <label>问诊时间：</label>
-            <input v-model="formData.sickDay" type="date" required> 
+            <input v-model="formData.sickDay" type="date":max="currentDate" required> 
           </div>
           <div class="form-group">
             <label>居住地：</label>
@@ -44,6 +44,10 @@
           <div class="form-group">
             <label>身份证号：</label>
             <input v-model="formData.idNumber" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>疾病：</label>
+            <input v-model="formData.sick" type="text" required>
           </div>
         </div>
         
@@ -81,7 +85,8 @@ export default defineComponent({
       contact: '',
       idNumber: '',
       sickDay: '',
-      livingPlace: ''
+      livingPlace: '',
+      sick:''
     })
 
     const mapVisible = ref(false)
@@ -100,7 +105,8 @@ export default defineComponent({
         contact: '',
         idNumber: '',
         sickDay: '',
-        livingPlace: ''
+        livingPlace: '',
+        sick:''
       }
     }
 
@@ -125,7 +131,8 @@ export default defineComponent({
             contact: data.phoneNumber,
             idNumber: data.idCard,
             sickDay: data.sickDay,
-            livingPlace: data.livingPlace
+            livingPlace: data.livingPlace,
+            sick:data.sick
           }
           console.log('✅ 患者数据加载成功:', formData.value)
         }
@@ -146,7 +153,8 @@ export default defineComponent({
         sickDay: formData.value.sickDay,
         livingPlace: formData.value.livingPlace,
         phoneNumber: formData.value.contact,
-        idCard: formData.value.idNumber
+        idCard: formData.value.idNumber,
+        sick:formData.value.sick
       }
 
       console.log('🚀 请求参数:', payload)

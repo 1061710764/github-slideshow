@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
           <label>问诊时间：</label>
-          <input v-model="formData.sickDay" type="date" required> <!-- 修正绑定字段 -->
+          <input v-model="formData.sickDay" type="date":max="currentDate" required> <!-- 修正绑定字段 -->
         </div>
         <div class="form-group">
           <label>居住地：</label>
@@ -48,6 +48,10 @@
         <div class="form-group">
           <label>身份证号：</label>
           <input v-model="formData.idNumber" type="text" required>
+        </div>
+        <div class="form-group">
+          <label>疾病：</label>
+          <input v-model="formData.sick" type="text" required>
         </div>
       </div>
       
@@ -81,7 +85,8 @@ export default {
         contact: '',
         idNumber: '',
         livingPlace: '',
-        sickDay: ''
+        sickDay: '',
+        sick:''
       },
       selectedProvince: '',
       mapVisible: false
@@ -104,7 +109,8 @@ export default {
             sickDay: this.formData.sickDay,
             livingPlace: this.formData.livingPlace,
             phoneNumber: this.formData.contact,
-            idCard: this.formData.idNumber
+            idCard: this.formData.idNumber,
+            sick:this.formData.sick
           },
           {
             headers: { 'Content-Type': 'application/json' }
@@ -129,7 +135,8 @@ export default {
         contact: '',
         idNumber: '',
         livingPlace: '',
-        sickDay: ''
+        sickDay: '',
+        sick:''
       }
     },
     handleProvinceSelect(name) {
