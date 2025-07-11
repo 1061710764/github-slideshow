@@ -66,70 +66,60 @@
 <div class="result-card">
     <h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
   <div class="analysis-wrapper">
-
     <!-- 出生时分析 -->
-    <div class="left_part">
-      <div class="analysis-section">
-        <div class="section-header">
-          <h4>出生时分析</h4>
-          <span class="section-tip">{{ currentPatient.lunarData.birth5y6q.solarDate }}</span>
-        </div>
-        <div class="yun-grid">
-          <div class="yun-item">
-            <span class="highlight-text">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</span>
-            <span class="emphasis">{{ currentPatient.lunarData.birth5y6q.zangElement }}</span>
-            <span class="emphasis">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</span>
-            <div class="zang-list">
-              <span
-                v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
-                :key="zang"
-                class="emphasis"
-              >{{ zang }}</span>
-            </div>
-            <span class="emphasis">{{ currentPatient.lunarData.birthSeason }}</span>
-            <span class="emphasis">{{ currentPatient.lunarData.birthDisease }}</span>
-          </div>
-        </div>
-      </div>
 
-      <!-- 当前分析 -->
-      <div class="analysis-section">
-        <div class="section-header">
-          <h4>当前分析</h4>
-          <span class="section-tip">{{ currentPatient.lunarData.now5y6q.lunarDate }}</span>
-        </div>
-        <div class="yun-grid">
-                  <div class="yun-item">
-            <span class="highlight-text">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</span>
-            <span class="emphasis">{{ currentPatient.lunarData.now5y6q.zangElement }}</span>
-            <span class="emphasis">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</span>
-            <span class="emphasis">{{ currentPatient.lunarData.diseaseName }}</span>
-          </div>
-          <!-- <div class="yun-item">
-            <label>天干地支：</label>
-            <span class="highlight-text">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</span>
-          </div>
-          <div class="yun-item">
-            <label>脏元素：</label>
-            <span class="emphasis">{{ currentPatient.lunarData.now5y6q.zangElement }}</span>
-          </div>
-          <div class="yun-item">
-            <label>司天在泉：</label>
-            <span class="warning">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</span>
-          </div>
-          <div class="yun-item">
-            <label>病症：</label>
-            <span class="warning">{{ currentPatient.lunarData.diseaseName }}</span>
-          </div> -->
-        </div>
+    <div class="analysis-section">
+      <div class="yun-grid">
+        <div class="yun-item-strong">谁</div>
+        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
+        <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</div>
       </div>
-
-      <div class="analysis-section">
-        <h4>疾病分析</h4>
-        <span class="emphasis"><p>{{ currentPatient.lunarData.desc }}</p></span>
+      <div class="yun-grid">
+        <span>{{ currentPatient.lunarData.birth5y6q.zangElement }}</span>
+        <span>{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</span>
+        <div class="zang-list">
+            <span
+              v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
+              :key="zang"
+            >{{ zang }}</span>
+          </div>
       </div>
-      
     </div>
+
+    <div class="analysis-section">
+      <div class="yun-grid">
+        <div class="yun-item-strong">在</div>
+        <div class="yun-item">{{ currentPatient.livingPlace }}</div>
+      </div>
+      <div class="yun-grid">
+        <div class="yun-item">{{ currentPatient.lunarData.birthSeason }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.birthDisease }}</div>
+      </div>
+    </div>
+
+    <div class="analysis-section">
+      <div class="yun-grid">
+        <div class="yun-item-strong">何时</div>
+        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
+        <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</div>
+      </div>
+      <div class="yun-grid">
+        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.diseaseName }}</div>
+      </div>
+    </div>
+    
+    <div class="analysis-section">
+        <div class="yun-grid">
+          <div class="yun-item-strong">病</div>
+          <div class="yun-item">{{ currentPatient.lunarData.sick }}</div>
+        </div>
+        <div class="yun-grid">
+          <div v-for="(line, index) in splitDesc" :key="index" class="yun-item">{{ line }}</div>
+        </div>
+    </div>
+
     <!-- 当前日期圆图 -->
     <div class="right_part">
       <div class="chart-container">
@@ -153,9 +143,10 @@
 
 <script>
 import Sidebar from '@/components/Sidebar.vue'
-import axios from 'axios'  // 添加axios引入
+import axios from 'axios'
 import birthCircularFigure from '@/components/icons/birthCircularFigure.vue'
 import nowCircularFigure from '@/components/icons/nowCircularFigure.vue'
+
 export default {
   components: {
     Sidebar,
@@ -175,7 +166,6 @@ export default {
         livingPlace: '',
         contact: '',
         idNumber: '',
-        // 添加 lunarData 初始化
         lunarData: {
           birth5y6q: {
             solarDate: '',
@@ -185,7 +175,8 @@ export default {
             zaiQuanQi: '',
             siTianZaiQuan: '',
             zangs: [],
-            zangElement: ''
+            zangElement: '',
+            text: ''  // 确保 text 字段存在
           },
           now5y6q: {
             solarDate: '',
@@ -210,7 +201,16 @@ export default {
       return [
         { label: '天干地支',  subtext: this.currentPatient.lunarData.tianGanDiZhi },
       ]
-    }
+    },
+    splitDesc() {
+      const desc = this.currentPatient.lunarData.desc || ''
+      return [
+        desc.slice(0, 2),
+        desc.slice(2, 6),
+        desc.slice(6, 8),
+        desc.slice(8, 12) 
+  ]
+}
   },
   created() {
     this.fetchPatientData()
@@ -223,11 +223,16 @@ export default {
     }
   },
   methods: {
-    
+    // ✅ 插入的换行方法
+    breakMiddle(str) {
+      if (!str || typeof str !== 'string') return ''
+      const mid = Math.floor(str.length / 2)
+      return str.slice(0, mid) + '<br>' + str.slice(mid)
+    },
+
     async fetchPatientData() {
       try {
-        // 第一步：获取基础数据
-         const mapLunarData = (data) => ({
+        const mapLunarData = (data) => ({
           birth5y6q: {
             solarDate: data.birth5y6q?.solarDate || '',
             lunarDate: data.birth5y6q?.lunarDate || '',
@@ -236,7 +241,8 @@ export default {
             zaiQuanQi: data.birth5y6q?.zaiQuanQi || '',
             siTianZaiQuan: data.birth5y6q?.siTianZaiQuan || '',
             zangs: data.birth5y6q?.zangs || [],
-            zangElement: data.birth5y6q?.zangElement || ''
+            zangElement: data.birth5y6q?.zangElement || '',
+            text: data.birth5y6q?.text || '' // 确保取到文字段
           },
           now5y6q: {
             solarDate: data.now5y6q?.solarDate || '',
@@ -252,56 +258,49 @@ export default {
           birthDisease: data?.birthDisease || '',
           diseaseName: data?.diseaseName || '',
           desc: data?.desc || ''
-        });
+        })
 
-        
-    
         const mapPatientData = (data) => ({
-          name: data.realName,  // 确保映射realName字段
+          name: data.realName,
           id: data.patientId,
           age: Math.floor((Date.now() - new Date(data.birthday).getTime()) / 3.15576e+10),
           gender: data.gender,
-          birthDate: data.birthday.split('T')[0],  // 格式化日期
+          birthDate: data.birthday.split('T')[0],
           sickDay: data.sickDay.split('T')[0],
           livingPlace: data.livingPlace,
           contact: data.phoneNumber,
           idNumber: data.idCard
-        });
-    
+        })
+
         const basicRes = await axios.post('/ljkj_cloud/patient/getPatient', { 
-        patientId: this.$route.params.id
-      });
-        // 添加字段映射方法
-    
-         this.currentPatient = {
-        ...this.currentPatient,
-        ...mapPatientData(basicRes.data.data)
-      };
-        
+          patientId: this.$route.params.id
+        });
+
+        this.currentPatient = {
+          ...this.currentPatient,
+          ...mapPatientData(basicRes.data.data)
+        };
 
         console.log('发送测试请求参数:', {
           birthDate: this.currentPatient.birthDate,
           nowDate: new Date().toISOString().split('T')[0]
         });
-        
+
         const testRes = await axios.post(
-           '/ljkj_cloud/patient/getPatient5y6q',
-         { 
-        patientId: this.$route.params.id
-      },
-      {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-      });
+          '/ljkj_cloud/patient/getPatient5y6q',
+          { patientId: this.$route.params.id },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
 
+        this.currentPatient.lunarData = {
+          ...this.currentPatient.lunarData,
+          ...mapLunarData(testRes.data.data)
+        };
 
-       this.currentPatient.lunarData = {
-        ...this.currentPatient.lunarData,
-        ...mapLunarData(testRes.data.data)
-      };
-        
-       
         console.log('测试接口响应:', testRes.data);
 
       } catch (error) {
@@ -311,12 +310,12 @@ export default {
           status: error.response?.status,
           data: error.response?.data
         });
-  
       }
     }
   }
 }
 </script>
+
 
 <style scoped>
 /* 布局样式 */
@@ -494,9 +493,24 @@ export default {
 /* 五运六气网格布局 */
 .yun-grid, .qi-grid {
   display: flex;
-  flex-direction: column;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  flex-direction: column; /* 纵向排列 */
+  align-items: center;     /* 子元素水平居中 */
   gap: 15px;
+  border: 1px solid #ccc;  /* ✅ 添加边框 */
+  padding: 10px;           /* ✅ 给边框内部留点空间 */
+  border-radius: 8px;      /* ✅ 可选，圆角 */
+  min-height: 300px;
+  justify-content: space-between; /* ✅ 垂直方向均匀分布 */
+
+}
+
+.yun-grid > div,
+.qi-grid > div {
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  text-align: center;       /* 文本水平居中 */
+  white-space: nowrap;      /* 防止换行，宽度随文字内容 */
 }
 
 .yun-item, .qi-item {
@@ -505,8 +519,21 @@ export default {
   padding: 12px;
   background: #fff;
   border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0);
 }
+.yun-item-strong, .qi-item-strong {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0);
+
+  /* 加粗和变大 */
+  font-weight: bold;
+  font-size: 18px; /* 或根据需要设置为 20px、1.2em 等 */
+}
+
 
 /* 特殊样式 */
 .highlight-text {
@@ -582,7 +609,7 @@ export default {
 
 /* 分析区块优化 */
 .analysis-section {
-  width: 320px;        /* ✅ 固定宽度，避免被 flex 拉伸 */
+       /* ✅ 固定宽度，避免被 flex 拉伸 */
   flex-shrink: 0;      /* ✅ 不允许压缩 */
   background: #fff;
   border-radius: 8px;
@@ -629,8 +656,8 @@ export default {
   transition: all 0.3s ease;
 }
 
-.yun-item:hover, .qi-item:hover, .yunqi-item:hover {
-  background: #fff;
+.yun-item:hover, .qi-item:hover, .yunqi-item:hover ,.yun-item-strong:hover{
+  background: #ffffff9c;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
@@ -789,6 +816,8 @@ text[font-size="36"] {
   max-width: 300px;
   margin: 0 -5px;
   padding: 12px;
+  justify-content: space-between; /* 内容撑满，上下贴边 */
+  min-height: 300px;
 }
 
 .disease-analysis{
