@@ -56,7 +56,7 @@
         <div class="section">
           <div class="section-header">
             账户设置
-            <el-button 
+            <!-- <el-button 
              type="primary" 
              size="large"
              class="submit-btn"
@@ -64,7 +64,7 @@
               style="margin-left: auto;"
              >
               编辑信息
-            </el-button>
+            </el-button> -->
             </div>
 
             <el-dialog
@@ -150,8 +150,8 @@ export default {
       userId: '',
       realName: '',
       phoneNumber: '',
-      isEditing: false,
-      editDialogVisible: false,
+      isEditing: true,
+      editDialogVisible: true,
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',

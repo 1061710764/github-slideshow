@@ -131,7 +131,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center; /* 新增：水平居中 */
-  background-image: url("/123.png");
+  background-image: url("../assets/background.png");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -139,7 +139,6 @@ body {
   top: 20px;
   bottom:20px;
   left: 0;
-  justify-content: flex-end;  /* 主轴上右对齐 */
   padding-right: 10%;         /* 按图片比例调整右侧间距 */
 }
 
@@ -164,6 +163,7 @@ body {
   background: rgb(245, 242, 242);
   border-radius: 8px;
   padding: 20px;
+  
 }
 
 .login-title {

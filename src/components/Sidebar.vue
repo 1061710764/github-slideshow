@@ -2,13 +2,13 @@
   <div class="sidebar">
     <div class="logo">五运六气<br>协助诊疗系统</div>
     <div class="menu">
-      <div 
+      <!-- <div 
         class="menu-item" 
         :class="{ active: $route.path === '/home' }"
         @click="$router.push('/home')">
         <span class="menu-icon">🏠</span>
         <span>首页</span>
-      </div>
+      </div> -->
       <div 
         class="menu-item" 
         :class="{ active: $route.path === '/BasicInformationManagement' }"
@@ -23,35 +23,34 @@
         <span class="menu-icon">🤖</span>
         <span>患者管理</span>
       </div>
-      <div class="menu-item">
+      <!-- <div class="menu-item">
         <span class="menu-icon">🧪</span>
         <span>药单</span>
-      </div>
-      <div class="menu-item submenu">
+      </div> -->
+      <!-- <div class="menu-item submenu">
         <div class="menu-item-title">
           <span class="menu-icon">📝</span>
           <span>会议</span>
         </div>
         <span class="submenu-icon">▼</span>
-      </div>
-      <div class="menu-item submenu">
+      </div> -->
+      <!-- <div class="menu-item submenu">
         <div class="menu-item-title">
           <span class="menu-icon">📊</span>
           <span>排班</span>
         </div>
         <span class="submenu-icon">▼</span>
-      </div>
-      <div class="menu-item">
+      </div> -->
+      <!-- <div class="menu-item">
         <span class="menu-icon">📁</span>
         <span>资源文件管理</span>
-      </div>
-      <div class="menu-item submenu" @click.stop="toggleWorkbench">
+      </div> -->
+      <!-- <div class="menu-item submenu" @click.stop="toggleWorkbench">
         <div class="menu-item-title">
           <span class="menu-icon">🖥️</span>
           <span>工作台</span>
         </div>
         <span class="submenu-icon">▼</span>
-        <!-- 二级菜单 -->
         <div v-show="isWorkbenchOpen" class="submenu-items">
           <div 
             class="submenu-item"
@@ -61,11 +60,11 @@
             {{ item.label }}
           </div>
         </div>
-      </div>
-      <div class="menu-item">
+      </div> -->
+      <!-- <div class="menu-item">
         <span class="menu-icon">❓</span>
         <span>使用帮助</span>
-      </div>
+      </div> -->
     </div>
     <div class="user-status">
       <div class="user-avatar">👤</div>

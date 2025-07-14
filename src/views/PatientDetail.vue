@@ -18,8 +18,6 @@
           </div>
         </div>
         <div class="header-actions">
-          <button class="action-btn medical-btn">病历文档</button>
-          <button class="action-btn print-btn">打印报告</button>
           <button class="action-btn back-btn" @click="$router.push('/patient-management')">
             <i class="fas fa-arrow-left"></i> 返回列表
           </button>
@@ -503,6 +501,8 @@ export default {
   border-radius: 8px;      /* ✅ 可选，圆角 */
   min-height: 300px;
   justify-content: space-between; /* ✅ 垂直方向均匀分布 */
+  /* margin-bottom: 10px; */
+  margin-top:20px
 
 }
 
