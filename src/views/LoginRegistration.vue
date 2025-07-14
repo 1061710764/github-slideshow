@@ -169,6 +169,11 @@ watch(password, (newVal, oldVal) => {
 });
 
 const handleRegister = async () => {
+  // 新增空值校验
+  if (!confirmPassword.value) {
+    ElMessage.error('请确认密码');
+    return;
+  }
   if (isPasswordMismatch.value) {
     ElMessage.error('两次输入的密码不一致');
     return;
