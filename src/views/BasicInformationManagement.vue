@@ -17,9 +17,9 @@
               <div class="avatar-wrapper">
                 <div class="avatar-placeholder">
                   <div class="user-icon">👤</div>
-                  <div class="edit-icon">
+                  <!-- <div class="edit-icon">
                     <div class="edit-icon-inner">+</div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <!-- <button class="modify-avatar-btn" @click="handleModifyAvatar">修改头像</button> -->
