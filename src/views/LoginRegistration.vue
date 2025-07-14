@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <h1 class="welcome-title">医学管理系统<span>欢迎您！</span></h1>
+    <h1 class="welcome-title">五运六气协助诊疗系统欢迎您</span></h1>
     <div class="login-form">
       <h2 class="login-title">注册</h2>
       
