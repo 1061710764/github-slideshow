@@ -74,10 +74,6 @@
         >
   <div class="settings-form">
     <div class="settings-form">
-            <div class="form-item">
-              <div class="form-label">账户名</div>
-              <div class="form-input account-name">188********</div>
-            </div>
             
             <div class="form-item">
               <div class="form-label">旧密码</div>

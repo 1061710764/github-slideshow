@@ -19,8 +19,8 @@
           </div>
         </div>
         <div class="header-actions">
-          <button class="action-btn medical-btn">病历文档</button>
-          <button class="action-btn print-btn">打印报告</button>
+          <!-- <button class="action-btn medical-btn">病历文档</button>
+          <button class="action-btn print-btn">打印报告</button> -->
           <button class="action-btn back-btn" @click="$router.push('/patient-management')">
             <i class="fas fa-arrow-left"></i> 返回列表
           </button>
@@ -99,14 +99,14 @@
     <div class="medical-card movement-analysis-card">
       <h3 class="card-title">
         <i class="fas fa-chart-line"></i>
-        客运分析
+        运分析
         <span class="card-subtitle">出生与当前运气变化对比</span>
       </h3>
       
       <div class="movement-comparison">
         <div v-for="(item, index) in currentPatient.guestMovementExplanation" 
              :key="index" class="movement-phase">
-          <h4>{{ item.type }}客运</h4>
+          <h4>{{ item.type }}</h4>
           <div class="phase-steps">
             <div v-for="step in item.steps" :key="step.step" class="step-item">
               <div class="step-number">第{{ step.step }}步</div>

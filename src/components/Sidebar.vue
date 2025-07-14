@@ -96,12 +96,12 @@ export default {
   data() {
     return {
       isWorkbenchOpen: false,
-      workbenchItems: [
-        { label: '数据看板', path: 'dashboard' },
-        { label: '排班管理', path: 'schedule' },
-        { label: '医嘱处理', path: 'orders' },
-        { label: '病历统计', path: 'records' }
-      ]
+      // workbenchItems: [
+      //   { label: '数据看板', path: 'dashboard' },
+      //   { label: '排班管理', path: 'schedule' },
+      //   { label: '医嘱处理', path: 'orders' },
+      //   { label: '病历统计', path: 'records' }
+      // ]
     }
   },
   methods: {
@@ -112,8 +112,28 @@ export default {
   } catch (error) {
   }
 },
-     goToLogin() {
-      this.$router.push('/')
+    async goToLogin() {
+      try {
+        const response = await axios.post(
+          "/ljkj_cloud/user/logout",
+          {},
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        if (response.data.code === 200) {
+          ElMessage.success('退出成功');
+          this.$router.push('/');
+        } else {
+          ElMessage.error(`退出失败: ${response.data.msg}`);
+        }
+      } catch (error) {
+        console.error('退出请求失败:', error);
+        ElMessage.error(error.response?.data?.msg || '退出请求异常');
+      }
     },
     toggleWorkbench() {
       this.isWorkbenchOpen = !this.isWorkbenchOpen
@@ -121,28 +141,6 @@ export default {
   }
 }
 
-const goToLogin = async () => {
-  try {
-    const response = await axios.post(
-      "/ljkj_cloud//user/logout",
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
-
-    if (response.data.code === 200) {
-      ElMessage.success('退出成功');
-      router.push('/');
-    } else {
-      ElMessage.error(`退出失败: ${response.data.msg}`);
-    }
-  } catch (error) {
-    console.error('退出请求失败:', error);
-    ElMessage.error(error.response?.data?.msg || '退出请求异常');
-  }
-};
 </script>
 
 <style scoped>

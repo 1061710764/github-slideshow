@@ -88,7 +88,7 @@
 
 <script setup lang="ts">
 
-import { ref ,watch, nextTick } from 'vue';
+import { ref ,watch, nextTick ,onMounted, onBeforeUnmount} from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
 import { ElInput, ElButton, ElMessage } from 'element-plus';
@@ -204,6 +204,20 @@ const handleRegister = async () => {
   
   }
 };
+
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'Enter') {
+    handleRegister()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
 </script>
 
 <style scoped>
@@ -286,6 +300,8 @@ body {
 
 .input-field {
   width:100vw;
+  transition: border-color 0.3s ease;
+  padding-left: 10px;
 }
 
 .login-button {
@@ -303,7 +319,7 @@ body {
   .el-input__wrapper {
     background: transparent !important;
     border-bottom: 4px solid #f7f7f8 !important;  
-    padding-left: 0;
+    padding-left: 15px !important;
   }
 
 

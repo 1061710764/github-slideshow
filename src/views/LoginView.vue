@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
-import { ElInput, ElButton } from 'element-plus'
+import { ElInput, ElButton, ElMessage } from 'element-plus'
 import axios from 'axios'
 
 // ✅ 登录逻辑
@@ -74,9 +74,12 @@ const handleLogin = async () => {
     )
     if (response.data.code === 200) {
       router.push('/BasicInformationManagement')
+    }else{
+      ElMessage.error(response.data.message||'登陆失败'+','+response.data.data)
     }
   } catch (error) {
-    console.error('登录失败:', error)
+    console.error('登录请求异常',error);
+    // ElMessage.error(error.response?.data?.msg||'登录请求异常')
     throw error
   }
 }
