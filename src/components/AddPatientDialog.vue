@@ -29,18 +29,15 @@
         <div class="form-group">
           <label>居住地：</label>
           <input v-model="formData.livingPlace" type="text" required> <!-- 修正绑定字段 -->
-          <el-button type="primary" @click="mapVisible = true">
+          <el-button type="primary" @click="mapVisible = true" class="livingplace-btn">
           选择省份
           </el-button>
-          
+        </div>
           <ProvinceMap
             v-if="mapVisible"
             v-model="mapVisible"
             @select="handleProvinceSelect"
           />
-
-        </div>
-
         <div class="form-group">
           <label>联系电话：</label>
           <input v-model="formData.contact" type="text" required>
@@ -170,7 +167,24 @@ export default {
 }
 
 .form-group {
+  display: flex;
   margin: 15px 0;
+  align-items: center;
+}
+
+.form-group label{
+  flex-shrink: 0;
+  width: 80px;
+  margin-right: 10px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: auto;         /* 修改：从100%改为auto */
+  flex-grow: 1;        /* 新增：填充剩余空间 */
+  padding: 8px;
+  border: 1px solid #ddd;
 }
 
 .form-group input,
@@ -180,6 +194,12 @@ export default {
   padding: 8px;
   border: 1px solid #ddd; 
   border-radius: 4px;
+}
+
+.form-group input[type="text"] {
+  flex-grow: 1;
+  width: auto;        /* 允许输入框收缩 */
+  margin-right: 10px; /* 添加右边距 */
 }
 
 .dialog-actions {
@@ -200,6 +220,16 @@ export default {
   background-color: #3498db;
   color: white;
   border: none;
+}
+.livingplace-btn {
+  background-color: #3489db;  /* 修改背景色 */
+  color: white;               /* 修改文字颜色 */
+  border-radius: 4px;        /* 添加圆角 */
+  border: none;              /* 移除原有边框 */
+  flex-shrink: 0;     /* 禁止按钮收缩 */
+  width: auto;         /* 自动宽度 */
+  padding: 8px 16px;  /* 调整内边距 */
+  margin-left: 10px;  /* 添加左边距 */
 }
 
 @media (max-width: 768px) {
