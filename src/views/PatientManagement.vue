@@ -68,7 +68,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Sidebar from '@/components/Sidebar.vue' // 添加这行
 import AddPatientDialog from '@/components/AddPatientDialog.vue';
 import axios from 'axios';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 import EditPatientDialog from '@/components/EditPatientDialog.vue';
 
 export default {
@@ -137,9 +137,6 @@ export default {
   },
 
   // 保留原有的其他方法
-  async deletePatient(patient) { 
-    /* 原有删除逻辑保持不变 */
-  },
   
     editPatient(patient) {
     this.selectedPatientId = patient.id
@@ -185,6 +182,16 @@ export default {
 
     async deletePatient(patient) {
       try {
+        await ElMessageBox.confirm(
+          '是否删除该病人的信息？此操作带来的结果不可撤销。',
+          '确认删除',
+          {
+            confirmButtonText:'确定',
+            cancelButtonText:'取消',
+            type:'warning'
+          }
+        )
+
         const response = await axios.post(
           "/ljkj_cloud/patient/deletePatient",
           {

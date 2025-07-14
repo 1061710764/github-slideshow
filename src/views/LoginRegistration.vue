@@ -226,7 +226,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center; 
-  background-image: url("/123.png"); 
+  background-image: url("../assets/background.png"); 
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -234,7 +234,6 @@ body {
   top: 20px;
   bottom:20px;
   left: 0;
-  justify-content: flex-end;  
   padding-right: 10%;         
 }
 

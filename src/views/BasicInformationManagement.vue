@@ -121,8 +121,9 @@
           size="large" 
           class="submit-btn"
           @click="submitmessage"
-        >提交
-      </el-button>
+        >
+          提交
+        </el-button>
         </div>
       </div>
     </div>
@@ -207,8 +208,8 @@ export default {
   }
   },
     async submitmessage() {
-       this.editDialogVisible = false; 
-      this.isEditing = false;          
+       this.editDialogVisible = true; 
+      this.isEditing = true;          
       if (this.newPassword !== this.confirmPassword) {
         ElMessage.error('两次输入密码不一致')
         return
@@ -574,6 +575,7 @@ export default {
 }
 
 .submit-btn {
+  margin-top: 20px;
   background: #409eff;
   color: white;
   border: none;
