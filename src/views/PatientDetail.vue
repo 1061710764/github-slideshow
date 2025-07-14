@@ -121,7 +121,7 @@
     <!-- 当前日期圆图 -->
     <div class="right_part">
       <div class="chart-container">
-        <div class="chart-title">当前日期：{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
+        <div class="chart-title">问诊日期主客气</div>
         <now-circular-figure :patient-id="$route.params.id" />
       </div>
     </div>
