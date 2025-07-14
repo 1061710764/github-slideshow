@@ -22,7 +22,7 @@
                   </div>
                 </div>
               </div>
-              <button class="modify-avatar-btn" @click="handleModifyAvatar">修改头像</button>
+              <!-- <button class="modify-avatar-btn" @click="handleModifyAvatar">修改头像</button> -->
             </div>
             
             <!-- 基本信息区域 -->
@@ -42,12 +42,12 @@
                <div class="info-value">{{ phoneNumber }}</div>
              </div>
               
-              <div class="account-info">
+              <!-- <div class="account-info">
                 <div class="info-row">
                   <div class="info-label">身份</div>
                   <div class="info-value">医生</div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
