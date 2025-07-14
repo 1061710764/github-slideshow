@@ -5,11 +5,11 @@
       <h2 class="login-title">登录</h2>
 
       <div class="form-group">
-        <label class="form-label">账号：</label>
+        <label class="form-label">用户名：</label>
         <el-input
           ref="phoneInput"
           v-model="phone"
-          placeholder="  请输入账号"
+          placeholder="  请输入用户名"
           size="large"
           class="input-field"
         />
