@@ -25,15 +25,15 @@
       </div>
 
       <!-- 标签导航 -->
-      <div class="tab-nav">
-        <div class="tab-item active">五运六气</div>
-        <div class="tab-item" @click="$router.push(`/patient/${currentPatient.id}/shenzhangyuce`)">肾脏预测</div>
-        <div 
+      <!-- <div class="tab-nav">
+        <div class="tab-item active">五运六气</div> -->
+        <!-- <div class="tab-item" @click="$router.push(`/patient/${currentPatient.id}/shenzhangyuce`)">肾脏预测</div> -->
+        <!-- <div 
           class="tab-item" 
           @click="$router.push(`/patient/${$route.params.id}/patientPredict`)">
           预测报告
-      </div>
-      </div>
+      </div> -->
+      <!-- </div> -->
       <!-- 主内容区域 -->
       <div class="medical-dashboard">
         <!-- 左侧信息面板 -->
@@ -61,20 +61,20 @@
     <p><strong>疾病：</strong> <span>{{ currentPatient.lunarData.diseaseName }}</span></p>
     <p><strong>疾病分析：</strong> <span>{{ currentPatient.lunarData.desc }}</span></p>
 </div> -->
-<div class="result-card">
-    <h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
-  <div class="analysis-wrapper">
-    <!-- 出生时分析 -->
 
+<h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
+  <span>该患者出生于{{ currentPatient.lunarData.birth5y6q.solarDate }},{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}年，出生岁运为{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}，常住于{{ currentPatient.livingPlace }}。</span>
+  <span>前来就诊时间为{{ currentPatient.lunarData.now5y6q.solarDate }},{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}年，司天气为{{ currentPatient.lunarData.now5y6q.siTianQi }},在泉气为{{ currentPatient.lunarData.now5y6q.zaiQuanQi }},岁运为{{ currentPatient.lunarData.now5y6q.yearlyMovement }},所患病症为{{ currentPatient.sick }}。</span>
+  <div class="analysis-wrapper">
     <div class="analysis-section">
       <div class="yun-grid">
         <div class="yun-item-strong">谁</div>
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
         <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</div>
       </div>
-      <div class="yun-grid">
-        <span>{{ currentPatient.lunarData.birth5y6q.zangElement }}</span>
-        <span>{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</span>
+      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.siTianQi)">
+        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.zangElement }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
         <div class="zang-list">
             <span
               v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
@@ -89,7 +89,7 @@
         <div class="yun-item-strong">在</div>
         <div class="yun-item">{{ currentPatient.livingPlace }}</div>
       </div>
-      <div class="yun-grid">
+      <div class="yun-grid":style="getGradientStyle_season(currentPatient.lunarData.birthSeason)">
         <div class="yun-item">{{ currentPatient.lunarData.birthSeason }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.birthDisease }}</div>
       </div>
@@ -101,7 +101,7 @@
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
         <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</div>
       </div>
-      <div class="yun-grid">
+      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.siTianQi)">
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.diseaseName }}</div>
@@ -121,13 +121,12 @@
     <!-- 当前日期圆图 -->
     <div class="right_part">
       <div class="chart-container">
-        <div class="chart-title">问诊日期主客气</div>
-        <now-circular-figure :patient-id="$route.params.id" />
+      <now-circular-figure :patient-id="$route.params.id" />
       </div>
     </div>
 
   </div>
-</div>
+
 
   
             </div>
@@ -221,6 +220,43 @@ export default {
     }
   },
   methods: {
+    getGradientStyle(siTianQi) {
+      // 添加更详细的调试信息
+      
+      const colormap = {
+        '厥阴风木':'#05af2a',
+        '少阴君火':'#f4529d',
+        '少阳相火':'#f80707', 
+        '太阴湿土':'#f6d206',
+        '阳明燥金':'#d4dcde',
+        '太阳寒水':'#010001'
+      };
+      
+      // 添加空值保护
+      const startColor = colormap[siTianQi?.trim()] || '#ffffff';
+
+      return {
+        background: startColor
+      };
+    },
+    getGradientStyle_season(birthSeason) {
+      // 添加更详细的调试信息
+      
+      const colormap = {
+        '春季':'#05af2a',
+        '夏季':'#f80707',
+        '长夏':'#f6d206', 
+        '秋季':'#ffffff',
+        '冬季':'#010001',
+      };
+      
+      // 添加空值保护
+      const startColor = colormap[birthSeason?.trim()] || '#ffffff';
+
+      return {
+        background: startColor
+      };
+    },
     // ✅ 插入的换行方法
     breakMiddle(str) {
       if (!str || typeof str !== 'string') return ''
@@ -235,6 +271,7 @@ export default {
             solarDate: data.birth5y6q?.solarDate || '',
             lunarDate: data.birth5y6q?.lunarDate || '',
             tianGanDiZhi: data.birth5y6q?.tianGanDiZhi || '',
+            yearlyMovement:data.birth5y6q?.yearlyMovement||'',
             siTianQi: data.birth5y6q?.siTianQi || '',
             zaiQuanQi: data.birth5y6q?.zaiQuanQi || '',
             siTianZaiQuan: data.birth5y6q?.siTianZaiQuan || '',
@@ -246,6 +283,7 @@ export default {
             solarDate: data.now5y6q?.solarDate || '',
             lunarDate: data.now5y6q?.lunarDate || '',
             tianGanDiZhi: data.now5y6q?.tianGanDiZhi || '',
+            yearlyMovement:data.now5y6q?.yearlyMovement || '',
             siTianQi: data.now5y6q?.siTianQi || '',
             zaiQuanQi: data.now5y6q?.zaiQuanQi || '',
             siTianZaiQuan: data.now5y6q?.siTianZaiQuan || '',
@@ -490,30 +528,41 @@ export default {
   border-radius: 8px;
 }
 
-/* 五运六气网格布局 */
+/* 五运六气网格通用样式 */
 .yun-grid, .qi-grid {
   display: flex;
-  flex-direction: column; /* 纵向排列 */
-  align-items: center;     /* 子元素水平居中 */
+  flex-direction: column;
+  align-items: center;
   gap: 15px;
-  border: 1px solid #ccc;  /* ✅ 添加边框 */
-  padding: 10px;           /* ✅ 给边框内部留点空间 */
-  border-radius: 8px;      /* ✅ 可选，圆角 */
-  min-height: 300px;
-  justify-content: space-between; /* ✅ 垂直方向均匀分布 */
-  /* margin-bottom: 10px; */
-  margin-top:20px
-
+  border: none !important;
+  padding: 10px;
+  border-radius: 8px;
+  min-height: 220px;
+  justify-content: space-between;
+  margin-top: 20px;
+  /* background: transparent !important; */
+  transition: all 0.3s ease;
 }
 
+/* 响应式调整 */
+
+
+/* 子元素通用样式 */
 .yun-grid > div,
 .qi-grid > div {
   padding: 10px 15px;
-  background-color: #ffffff;
   border-radius: 6px;
-  text-align: center;       /* 文本水平居中 */
-  white-space: nowrap;      /* 防止换行，宽度随文字内容 */
+  text-align: center;
+  white-space: nowrap;
 }
+/* 悬停效果 */
+.yun-grid:hover, .qi-grid:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+
 
 .yun-item, .qi-item {
   display: flex;
@@ -558,10 +607,10 @@ export default {
   
   .yun-grid, .qi-grid {
     grid-template-columns: 1fr;
+    min-height: auto;
+    margin-top: 15px;
   }
 }
-
-
 /* 新增样式 */
 /* 卡片标题优化 */
 .card-title {
@@ -651,14 +700,14 @@ export default {
 }
 
 /* 网格项优化 */
-.yun-item, .qi-item, .yunqi-item {
+.yun-item, .qi-item, .yunqi-item,.zang-list {
   padding: 15px;
-  background: #f8fafc;
+  background: #f8fafc00;
   border-radius: 6px;
   transition: all 0.3s ease;
 }
 
-.yun-item:hover, .qi-item:hover, .yunqi-item:hover ,.yun-item-strong:hover{
+.yun-item:hover, .qi-item:hover, .yunqi-item:hover ,.yun-item-strong:hover,.zang-list:hover{
   background: #ffffff9c;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }

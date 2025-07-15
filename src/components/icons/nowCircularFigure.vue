@@ -2,7 +2,28 @@
   <div class="circular-figure">
     <div class="diagram-container">
       <svg :width="svgSize" :height="svgSize" viewBox="0 0 600 600">
-        <!-- 外层圆环 - 修复文字弯曲效果 -->
+        <!-- 新增辐射线 -->
+        <g v-for="(_, index) in 6" :key="'line-'+index">
+          <line 
+            :x1="center.x"
+            :y1="center.y"
+            :x2="center.x + 250 * Math.cos((index * 60 - 90-30) * Math.PI / 180)"
+            :y2="center.y + 250 * Math.sin((index * 60 - 90-30) * Math.PI / 180)"
+            stroke="#666" 
+            stroke-width="1"
+          />
+          <text
+            :x="center.x + 260 * Math.cos((index * 60 - 90 + 30) * Math.PI / 180)"
+            :y="center.y + 260 * Math.sin((index * 60 - 90 + 30) * Math.PI / 180)"
+            fill="#2c3e50"
+            font-size="14"
+            text-anchor="middle"
+          >
+            {{ ['7月21，大暑','9月21，秋分','11月21，小雪','1月21，大寒','3月21，春分','5月21，小满',][index] }}
+          </text>
+        </g>
+      
+        <!-- 原有外层圆环代码保持不变 -->
         <g v-for="(text, index) in outerTexts" :key="'outer-'+index">
           <path 
             :d="getSectorPath(outerRadius, innerRadius1, index * 60 - 30, (index + 1) * 60 - 30)"
@@ -272,9 +293,14 @@ export default {
 .diagram-container {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  padding: 40px;
-  margin: 30px auto;
+  padding: 20px;
+  margin: 10px auto;
   max-width: 600px;
   overflow: visible;
+}
+
+text{
+  pointer-events: none;
+  user-select: none;
 }
 </style>

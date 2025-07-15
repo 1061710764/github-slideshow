@@ -73,7 +73,7 @@ const handleLogin = async () => {
       }
     )
     if (response.data.code === 200) {
-      router.push('/BasicInformationManagement')
+      router.push('/patient-management')
     }else{
       ElMessage.error(response.data.message||'登陆失败'+','+response.data.data)
     }

@@ -69,8 +69,8 @@
     <div class="user-status">
       <div class="user-avatar">👤</div>
       <div class="user-info">
-        <div class="username">状态</div>
-        <div class="status">在线</div>
+        <div class="username">{{ realName }}</div>
+        <!-- <div class="status">在线</div> -->
       </div>
       <div class="logout-container">
   <el-button 
@@ -96,6 +96,11 @@ export default {
   data() {
     return {
       isWorkbenchOpen: false,
+      userId: '',
+      realName: '',
+      phoneNumber: '',
+      // 添加本地存储标识
+      hasFetchedUser: false
       // workbenchItems: [
       //   { label: '数据看板', path: 'dashboard' },
       //   { label: '排班管理', path: 'schedule' },
@@ -104,7 +109,39 @@ export default {
       // ]
     }
   },
+  mounted(){
+    this.initializeUser();
+  },
+  activated(){
+    this.initializeUser();
+  },
   methods: {
+    async initializeUser() {
+      if (!this.hasFetchedUser) {
+        await this.fetchUserDetail();
+        this.hasFetchedUser = true;
+      }
+    },
+    async fetchUserDetail() {
+      try {
+        const response = await axios.post(
+          "/ljkj_cloud/user/getUserDetail",
+          {},
+          {
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+        if (response.data.code === 200) {
+          const data = response.data.data;
+          this.userId = data.userId;
+          this.realName = data.realName;
+          this.phoneNumber = data.phoneNumber;
+        }
+      } catch (error) {
+        console.error('获取用户信息失败:', error);
+        ElMessage.error('用户信息加载失败');
+      }
+    },
 
     async goToPatientManagement() {
       try {
@@ -183,7 +220,7 @@ export default {
   height: 100vh; 
   position: fixed; 
   background: linear-gradient(180deg, #2c3e50, #1a2530);
-  color: #ecf0f1;
+  color: #000000b6;
   display: flex;
   flex-direction: column;
   box-shadow: 3px 0 15px rgba(0,0,0,0.1);
@@ -198,9 +235,9 @@ export default {
   font-weight: 700;
   padding: 24px 20px;
   text-align: center;
-  background-color: rgba(0,0,0,0.15);
+  background-color: rgb(255, 255, 255);
   letter-spacing: 1px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 10px;
 }
 
@@ -225,11 +262,11 @@ export default {
 }
 
 .menu-item:hover {
-  background: rgba(255,255,255,0.08);
+  background: rgba(171, 217, 236, 0.767);
 }
 
 .menu-item.active {
-  background: #3498db;
+  background: #6fb1dd;
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
 }
 
@@ -251,6 +288,7 @@ export default {
 
 
 .user-status {
+  color: #1a2530;
   padding: 20px 15px;
   background: rgba(255, 255, 255, 0.08);
   border-top: 1px solid rgba(255,255,255,0.1);
@@ -273,10 +311,11 @@ export default {
 }
 
 .user-info {
-  color: #ecf0f1;
+  color: #000000;
 }
 
 .username {
+  color: #000000;
   font-size: 14px;
   margin-bottom: 2px;
 }
@@ -314,7 +353,7 @@ export default {
   height: 100vh;
   position: fixed;
   left: 0; 
-  background: linear-gradient(180deg, #2c3e50, #1a2530);
+  background: #ffffff;
 
 }
 

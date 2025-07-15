@@ -32,10 +32,10 @@
             <div class="card-header">
               <div class="patient-avatar">{{ patient.name.charAt(0) }}</div>
               <div class="patient-name">{{ patient.name }}</div>
-              <div class="patient-id">{{ patient.id }}</div>
-              <span 
+              <!-- <div class="patient-id">{{ patient.id }}</div> -->
+              <!-- <span 
                 class="badge" 
-                :class="`status-${patient.status}`">{{ patient.statusText }}</span>
+                :class="`status-${patient.status}`">{{ patient.statusText }}</span> -->
             </div>
             <div class="card-body">
               <div class="patient-detail">
@@ -416,8 +416,9 @@ export default {
 }
 
 .patient-card {
-  background: white;
-  border-radius: 10px;
+  background: #F9FAFB;
+  border:1px solid #e5e7eb;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0,0,0,0.07);
   transition: all 0.3s ease;
@@ -429,9 +430,13 @@ export default {
 }
 
 .card-header {
-  background: linear-gradient(to right, #3a7bd5, #00d2ff);
-  color: white;
-  padding: 20px;
+  background-color: #3B82F6;  /* Tailwind 的蓝色 Blue-500，传达专业信任 */
+  color: #FFFFFF;             /* 白色字体 */
+  font-weight: bold;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E5E7EB;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   position: relative;
 }
 
@@ -451,7 +456,7 @@ export default {
 }
 
 .priority-medium {
-  background: rgba(241, 196, 15, 0.8);
+  background: rgba(241, 196, 15, 0);
 }
 
 .patient-avatar {
@@ -480,7 +485,11 @@ export default {
 }
 
 .card-body {
-  padding: 20px;
+  background-color: #FFFFFF;
+  color: #374151;   /* 深灰字体，阅读舒适 */
+  padding: 16px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .patient-detail {
