@@ -1,4 +1,5 @@
 <template>
+
   <div class="sidebar">
     <div class="logo">五运六气<br>协助诊疗系统</div>
     <div class="menu">
@@ -22,6 +23,13 @@
         @click="goToPatientManagement">
         <span class="menu-icon">🤖</span>
         <span>患者管理</span>
+      </div>
+      <div
+        class="menu-item" 
+        :class="{ active: $route.path === '/RealTimeCalculation' }"
+        @click="gotoRealTimeCalculation">
+        <span class="menu-icon">🧮</span>
+        <span>实时计算</span>
       </div>
       <!-- <div class="menu-item">
         <span class="menu-icon">🧪</span>
@@ -73,14 +81,14 @@
         <!-- <div class="status">在线</div> -->
       </div>
       <div class="logout-container">
-  <el-button 
-    type="danger" 
-    size="small"
-    @click="goToLogin"
-    class="logout-button"
-  >
-    退出登录
-  </el-button>
+        <el-button 
+          type="danger" 
+          size="small"
+          @click="Logout"
+          class="logout-button"
+        >
+          退出登录
+        </el-button>
 </div>
     </div>
   </div>
@@ -92,9 +100,12 @@ import { ElMessage , ElButton } from 'element-plus';
 import axios from 'axios';
 
 export default {
+  components:{
+  },
   name: 'Sidebar',
   data() {
     return {
+      showRealtimeDialog:false,
       isWorkbenchOpen: false,
       userId: '',
       realName: '',
@@ -149,7 +160,12 @@ export default {
   } catch (error) {
   }
 },
-    async goToLogin() {
+    async gotoRealTimeCalculation(){
+    try {
+      this.$router.push('/RealTimeCalculation');
+    }catch (error){}
+    },
+    async Logout() {
       try {
         const response = await axios.post(
           "/ljkj_cloud/user/logout",
@@ -171,6 +187,12 @@ export default {
         console.error('退出请求失败:', error);
         ElMessage.error(error.response?.data?.msg || '退出请求异常');
       }
+    },
+    openRealTimeDialog(){
+      this.showRealtimeDialog = true;
+    },
+    closeRealTimeDialog() {
+      this.showRealtimeDialog = false;
     },
     toggleWorkbench() {
       this.isWorkbenchOpen = !this.isWorkbenchOpen
@@ -219,13 +241,15 @@ export default {
   top: 0px;
   height: 100vh; 
   position: fixed; 
-  background: linear-gradient(180deg, #2c3e50, #1a2530);
+  background: #ffffff;
+  left: 0;
   color: #000000b6;
   display: flex;
   flex-direction: column;
   box-shadow: 3px 0 15px rgba(0,0,0,0.1);
   overflow-y: auto; 
 }
+
 
 .logo {
   white-space: nowrap;
@@ -237,7 +261,7 @@ export default {
   text-align: center;
   background-color: rgb(255, 255, 255);
   letter-spacing: 1px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #e2d1d1;
   margin-bottom: 10px;
 }
 
@@ -291,7 +315,7 @@ export default {
   color: #1a2530;
   padding: 20px 15px;
   background: rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid #e2d1d1;
   backdrop-filter: none; 
   display: flex;
   align-items: center;
@@ -347,15 +371,6 @@ export default {
   box-shadow: 0 2px 8px rgba(255, 77, 79, 0.2); 
 }
 
-.sidebar {
-  width: 240px;
-  min-width: 240px;
-  height: 100vh;
-  position: fixed;
-  left: 0; 
-  background: #ffffff;
-
-}
 
 
 

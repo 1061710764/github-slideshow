@@ -11,7 +11,7 @@
   :visible="showEditDialog"
   :patient-id="selectedPatientId"
   @close="showEditDialog = false"
-   @update-success="handleUpdateSuccess" 
+  @update-success="handleUpdateSuccess" 
 />
     <!-- 右侧用户信息区域 -->
     <div class="main-content">

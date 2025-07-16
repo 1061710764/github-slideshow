@@ -2,7 +2,28 @@
   <div class="circular-figure">
     <div class="diagram-container">
       <svg :width="svgSize" :height="svgSize" viewBox="0 0 600 600">
-        <!-- 外层圆环 - 修复文字弯曲效果 -->
+        <!-- 新增辐射线 -->
+        <g v-for="(_, index) in 6" :key="'line-'+index">
+          <line 
+            :x1="center.x"
+            :y1="center.y"
+            :x2="center.x + 250 * Math.cos((index * 60 - 90-30) * Math.PI / 180)"
+            :y2="center.y + 250 * Math.sin((index * 60 - 90-30) * Math.PI / 180)"
+            stroke="#666" 
+            stroke-width="1"
+          />
+          <text
+            :x="center.x + 260 * Math.cos((index * 60 - 90 + 30) * Math.PI / 180)"
+            :y="center.y + 260 * Math.sin((index * 60 - 90 + 30) * Math.PI / 180)"
+            fill="#2c3e50"
+            font-size="14"
+            text-anchor="middle"
+          >
+            {{ ['7月21，大暑','9月21，秋分','11月21，小雪','1月21，大寒','3月21，春分','5月21，小满',][index] }}
+          </text>
+        </g>
+      
+        <!-- 原有外层圆环代码保持不变 -->
         <g v-for="(text, index) in outerTexts" :key="'outer-'+index">
           <path 
             :d="getSectorPath(outerRadius, innerRadius1, index * 60 - 30, (index + 1) * 60 - 30)"
@@ -33,7 +54,7 @@
     :d="getSectorPath(innerRadius1, innerRadius2, index * 60 + 30, (index + 1) * 60 + 30)"
     :fill="middleColors[index]"
   />
-  <!-- 弧形路径 -->
+  <!-- 新增弧形路径 -->
   <path 
     :id="'middleTextPath'+index"
     :d="getArcPath((innerRadius1 + innerRadius2)/2, index * 60 + 30, (index + 1) * 60 + 30)"
@@ -68,6 +89,7 @@
           fill="#666" 
           fill-opacity="0.5"
           font-size="30"
+          font
           dominant-baseline="middle"
         >
           主气
@@ -98,24 +120,20 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   props: {
-    patientId: {
-      type: Number,
+    siTianQi: {
+      type: String,
       required: true
+    },
+    tianGanDiZhi: {
+      type: String,
+      required: false
     }
   },
+
   data() {
     return {
-      tianGanDiZhi: "",
-      birthsiTianQi: "",
-      birthzaiQuanQi: "",
-      birthsiTianZaiQuan: "",
-      nowsiTianQi: "",
-      nowZaiQuanQi: "",
-      nowsiTianZaiQuan: "",
       svgSize: 600,
       center: { x: 300, y: 300 },
       outerRadius: 200,
@@ -123,147 +141,135 @@ export default {
       innerRadius2: 60,
       outerTexts: [],
       middleTexts: [
-      '太阴湿土\n四之气', 
-      '阳明燥金\n五之气',
-      '太阳寒水\n终之气',  
-      '厥阴风木\n初之气',
-      '少阴君火\n二之气',
-      '少阳相火\n三之气',
-      
-    ],
-    // 颜色映射表
-    middleColorMap: {
-      '太阴湿土': '#fafd0e',
-      '少阳相火': '#ee3c3c',
-      '阳明燥金': '#d7d7d7',
-      '太阳寒水': '#1800b8',
-      '厥阴风木': '#2cfc0a',
-      '少阴君火': '#edb094'
-    },
-    outerColorMap: {
-      '太阴湿土': '#fafd0e',
-      '少阳相火': '#ee3c3c',
-      '阳明燥金': '#d7d7d7',
-      '太阳寒水': '#1800b8',
-      '厥阴风木': '#2cfc0a',
-      '少阴君火': '#edb094'
-
-    },
-  }
+        '太阴湿土\n四之气',
+        '阳明燥金\n五之气',
+        '太阳寒水\n终之气',
+        '厥阴风木\n初之气',
+        '少阴君火\n二之气',
+        '少阳相火\n三之气',
+      ],
+      middleColorMap: {
+        '太阴湿土': '#f6d206',
+        '少阳相火': '#f80707',
+        '阳明燥金': '#d4dcde',
+        '太阳寒水': '#010001',
+        '厥阴风木': '#05af2a',
+        '少阴君火': '#f4529d'
+      },
+      outerColorMap: {
+        '太阴湿土': '#f6d206',
+        '少阳相火': '#f80707',
+        '阳明燥金': '#d4dcde',
+        '太阳寒水': '#010001',
+        '厥阴风木': '#05af2a',
+        '少阴君火': '#f4529d'
+      },
+    };
   },
+
   computed: {
     outerColors() {
-    return this.outerTexts.map(text => {
-      return this.outerColorMap[text] || '#CCCCCC';
-    });
-  },
-  middleColors() {
-    return this.middleTexts.map(text => {
-      const key = text.split('\n')[0]; 
-      return this.middleColorMap[key] || '#CCCCCC'; 
-    });
-  },
-  outerTextColors() {
-    return this.outerTexts.map(text => text === '太阳寒水' ? '#FFFFFF' : '#000');
-  },
-  middleTextColors() {
-    return this.middleTexts.map(text => {
-      const key = text.split('\n')[0];
-      return key === '太阳寒水' ? '#FFFFFF' : '#000';
-    });
-  }
-},
-
-  watch: {
-    patientId: {
-      immediate: true,
-      handler(newVal) {
-        if (newVal) {
-          this.fetchData();
-        }
-      }
+      return this.outerTexts.map(text => this.outerColorMap[text] || '#CCCCCC');
+    },
+    middleColors() {
+      return this.middleTexts.map(text => {
+        const key = text.split('\n')[0];
+        return this.middleColorMap[key] || '#CCCCCC';
+      });
+    },
+    outerTextColors() {
+      return this.outerTexts.map(text => text === '太阳寒水' ? '#FFFFFF' : '#000');
+    },
+    middleTextColors() {
+      return this.middleTexts.map(text => {
+        const key = text.split('\n')[0];
+        return key === '太阳寒水' ? '#FFFFFF' : '#000';
+      });
     }
   },
+
+  mounted() {
+    console.log('组件 mounted，收到的 siTianQi:', this.siTianQi);
+    this.initOuterTexts(this.siTianQi);
+  },
+
   methods: {
-    async fetchData() {
-      try {
-        const response = await axios.post(
-          '/ljkj_cloud/patient/getPatient5y6q',
-          { patientId: this.patientId }
-        );
-        if (response.data.code === 200) {
-          this.tianGanDiZhi = response.data.data.birth5y6q.tianGanDiZhi;
+    initOuterTexts(siTianQi) {
+      const sixQiCycle = [
+        '厥阴风木',
+        '少阴君火',
+        '太阴湿土',
+        '少阳相火',
+        '阳明燥金',
+        '太阳寒水'
+      ];
 
-          this.birthsiTianQi = response.data.data.birth5y6q.siTianQi;
-          
-          const sixQiCycle = [
-            '厥阴风木',
-            '少阴君火',
-            '太阴湿土',
-            '少阳相火',
-            '阳明燥金',
-            '太阳寒水'  
-          ];
+      const cleanQi = siTianQi.trim();
+      const startIndex = sixQiCycle.indexOf(cleanQi);
+      console.log('🌀 构建 outerTexts，起始气为:', cleanQi, '索引:', startIndex);
 
-          // 找到当前起始索引
-          const startIndex = sixQiCycle.indexOf(this.birthsiTianQi);
-          
-          // 生成循环序列
-          this.outerTexts = [];
-          for (let i = 0; i < 6; i++) {
-            const cycleIndex = (startIndex + i) % 6;
-            this.outerTexts.push(sixQiCycle[cycleIndex]);
-          }
-        }
-      } catch (error) {
-        console.error('获取数据失败:', error);
+      if (startIndex === -1) {
+        console.warn('⚠️ 未识别的 siTianQi:', siTianQi);
+        this.outerTexts = [];
+        return;
       }
+
+      this.outerTexts = [];
+      for (let i = 0; i < 6; i++) {
+        const idx = (startIndex + i) % 6;
+        this.outerTexts.push(sixQiCycle[idx]);
+      }
+
+      console.log('✅ outerTexts =', this.outerTexts);
     },
+
     getSectorPath(outerR, innerR, startAngle, endAngle) {
-      const startRad = (startAngle - 90) * Math.PI / 180
-      const endRad = (endAngle - 90) * Math.PI / 180
-      
-      const x1 = this.center.x + innerR * Math.cos(startRad)
-      const y1 = this.center.y + innerR * Math.sin(startRad)
-      const x2 = this.center.x + outerR * Math.cos(startRad)
-      const y2 = this.center.y + outerR * Math.sin(startRad)
-      const x3 = this.center.x + outerR * Math.cos(endRad)
-      const y3 = this.center.y + outerR * Math.sin(endRad)
-      const x4 = this.center.x + innerR * Math.cos(endRad)
-      const y4 = this.center.y + innerR * Math.sin(endRad)
-      
-      const largeArc = endAngle - startAngle <= 180 ? 0 : 1
-      
+      const startRad = (startAngle - 90) * Math.PI / 180;
+      const endRad = (endAngle - 90) * Math.PI / 180;
+
+      const x1 = this.center.x + innerR * Math.cos(startRad);
+      const y1 = this.center.y + innerR * Math.sin(startRad);
+      const x2 = this.center.x + outerR * Math.cos(startRad);
+      const y2 = this.center.y + outerR * Math.sin(startRad);
+      const x3 = this.center.x + outerR * Math.cos(endRad);
+      const y3 = this.center.y + outerR * Math.sin(endRad);
+      const x4 = this.center.x + innerR * Math.cos(endRad);
+      const y4 = this.center.y + innerR * Math.sin(endRad);
+
+      const largeArc = endAngle - startAngle <= 180 ? 0 : 1;
+
       return `M ${x1} ${y1} 
               L ${x2} ${y2} 
               A ${outerR} ${outerR} 0 ${largeArc} 1 ${x3} ${y3} 
               L ${x4} ${y4} 
-              A ${innerR} ${innerR} 0 ${largeArc} 0 ${x1} ${y1} Z`
+              A ${innerR} ${innerR} 0 ${largeArc} 0 ${x1} ${y1} Z`;
     },
+
     getTextPosition(radius, angle) {
-      const rad = (angle - 90) * Math.PI / 180
+      const rad = (angle - 90) * Math.PI / 180;
       return {
         x: this.center.x + radius * Math.cos(rad),
         y: this.center.y + radius * Math.sin(rad)
-      }
+      };
     },
-    // 生成弧形路径
+
     getArcPath(radius, startAngle, endAngle) {
       const startRad = (startAngle - 90) * Math.PI / 180;
       const endRad = (endAngle - 90) * Math.PI / 180;
       const largeArc = endAngle - startAngle <= 180 ? 0 : 1;
-      
+
       const startX = this.center.x + radius * Math.cos(startRad);
       const startY = this.center.y + radius * Math.sin(startRad);
       const endX = this.center.x + radius * Math.cos(endRad);
       const endY = this.center.y + radius * Math.sin(endRad);
-      
+
       return `M ${startX} ${startY} 
               A ${radius} ${radius} 0 ${largeArc} 1 ${endX} ${endY}`;
     }
   }
-}
+};
 </script>
+
 
 <style scoped>
 .circular-figure {
@@ -273,9 +279,14 @@ export default {
 .diagram-container {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  padding: 40px;
-  margin: 30px auto;
+  padding: 20px;
+  margin: 10px auto;
   max-width: 600px;
   overflow: visible;
+}
+
+text{
+  pointer-events: none;
+  user-select: none;
 }
 </style>

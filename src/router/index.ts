@@ -40,15 +40,20 @@ const routes = [
     name: 'patientPredict',
     component: () => import('../views/patientPredict.vue')
   },
-  // 在路由配置中添加
   {
-    path: '/home',
-    name: 'HomePage',
-    component: () => import('../views/HomePage.vue').catch(() => {
-        console.error('组件加载失败');
-        return { template: '<div>加载失败</div>' }
-    })
-}
+    path:'/RealTimeCalculation',
+    name: 'RealTimeCalculation',
+    component: () => import('../views/RealTimeCalculation.vue')
+  }
+  // 在路由配置中添加
+  // {
+  //   path: '/home',
+  //   name: 'HomePage',
+  //   component: () => import('../views/HomePage.vue').catch(() => {
+  //       console.error('组件加载失败');
+  //       return { template: '<div>加载失败</div>' }
+  //   })
+  // }
 ]
 
 const router = createRouter({
