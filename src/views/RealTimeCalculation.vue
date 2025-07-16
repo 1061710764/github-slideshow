@@ -82,7 +82,7 @@
 </div>
 <el-button class="open-dialog-btn" @click="openDialog">实时计算</el-button>
 <RealTimeInfoDialog 
-  :visible.sync="dialogVisible"
+  v-model:visible="dialogVisible"
   @submit-success="handleFormSuccess" 
 />
   

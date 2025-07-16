@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="dialog-overlay" @click.self="$emit('close')">
+  <div v-if="visible" class="dialog-overlay" @click.self="$emit('update:visible', false)">
     <div class="dialog-content">
       <form @submit.prevent="save"> 
       <h3>实时计算信息</h3>  
@@ -32,7 +32,7 @@
       
       
         <div class="dialog-actions">
-          <button type="button" @click="visible = false">取消</button>
+          <button type="button" @click="$emit('update:visible',false)">取消</button>
           <button type="primary" @click="submitForm">计算</button>
         </div>
         </form>
@@ -56,6 +56,10 @@ export default {
         type: Boolean,
         required: true
     }},
+  model:{
+    prop: 'visible',
+    event: 'update:visible'
+  },
   data() {
     return {
       formData: {
