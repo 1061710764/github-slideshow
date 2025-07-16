@@ -72,7 +72,7 @@
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
         <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</div>
       </div>
-      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.siTianQi)">
+      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.zangElement }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
         <div class="zang-list">
@@ -101,7 +101,7 @@
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
         <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</div>
       </div>
-      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.siTianQi)">
+      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.diseaseName }}</div>
@@ -220,21 +220,28 @@ export default {
     }
   },
   methods: {
-    getGradientStyle(siTianQi) {
+    getGradientStyle(zangElement) {
       // 添加更详细的调试信息
       
       const colormap = {
-        '厥阴风木':'#05af2a',
-        '少阴君火':'#f4529d',
-        '少阳相火':'#f80707', 
-        '太阴湿土':'#f6d206',
-        '阳明燥金':'#d4dcde',
-        '太阳寒水':'#010001'
+        '风':'#05af2a',
+        '火':'#f4529d',
+        '热':'#f80707', 
+        '湿':'#f6d206',
+        '燥':'#d4dcde',
+        '寒':'#010001'
       };
       
       // 添加空值保护
-      const startColor = colormap[siTianQi?.trim()] || '#ffffff';
-
+      const startColor = colormap[zangElement?.trim()] || '#ffffff';
+      console.log('当前五运六气元素:', zangElement, '对应颜色:', startColor);
+      if(startColor==='#010001')
+      {
+        return{
+          background:startColor,
+          color:'#ffffff'
+        }
+      }
       return {
         background: startColor
       };
@@ -252,7 +259,13 @@ export default {
       
       // 添加空值保护
       const startColor = colormap[birthSeason?.trim()] || '#ffffff';
-
+      if(startColor==='#010001')
+      {
+        return{
+          background:startColor,
+          color:'#ffffff'
+        }
+      }
       return {
         background: startColor
       };
@@ -534,14 +547,16 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  border: none !important;
+  border: 1px solid #27ae60;
   padding: 10px;
   border-radius: 8px;
   min-height: 220px;
+  max-width: 140px;
   justify-content: space-between;
   margin-top: 20px;
   /* background: transparent !important; */
   transition: all 0.3s ease;
+  word-wrap: break-word;
 }
 
 /* 响应式调整 */
