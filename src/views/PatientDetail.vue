@@ -146,7 +146,6 @@ import nowCircularFigure from '@/components/icons/nowCircularFigure.vue'
 export default {
   components: {
     Sidebar,
-    birthCircularFigure,
     nowCircularFigure
   },
   data() {
