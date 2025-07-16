@@ -187,7 +187,11 @@ export default {
       });
     }
   },
-
+  watch:{
+    siTianQi(newVal) {
+      this.initOuterTexts(newVal);
+    }
+  },
   mounted() {
     console.log('组件 mounted，收到的 siTianQi:', this.siTianQi);
     this.initOuterTexts(this.siTianQi);

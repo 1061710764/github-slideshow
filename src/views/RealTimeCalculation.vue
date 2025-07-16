@@ -148,7 +148,7 @@ export default {
     handleFormSuccess(dataFromBackend) {
         console.log('后端返回的数据',dataFromBackend)
         this.currentPatient = dataFromBackend
-        console.log(this.currentPatient.birth5y6q.siTianQi)
+        console.log(this.currentPatient.now5y6q.siTianQi)
         this.dialogVisible = false;
         this.showContent = true;
         
