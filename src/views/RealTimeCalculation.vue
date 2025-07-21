@@ -18,8 +18,10 @@
     <div class="analysis-section">
       <div class="yun-grid">
         <div class="yun-item-strong">谁</div>
-        <div class="yun-item">{{ currentPatient.birth5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
-        <div class="yun-item-strong">{{ currentPatient.birth5y6q.tianGanDiZhi }}</div>
+        <div class="yun-item">{{ currentPatient.birth5y6q.solarDate }}</div>
+        <div class="yun-item">{{ currentPatient.birth5y6q.yearlyMovement }}</div>
+        <div class="yun-item">{{ currentPatient.birth5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item-strong">{{ getQiTime(currentPatient.birth5y6q.jiQi) }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.birth5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.birth5y6q.zangElement }}</div>
@@ -47,8 +49,10 @@
     <div class="analysis-section">
       <div class="yun-grid">
         <div class="yun-item-strong">何时</div>
-        <div class="yun-item">{{ currentPatient.now5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
-        <div class="yun-item-strong">{{ currentPatient.now5y6q.tianGanDiZhi }}</div>
+        <div class="yun-item">{{ currentPatient.now5y6q.solarDate }}</div>
+        <div class="yun-item">{{ currentPatient.now5y6q.yearlyMovement }}</div>
+        <div class="yun-item">{{ currentPatient.now5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item-strong">{{ getQiTime(currentPatient.now5y6q.jiQi) }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.now5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.now5y6q.zangElement }}</div>
@@ -142,6 +146,17 @@ export default {
     }
   },
   methods: {
+    getQiTime(jiQi){
+      const qiMap ={
+        '1':'初之气',
+        '2':'二之气',
+        '3':'三之气',
+        '4':'四之气',
+        '5':'五之气',
+        '6':'终之气',
+      }
+      return qiMap[jiQi]
+    },
     openDialog() {
       this.dialogVisible = true;
     },
@@ -394,18 +409,19 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
   border: 1px solid #27ae60;
   padding: 10px;
   border-radius: 8px;
-  min-height: 220px;
-  max-width: 140px;
+  min-height: 230px;
+  max-width: 120px;
   justify-content: space-between;
   margin-top: 20px;
   /* background: transparent !important; */
   transition: all 0.3s ease;
   word-wrap: break-word;
 }
+
+
 
 /* 响应式调整 */
 
@@ -527,10 +543,10 @@ export default {
   flex-shrink: 0;      /* ✅ 不允许压缩 */
   background: #fff;
   border-radius: 8px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.05);
   transition: transform 0.3s ease;
-  max-width: 360px;
+  max-width: 150px;
   flex: 0 0 auto;  /* 不拉伸也不压缩 */
 }
 
@@ -703,6 +719,7 @@ text[font-size="36"] {
 }
 </style>
 
+
 <style>
 /* 综合布局优化 */
 .medical-dashboard {
@@ -759,8 +776,6 @@ text[font-size="36"] {
     margin: 0 -10px;
   }
 }
-
-
 .open-dialog-btn {
   padding: 8px 16px;
   background: #3498db;

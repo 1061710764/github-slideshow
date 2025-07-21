@@ -568,7 +568,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
   border: 1px solid #27ae60;
   padding: 10px;
   border-radius: 8px;
