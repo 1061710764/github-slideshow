@@ -69,8 +69,10 @@
     <div class="analysis-section">
       <div class="yun-grid">
         <div class="yun-item-strong">谁</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
-        <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item-strong">{{ getQiTime(currentPatient.lunarData.birth5y6q.jiQi) }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.zangElement }}</div>
@@ -98,8 +100,10 @@
     <div class="analysis-section">
       <div class="yun-grid">
         <div class="yun-item-strong">何时</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate.match(/^\d+年\d+月/)[0] }}</div>
-        <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.yearlyMovement }}</div>
+        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item-strong">{{ getQiTime(currentPatient.lunarData.now5y6q.jiQi) }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
@@ -166,6 +170,8 @@ export default {
             solarDate: '',
             lunarDate: '',
             tianGanDiZhi: '',
+            yearlyMovement: '',
+            jiQi: '',
             siTianQi: '',
             zaiQuanQi: '',
             siTianZaiQuan: '',
@@ -177,6 +183,8 @@ export default {
             solarDate: '',
             lunarDate: '',
             tianGanDiZhi: '',
+            yearlyMovement: '',
+            jiQi: '',
             siTianQi: '',
             zaiQuanQi: '',
             siTianZaiQuan: '',
@@ -218,6 +226,18 @@ export default {
     }
   },
   methods: {
+    getQiTime(jiQi){
+      const qiMap ={
+        '1':'初之气',
+        '2':'二之气',
+        '3':'三之气',
+        '4':'四之气',
+        '5':'五之气',
+        '6':'终之气',
+      }
+      return qiMap[jiQi]
+    },
+
     getGradientStyle(zangElement) {
       // 添加更详细的调试信息
       
@@ -283,6 +303,7 @@ export default {
             lunarDate: data.birth5y6q?.lunarDate || '',
             tianGanDiZhi: data.birth5y6q?.tianGanDiZhi || '',
             yearlyMovement:data.birth5y6q?.yearlyMovement||'',
+            jiQi:data.birth5y6q?.jiQi||'',
             siTianQi: data.birth5y6q?.siTianQi || '',
             zaiQuanQi: data.birth5y6q?.zaiQuanQi || '',
             siTianZaiQuan: data.birth5y6q?.siTianZaiQuan || '',
@@ -295,6 +316,7 @@ export default {
             lunarDate: data.now5y6q?.lunarDate || '',
             tianGanDiZhi: data.now5y6q?.tianGanDiZhi || '',
             yearlyMovement:data.now5y6q?.yearlyMovement || '',
+            jiQi:data.now5y6q?.jiQi || '',
             siTianQi: data.now5y6q?.siTianQi || '',
             zaiQuanQi: data.now5y6q?.zaiQuanQi || '',
             siTianZaiQuan: data.now5y6q?.siTianZaiQuan || '',
@@ -318,7 +340,9 @@ export default {
           livingPlace: data.livingPlace,
           contact: data.phoneNumber,
           idNumber: data.idCard,
-          sick:data.sick
+          sick:data.sick,
+          yearlyMovement:data.yearlyMovement,
+          jiQi:data.jiQi,
         })
 
         const basicRes = await axios.post('/ljkj_cloud/patient/getPatient', { 
@@ -548,14 +572,16 @@ export default {
   border: 1px solid #27ae60;
   padding: 10px;
   border-radius: 8px;
-  min-height: 220px;
-  max-width: 140px;
+  min-height: 230px;
+  max-width: 120px;
   justify-content: space-between;
   margin-top: 20px;
   /* background: transparent !important; */
   transition: all 0.3s ease;
   word-wrap: break-word;
 }
+
+
 
 /* 响应式调整 */
 
@@ -677,10 +703,10 @@ export default {
   flex-shrink: 0;      /* ✅ 不允许压缩 */
   background: #fff;
   border-radius: 8px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.05);
   transition: transform 0.3s ease;
-  max-width: 360px;
+  max-width: 150px;
   flex: 0 0 auto;  /* 不拉伸也不压缩 */
 }
 
@@ -853,6 +879,7 @@ text[font-size="36"] {
 }
 </style>
 
+
 <style>
 /* 综合布局优化 */
 .medical-dashboard {
@@ -910,3 +937,4 @@ text[font-size="36"] {
   }
 }
 </style>
+
