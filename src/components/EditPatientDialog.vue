@@ -289,8 +289,14 @@ export default defineComponent({
   width: auto;         /* 自动宽度 */
   padding: 8px 16px;  /* 调整内边距 */
   margin-left: 10px;  /* 添加左边距 */
+  transition: all 0.2s ease-in-out;
 }
-
+.livingplace-btn:hover{
+  background-color: #2980b9; /* 深一点的蓝色 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影提升层次感 */
+  transform: translateY(-2px); /* 稍微上移，模拟“浮起”效果 */
+  user-select: none;
+}
 @media (max-width: 768px) {
   .dialog-overlay {
     left: 70px;

@@ -370,6 +370,8 @@ export default {
 
 .back-btn:hover {
   background: #2980b9;
+  transform: translateY(-2px); /* 稍微上移，模拟“浮起”效果 */
+
 }
 
 /* 响应式设计 */
@@ -587,8 +589,10 @@ export default {
 }
 
 .yun-item:hover, .qi-item:hover, .yunqi-item:hover ,.yun-item-strong:hover,.zang-list:hover{
-  background: #ffffff9c;
+  background: #ebebeb;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px); /* 稍微上移，模拟“浮起”效果 */
+
 }
 
 /* 动画效果 */
@@ -785,5 +789,16 @@ text[font-size="36"] {
   cursor: pointer;
   margin-left: 20px;
   width: 65px;
+  transition: all 0.2s ease-in-out;
+
 }
+
+.open-dialog-btn:hover {
+  background: #5dade2; /* 稍浅的蓝色 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 轻微阴影 */
+  transform: translateY(-1px); /* 轻微上浮 */
+  transition: all 0.2s ease-in-out;
+}
+
+
 </style>

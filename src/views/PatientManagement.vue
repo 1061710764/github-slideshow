@@ -32,10 +32,6 @@
             <div class="card-header">
               <div class="patient-avatar">{{ patient.name.charAt(0) }}</div>
               <div class="patient-name">{{ patient.name }}</div>
-              <!-- <div class="patient-id">{{ patient.id }}</div> -->
-              <!-- <span 
-                class="badge" 
-                :class="`status-${patient.status}`">{{ patient.statusText }}</span> -->
             </div>
             <div class="card-body">
               <div class="patient-detail">
@@ -438,6 +434,8 @@ export default {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .badge {
@@ -474,7 +472,9 @@ export default {
 }
 
 .patient-name {
-  font-size: 20px;
+  font-size: 28px;
+  flex-grow: 1;
+  text-align: center;
   margin-bottom: 5px;
   font-weight: 600;
 }
