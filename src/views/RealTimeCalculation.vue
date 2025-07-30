@@ -2,84 +2,33 @@
   <div class="app-container">
     <Sidebar />
     <div class="main-content">
-      <!-- 头部区域 -->
-      <div class="detail-header">
-        <div class="header-left">
-          <h1 class="patient-name">{{ currentPatient.name }}</h1>
-          <div class="patient-meta">
-  <span class="patient-id">ID: {{ currentPatient.id }}</span>
-  <span class="patient-age">{{ currentPatient.age }}岁</span>
-  <span class="patient-gender">{{ currentPatient.gender }}</span>
-  <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
-  <span class="patient-sickday">问诊时间：{{ currentPatient.sickDay }}</span>
-  <span class="patient-idnum">身份证号：{{ currentPatient.idNumber }}</span>
-  <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
-  <span class="patient-living">居住地：{{ currentPatient.livingPlace }}</span>
-          </div>
-        </div>
-        <div class="header-actions">
-          <button class="action-btn back-btn" @click="$router.push('/patient-management')">
-            <i class="fas fa-arrow-left"></i> 返回列表
-          </button>
-        </div>
-      </div>
-
-      <!-- 标签导航 -->
-      <!-- <div class="tab-nav">
-        <div class="tab-item active">五运六气</div> -->
-        <!-- <div class="tab-item" @click="$router.push(`/patient/${currentPatient.id}/shenzhangyuce`)">肾脏预测</div> -->
-        <!-- <div 
-          class="tab-item" 
-          @click="$router.push(`/patient/${$route.params.id}/patientPredict`)">
-          预测报告
-      </div> -->
-      <!-- </div> -->
-      <!-- 主内容区域 -->
       <div class="medical-dashboard">
         <!-- 左侧信息面板 -->
         <div class="info-panel">
           <!-- 原有状态卡片保持不变 -->
         </div>
-
-        <!-- 右侧主信息区 -->
         <div class="main-panel">
-          <!-- 优化后的五运六气卡片 -->
           <div class="medical-card five-elements-card">
-            <!-- <h3 class="card-title">
-              <i class="fas fa-yin-yang icon-spin"></i> 
-              五运六气分析
-              <span class="card-subtitle">中医运气学说分析报告</span>
-            </h3> -->
             <div class="five-elements-grid">
-
-              <!-- 五运分析优化 -->
-<!-- <div class="result-card">
-    <h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
-    
-    <p><strong>出生季节：</strong> <span>{{ currentPatient.lunarData.birthSeason }}</span></p>
-    <p><strong>先天不足：</strong> <span>{{ currentPatient.lunarData.birthDisease }}</span></p>
-    <p><strong>疾病：</strong> <span>{{ currentPatient.lunarData.diseaseName }}</span></p>
-    <p><strong>疾病分析：</strong> <span>{{ currentPatient.lunarData.desc }}</span></p>
-</div> -->
-
 <h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
-  <span>该患者出生于{{ currentPatient.lunarData.birth5y6q.solarDate }},{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}年，出生岁运为{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}，常住于{{ currentPatient.livingPlace }}。</span>
-  <span>前来就诊时间为{{ currentPatient.lunarData.now5y6q.solarDate }},{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}年，司天气为{{ currentPatient.lunarData.now5y6q.siTianQi }},在泉气为{{ currentPatient.lunarData.now5y6q.zaiQuanQi }},岁运为{{ currentPatient.lunarData.now5y6q.yearlyMovement }},所患病症为{{ currentPatient.sick }}。</span>
+<div v-if="showContent" class="five-elements-grid">
+  <span>该患者出生于{{ currentPatient.birth5y6q.solarDate }},{{ currentPatient.birth5y6q.tianGanDiZhi }}年，出生岁运为{{ currentPatient.birth5y6q.yearlyMovement }}，常住于{{ currentPatient.livingPlace }}。</span>
+  <span>前来就诊时间为{{ currentPatient.now5y6q.solarDate }},{{ currentPatient.now5y6q.tianGanDiZhi }}年，司天气为{{ currentPatient.now5y6q.siTianQi }},在泉气为{{ currentPatient.now5y6q.zaiQuanQi }},岁运为{{ currentPatient.now5y6q.yearlyMovement }},所患病症为{{ currentPatient.sick }}。</span>
   <div class="analysis-wrapper">
     <div class="analysis-section">
       <div class="yun-grid">
         <div class="yun-item-strong">谁</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.jiQi }}</div>
+        <div class="yun-item">{{ currentPatient.birth5y6q.solarDate }}</div>
+        <div class="yun-item">{{ currentPatient.birth5y6q.yearlyMovement }}</div>
+        <div class="yun-item">{{ currentPatient.birth5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item-strong">{{ currentPatient.birth5y6q.jiQi }}</div>
       </div>
-      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.zangElement)">
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.zangElement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
+      <div class="yun-grid":style="getGradientStyle(currentPatient.birth5y6q.zangElement)">
+        <div class="yun-item">{{ currentPatient.birth5y6q.zangElement }}</div>
+        <div class="yun-item">{{ currentPatient.birth5y6q.siTianZaiQuan }}</div>
         <div class="zang-list">
             <span
-              v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
+              v-for="zang in currentPatient.birth5y6q.zangs"
               :key="zang"
             >{{ zang }}</span>
           </div>
@@ -91,31 +40,31 @@
         <div class="yun-item-strong">在</div>
         <div class="yun-item">{{ currentPatient.livingPlace }}</div>
       </div>
-      <div class="yun-grid":style="getGradientStyle_season(currentPatient.lunarData.birthSeason)">
-        <div class="yun-item">{{ currentPatient.lunarData.birthSeason }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birthDisease }}</div>
+      <div class="yun-grid":style="getGradientStyle_season(currentPatient.birthSeason)">
+        <div class="yun-item">{{ currentPatient.birthSeason }}</div>
+        <div class="yun-item">{{ currentPatient.birthDisease }}</div>
       </div>
     </div>
 
     <div class="analysis-section">
       <div class="yun-grid">
         <div class="yun-item-strong">何时</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.yearlyMovement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.jiQi }}</div>
+        <div class="yun-item">{{ currentPatient.now5y6q.solarDate }}</div>
+        <div class="yun-item">{{ currentPatient.now5y6q.yearlyMovement }}</div>
+        <div class="yun-item">{{ currentPatient.now5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item-strong">{{ currentPatient.now5y6q.jiQi }}</div>
       </div>
-      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.zangElement)">
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.diseaseName }}</div>
+      <div class="yun-grid":style="getGradientStyle(currentPatient.now5y6q.zangElement)">
+        <div class="yun-item">{{ currentPatient.now5y6q.zangElement }}</div>
+        <div class="yun-item">{{ currentPatient.now5y6q.siTianZaiQuan }}</div>
+        <div class="yun-item">{{ currentPatient.diseaseName }}</div>
       </div>
     </div>
     
     <div class="analysis-section">
         <div class="yun-grid">
           <div class="yun-item-strong">病</div>
-          <div class="yun-item">{{ currentPatient.lunarData.sick }}</div>
+          <div class="yun-item">{{ currentPatient.sick }}</div>
         </div>
         <div class="yun-grid">
           <div v-for="(line, index) in splitDesc" :key="index" class="yun-item">{{ line }}</div>
@@ -123,16 +72,24 @@
     </div>
 
     <!-- 当前日期圆图 -->
-    
     <div class="right_part">
       <div class="chart-container">
-      <now-circular-figure :patient-id="$route.params.id" :is-start-lichun="isStartLiChun" />
+      <realtime-circular-figure 
+        v-if="currentPatient.now5y6q.siTianQi"
+        :tianGanDiZhi="currentPatient.now5y6q.tianGanDiZhi"
+        :siTianQi="currentPatient.now5y6q.siTianQi"
+        :is-start-liChun="isStartLiChun" />
       </div>
     </div>
 
   </div>
-  <button class="switchLichun" @click="toggleLichun">切换开始节气</button>
-
+<el-button class="switchLichun-btn" @click="toggleLichun">切换开始节气</el-button>
+</div>
+<el-button class="open-dialog-btn" @click="openDialog">实时计算</el-button>
+<RealTimeInfoDialog 
+  v-model:visible="dialogVisible"
+  @submit-success="handleFormSuccess" 
+/>
   
             </div>
           </div>
@@ -140,75 +97,38 @@
       </div>
     </div>
   </div>
-  
+
 </template>
 
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import axios from 'axios'
-import nowCircularFigure from '@/components/icons/nowCircularFigure.vue'
+import realtimeCircularFigure from '@/components/icons/realtimeCircularFigure.vue'
+import RealTimeInfoDialog from '@/components/RealTimeInfoDialog.vue'
+import { ElButton } from 'element-plus'
 
 export default {
   components: {
     Sidebar,
-    nowCircularFigure
+    realtimeCircularFigure,
+    RealTimeInfoDialog
   },
   data() {
     return {
-      isStartLiChun: false,
-      currentPatient: {
-        name: '加载中...',
-        id: '',
-        gender: '',
-        birthDate: '',
-        contact: '',
-        idNumber: '',
-        sickDay: '',
-        livingPlace: '',
-        contact: '',
-        idNumber: '',
-        lunarData: {
-          birth5y6q: {
-            solarDate: '',
-            lunarDate: '',
-            tianGanDiZhi: '',
-            yearlyMovement: '',
-            jiQi: '',
-            siTianQi: '',
-            zaiQuanQi: '',
-            siTianZaiQuan: '',
-            zangs: [],
-            zangElement: '',
-            text: ''  // 确保 text 字段存在
-          },
-          now5y6q: {
-            solarDate: '',
-            lunarDate: '',
-            tianGanDiZhi: '',
-            yearlyMovement: '',
-            jiQi: '',
-            siTianQi: '',
-            zaiQuanQi: '',
-            siTianZaiQuan: '',
-            zangs: [],
-            zangElement: ''
-          },
-          birthSeason: '',
-          birthDisease: '',
-          desc: '',
-          diseaseName: ''
-        },
+      isStartLiChun :false,
+      showContent:false,
+      dialogVisible:false,
+      currentPatient: {},
       }
-    }
   },
   computed: {
     yunItems() {
       return [
-        { label: '天干地支',  subtext: this.currentPatient.lunarData.tianGanDiZhi },
+        { label: '天干地支',  subtext: this.currentPatient.now5y6q.tianGanDiZhi },
       ]
     },
     splitDesc() {
-      const desc = this.currentPatient.lunarData.desc || ''
+      const desc = this.currentPatient.desc || ''
       return [
         desc.slice(0, 2),
         desc.slice(2, 6),
@@ -217,21 +137,65 @@ export default {
   ]
 }
   },
-  created() {
-    this.fetchPatientData()
-  },
+//   created() {
+//     this.fetchPatientData()
+//   },
   watch: {
-    '$route.params.id': {
-      handler(newId) {
-        if (newId) this.fetchPatientData()
-      }
-    }
+    // '$route.params.id': {
+    //   handler(newId) {
+    //     if (newId) this.fetchPatientData()
+    //   }
+    // }
   },
   methods: {
-
+    formatDate(datestr){
+      if(!datestr) return ''
+      const match = datestr.match(/(\d+)年(\d{1,2})月(\d{1,2})日/)
+      if(match){
+        return `${match[1]}-${match[2].padStart(2,'0')}-${match[3].padStart(2,'0')}`
+      }
+    },    
+    openDialog() {
+      this.dialogVisible = true;
+    },
+    handleFormSuccess(dataFromBackend) {
+        console.log('后端返回的数据',dataFromBackend)
+        this.currentPatient = dataFromBackend
+        console.log(this.currentPatient.now5y6q.siTianQi)
+        this.dialogVisible = false;
+        this.showContent = true;
+        
+    },
     toggleLichun(){
-        this.isStartLiChun = !this.isStartLiChun
-        this.fetchPatientData()
+      this.isStartLiChun = !this.isStartLiChun
+      if(this.showContent){
+        this.handleSwitchSuccess(this.currentPatient)
+      }
+    },
+    async handleSwitchSuccess(dataFromBackend){
+      console.log('切换前',dataFromBackend)
+      console.log(this.formatDate(dataFromBackend.birth5y6q.solarDate))
+      console.log(this.formatDate(dataFromBackend.now5y6q.solarDate))
+      console.log(dataFromBackend.livingPlace)
+      console.log(dataFromBackend.sick)
+      console.log(this.isStartLiChun)
+      try{
+        const res = await axios.post('/ljkj_cloud/patient/calculate5y6q',{
+          birthday:this.formatDate(dataFromBackend.birth5y6q.solarDate),
+          sickDay:this.formatDate(dataFromBackend.now5y6q.solarDate),
+          livingPlace:dataFromBackend.livingPlace,
+          sick:dataFromBackend.sick,
+          isStartLiChun:this.isStartLiChun
+        },
+        {
+          headers: { 'Content-Type': 'application/json' }
+        });
+        if(res.data.code === 200){
+          this.currentPatient = res.data.data
+          console.log('切换节气成功',this.currentPatient)}
+      }catch(error){
+        console.error('切换节气失败:', error)
+      }
     },
     getGradientStyle(zangElement) {
       // 添加更详细的调试信息
@@ -289,98 +253,6 @@ export default {
       const mid = Math.floor(str.length / 2)
       return str.slice(0, mid) + '<br>' + str.slice(mid)
     },
-
-    async fetchPatientData() {
-      try {
-        const mapLunarData = (data) => ({
-          birth5y6q: {
-            solarDate: data.birth5y6q?.solarDate || '',
-            lunarDate: data.birth5y6q?.lunarDate || '',
-            tianGanDiZhi: data.birth5y6q?.tianGanDiZhi || '',
-            yearlyMovement:data.birth5y6q?.yearlyMovement||'',
-            jiQi:data.birth5y6q?.jiQi||'',
-            siTianQi: data.birth5y6q?.siTianQi || '',
-            zaiQuanQi: data.birth5y6q?.zaiQuanQi || '',
-            siTianZaiQuan: data.birth5y6q?.siTianZaiQuan || '',
-            zangs: data.birth5y6q?.zangs || [],
-            zangElement: data.birth5y6q?.zangElement || '',
-            text: data.birth5y6q?.text || '' // 确保取到文字段
-          },
-          now5y6q: {
-            solarDate: data.now5y6q?.solarDate || '',
-            lunarDate: data.now5y6q?.lunarDate || '',
-            tianGanDiZhi: data.now5y6q?.tianGanDiZhi || '',
-            yearlyMovement:data.now5y6q?.yearlyMovement || '',
-            jiQi:data.now5y6q?.jiQi || '',
-            siTianQi: data.now5y6q?.siTianQi || '',
-            zaiQuanQi: data.now5y6q?.zaiQuanQi || '',
-            siTianZaiQuan: data.now5y6q?.siTianZaiQuan || '',
-            zangs: data.now5y6q?.zangs || [],
-            zangElement: data.now5y6q?.zangElement || ''
-          },
-          birthSeason: data?.birthSeason || '',
-          birthDisease: data?.birthDisease || '',
-          diseaseName: data?.diseaseName || '',
-          sick: data?.sick || '',
-          desc: data?.desc || ''
-        })
-
-        const mapPatientData = (data) => ({
-          name: data.realName,
-          id: data.patientId,
-          age: Math.floor((Date.now() - new Date(data.birthday).getTime()) / 3.15576e+10),
-          gender: data.gender,
-          birthDate: data.birthday.split('T')[0],
-          sickDay: data.sickDay.split('T')[0],
-          livingPlace: data.livingPlace,
-          contact: data.phoneNumber,
-          idNumber: data.idCard,
-          sick:data.sick,
-          yearlyMovement:data.yearlyMovement,
-          jiQi:data.jiQi,
-        })
-
-        const basicRes = await axios.post('/ljkj_cloud/patient/getPatient', { 
-          patientId: this.$route.params.id
-        });
-
-        this.currentPatient = {
-          ...this.currentPatient,
-          ...mapPatientData(basicRes.data.data)
-        };
-
-        console.log('发送测试请求参数:', {
-          birthDate: this.currentPatient.birthDate,
-          nowDate: new Date().toISOString().split('T')[0]
-        });
-
-        const testRes = await axios.post(
-          '/ljkj_cloud/patient/getPatient5y6q',
-          { patientId: this.$route.params.id,
-            isStartLiChun:this.isStartLiChun },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        );
-
-        this.currentPatient.lunarData = {
-          ...this.currentPatient.lunarData,
-          ...mapLunarData(testRes.data.data)
-        };
-
-        console.log('测试接口响应:', testRes.data);
-
-      } catch (error) {
-        console.error('请求失败详情:', {
-          url: error.config?.url,
-          params: error.config?.data,
-          status: error.response?.status,
-          data: error.response?.data
-        });
-      }
-    }
   }
 }
 </script>
@@ -525,6 +397,8 @@ export default {
 
 .back-btn:hover {
   background: #2980b9;
+  transform: translateY(-2px); /* 稍微上移，模拟“浮起”效果 */
+
 }
 
 /* 响应式设计 */
@@ -742,8 +616,10 @@ export default {
 }
 
 .yun-item:hover, .qi-item:hover, .yunqi-item:hover ,.yun-item-strong:hover,.zang-list:hover{
-  background: #ffffff9c;
+  background: #ebebeb;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px); /* 稍微上移，模拟“浮起”效果 */
+
 }
 
 /* 动画效果 */
@@ -914,25 +790,7 @@ text[font-size="36"] {
   padding: 16px;
   margin-top: 0; /* 保持紧凑 */
 }
-.switchLichun {
-  padding: 8px 16px;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 20px;
-  width: 120px;
-  transition: all 0.2s ease-in-out;
-  text-align: center;
-}
 
-.switchLichun:hover {
-  background: #5dade2; /* 稍浅的蓝色 */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 轻微阴影 */
-  transform: translateY(-1px); /* 轻微上浮 */
-  transition: all 0.2s ease-in-out;
-}
 /* 移动端终极优化 */
 @media (max-width: 768px) {
   .medical-dashboard {
@@ -949,5 +807,44 @@ text[font-size="36"] {
     margin: 0 -10px;
   }
 }
-</style>
+.open-dialog-btn {
+  padding: 8px 16px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 20px;
+  width: 100px;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
 
+.open-dialog-btn:hover {
+  background: #5dade2; /* 稍浅的蓝色 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 轻微阴影 */
+  transform: translateY(-1px); /* 轻微上浮 */
+  transition: all 0.2s ease-in-out;
+}
+
+.switchLichun-btn {
+  padding: 8px 16px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 20px;
+  width: 120px;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+
+.switchLichun-btn:hover {
+  background: #5dade2; /* 稍浅的蓝色 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 轻微阴影 */
+  transform: translateY(-1px); /* 轻微上浮 */
+  transition: all 0.2s ease-in-out;
+}
+
+</style>

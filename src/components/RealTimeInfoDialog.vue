@@ -1,22 +1,8 @@
 <template>
-  <div v-if="visible" class="dialog-overlay" @click.self="$emit('close')">
+  <div v-if="visible" class="dialog-overlay" @click.self="$emit('update:visible', false)">
     <div class="dialog-content">
       <form @submit.prevent="save"> 
-      <h3>新增患者信息</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label>患者姓名：</label>
-          <input v-model="formData.name" type="text" required>
-        </div>
-        <div class="form-group">
-          <label>性别：</label>
-          <select v-model="formData.gender">
-            <option value="male">男</option>
-            <option value="female">女</option>
-          </select>
-        </div>
-      </div>
-      
+      <h3>实时计算信息</h3>  
       <div class="form-row">
         <div class="form-group">
           <label>出生年月：</label>
@@ -39,14 +25,6 @@
             @select="handleProvinceSelect"
           />
         <div class="form-group">
-          <label>联系电话：</label>
-          <input v-model="formData.contact" type="text" required>
-        </div>
-        <div class="form-group">
-          <label>身份证号：</label>
-          <input v-model="formData.idNumber" type="text" required>
-        </div>
-        <div class="form-group">
           <label>疾病：</label>
           <input v-model="formData.sick" type="text" required>
         </div>
@@ -54,8 +32,8 @@
       
       
         <div class="dialog-actions">
-          <button type="button" @click="$emit('close')">取消</button>
-          <button type="submit" class="primary-btn">保存</button>
+          <button type="button" @click="$emit('update:visible',false)">取消</button>
+          <button type="primary" @click="submitForm">计算</button>
         </div>
         </form>
     </div>
@@ -67,23 +45,29 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import ProvinceMap from './ProvinceMap.vue'
 
+
 export default {
-  name: 'YourComponentName',
+  name: 'RealTimeInfoDialog',
   components: {
     ProvinceMap
   },
-  props: ['visible'],
+  props: {
+    visible:{
+        type: Boolean,
+        required: true
+    }},
+  model:{
+    prop: 'visible',
+    event: 'update:visible'
+  },
   data() {
     return {
       formData: {
-        name: '',
-        gender: 'male',
         birthDate: '',
-        contact: '',
-        idNumber: '',
         livingPlace: '',
         sickDay: '',
-        sick:''
+        sick:'',
+        isStartLiChun:false,
       },
       selectedProvince: '',
       mapVisible: false
@@ -95,45 +79,40 @@ export default {
     }
   },
   methods: {
-    async save() {
+    async submitForm() {
+      console.log("click_test")
       try {
         const response = await axios.post(
-          "/ljkj_cloud/patient/createPatient",
+          "/ljkj_cloud/patient/calculate5y6q",
           {
-            realName: this.formData.name,
-            gender: this.formData.gender === 'male' ? '男' : '女',
             birthday: this.formData.birthDate,
             sickDay: this.formData.sickDay,
             livingPlace: this.formData.livingPlace,
-            phoneNumber: this.formData.contact,
-            idCard: this.formData.idNumber,
-            sick:this.formData.sick
+            sick:this.formData.sick,
+            isStartLiChun:this.formData.isStartLiChun
           },
           {
             headers: { 'Content-Type': 'application/json' }
           }
         )
         if (response.data.code === 200) {
-          ElMessage.success('新增患者成功')
-          this.$emit('close')
+          console.log("submit_test")
+          this.$emit('submit-success',response.data.data)
+          this.$emit('update:visible',false)
           this.resetForm()
-          this.$emit('save-success')
         }
       } catch (error) {
-        console.error('新增患者失败:', error)
+        console.error('实时计算失败:', error)
         throw error
       }
     },
     resetForm() {
       this.formData = {
-        name: '',
-        gender: 'male',
         birthDate: '',
-        contact: '',
-        idNumber: '',
         livingPlace: '',
         sickDay: '',
-        sick:''
+        sick:'',
+        isStartLiChun:false,
       }
     },
     handleProvinceSelect(name) {

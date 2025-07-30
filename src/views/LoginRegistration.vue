@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <h1 class="welcome-title">医学管理系统<span>欢迎您！</span></h1>
+    <h1 class="welcome-title">五运六气协助诊疗系统欢迎您</h1>
     <div class="login-form">
       <h2 class="login-title">注册</h2>
       
@@ -88,7 +88,7 @@
 
 <script setup lang="ts">
 
-import { ref ,watch, nextTick } from 'vue';
+import { ref ,watch, nextTick ,onMounted, onBeforeUnmount} from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
 import { ElInput, ElButton, ElMessage } from 'element-plus';
@@ -169,6 +169,11 @@ watch(password, (newVal, oldVal) => {
 });
 
 const handleRegister = async () => {
+  // 新增空值校验
+  if (!confirmPassword.value) {
+    ElMessage.error('请确认密码');
+    return;
+  }
   if (isPasswordMismatch.value) {
     ElMessage.error('两次输入的密码不一致');
     return;
@@ -204,6 +209,20 @@ const handleRegister = async () => {
   
   }
 };
+
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'Enter') {
+    handleRegister()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
 </script>
 
 <style scoped>
@@ -226,7 +245,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center; 
-  background-image: url("/123.png"); 
+  background-image: url("../assets/background.png"); 
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -234,7 +253,6 @@ body {
   top: 20px;
   bottom:20px;
   left: 0;
-  justify-content: flex-end;  
   padding-right: 10%;         
 }
 
@@ -287,6 +305,8 @@ body {
 
 .input-field {
   width:100vw;
+  transition: border-color 0.3s ease;
+  padding-left: 10px;
 }
 
 .login-button {
@@ -304,7 +324,7 @@ body {
   .el-input__wrapper {
     background: transparent !important;
     border-bottom: 4px solid #f7f7f8 !important;  
-    padding-left: 0;
+    padding-left: 15px !important;
   }
 
 

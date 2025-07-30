@@ -20,8 +20,8 @@
           </div>
         </div>
         <div class="header-actions">
-          <button class="action-btn medical-btn">病历文档</button>
-          <button class="action-btn print-btn">打印报告</button>
+          <!-- <button class="action-btn medical-btn">病历文档</button>
+          <button class="action-btn print-btn">打印报告</button> -->
           <button class="action-btn back-btn" @click="$router.push('/patient-management')">
             <i class="fas fa-arrow-left"></i> 返回列表
           </button>

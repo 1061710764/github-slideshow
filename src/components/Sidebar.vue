@@ -1,14 +1,15 @@
 <template>
+
   <div class="sidebar">
     <div class="logo">五运六气<br>协助诊疗系统</div>
     <div class="menu">
-      <div 
+      <!-- <div 
         class="menu-item" 
         :class="{ active: $route.path === '/home' }"
         @click="$router.push('/home')">
         <span class="menu-icon">🏠</span>
         <span>首页</span>
-      </div>
+      </div> -->
       <div 
         class="menu-item" 
         :class="{ active: $route.path === '/BasicInformationManagement' }"
@@ -23,35 +24,41 @@
         <span class="menu-icon">🤖</span>
         <span>患者管理</span>
       </div>
-      <div class="menu-item">
+      <div
+        class="menu-item" 
+        :class="{ active: $route.path === '/RealTimeCalculation' }"
+        @click="gotoRealTimeCalculation">
+        <span class="menu-icon">🧮</span>
+        <span>实时计算</span>
+      </div>
+      <!-- <div class="menu-item">
         <span class="menu-icon">🧪</span>
         <span>药单</span>
-      </div>
-      <div class="menu-item submenu">
+      </div> -->
+      <!-- <div class="menu-item submenu">
         <div class="menu-item-title">
           <span class="menu-icon">📝</span>
           <span>会议</span>
         </div>
         <span class="submenu-icon">▼</span>
-      </div>
-      <div class="menu-item submenu">
+      </div> -->
+      <!-- <div class="menu-item submenu">
         <div class="menu-item-title">
           <span class="menu-icon">📊</span>
           <span>排班</span>
         </div>
         <span class="submenu-icon">▼</span>
-      </div>
-      <div class="menu-item">
+      </div> -->
+      <!-- <div class="menu-item">
         <span class="menu-icon">📁</span>
         <span>资源文件管理</span>
-      </div>
-      <div class="menu-item submenu" @click.stop="toggleWorkbench">
+      </div> -->
+      <!-- <div class="menu-item submenu" @click.stop="toggleWorkbench">
         <div class="menu-item-title">
           <span class="menu-icon">🖥️</span>
           <span>工作台</span>
         </div>
         <span class="submenu-icon">▼</span>
-        <!-- 二级菜单 -->
         <div v-show="isWorkbenchOpen" class="submenu-items">
           <div 
             class="submenu-item"
@@ -61,27 +68,27 @@
             {{ item.label }}
           </div>
         </div>
-      </div>
-      <div class="menu-item">
+      </div> -->
+      <!-- <div class="menu-item">
         <span class="menu-icon">❓</span>
         <span>使用帮助</span>
-      </div>
+      </div> -->
     </div>
     <div class="user-status">
       <div class="user-avatar">👤</div>
       <div class="user-info">
-        <div class="username">状态</div>
-        <div class="status">在线</div>
+        <div class="username">{{ realName }}</div>
+        <!-- <div class="status">在线</div> -->
       </div>
       <div class="logout-container">
-  <el-button 
-    type="danger" 
-    size="small"
-    @click="goToLogin"
-    class="logout-button"
-  >
-    退出登录
-  </el-button>
+        <el-button 
+          type="danger" 
+          size="small"
+          @click="Logout"
+          class="logout-button"
+        >
+          退出登录
+        </el-button>
 </div>
     </div>
   </div>
@@ -93,19 +100,59 @@ import { ElMessage , ElButton } from 'element-plus';
 import axios from 'axios';
 
 export default {
+  components:{
+  },
   name: 'Sidebar',
   data() {
     return {
+      showRealtimeDialog:false,
       isWorkbenchOpen: false,
-      workbenchItems: [
-        { label: '数据看板', path: 'dashboard' },
-        { label: '排班管理', path: 'schedule' },
-        { label: '医嘱处理', path: 'orders' },
-        { label: '病历统计', path: 'records' }
-      ]
+      userId: '',
+      realName: '',
+      phoneNumber: '',
+      // 添加本地存储标识
+      hasFetchedUser: false
+      // workbenchItems: [
+      //   { label: '数据看板', path: 'dashboard' },
+      //   { label: '排班管理', path: 'schedule' },
+      //   { label: '医嘱处理', path: 'orders' },
+      //   { label: '病历统计', path: 'records' }
+      // ]
     }
   },
+  mounted(){
+    this.initializeUser();
+  },
+  activated(){
+    this.initializeUser();
+  },
   methods: {
+    async initializeUser() {
+      if (!this.hasFetchedUser) {
+        await this.fetchUserDetail();
+        this.hasFetchedUser = true;
+      }
+    },
+    async fetchUserDetail() {
+      try {
+        const response = await axios.post(
+          "/ljkj_cloud/user/getUserDetail",
+          {},
+          {
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+        if (response.data.code === 200) {
+          const data = response.data.data;
+          this.userId = data.userId;
+          this.realName = data.realName;
+          this.phoneNumber = data.phoneNumber;
+        }
+      } catch (error) {
+        console.error('获取用户信息失败:', error);
+        ElMessage.error('用户信息加载失败');
+      }
+    },
 
     async goToPatientManagement() {
       try {
@@ -113,8 +160,39 @@ export default {
   } catch (error) {
   }
 },
-     goToLogin() {
-      this.$router.push('/')
+    async gotoRealTimeCalculation(){
+    try {
+      this.$router.push('/RealTimeCalculation');
+    }catch (error){}
+    },
+    async Logout() {
+      try {
+        const response = await axios.post(
+          "/ljkj_cloud/user/logout",
+          {},
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        if (response.data.code === 200) {
+          ElMessage.success('退出成功');
+          this.$router.push('/');
+        } else {
+          ElMessage.error(`退出失败: ${response.data.msg}`);
+        }
+      } catch (error) {
+        console.error('退出请求失败:', error);
+        ElMessage.error(error.response?.data?.msg || '退出请求异常');
+      }
+    },
+    openRealTimeDialog(){
+      this.showRealtimeDialog = true;
+    },
+    closeRealTimeDialog() {
+      this.showRealtimeDialog = false;
     },
     toggleWorkbench() {
       this.isWorkbenchOpen = !this.isWorkbenchOpen
@@ -122,28 +200,6 @@ export default {
   }
 }
 
-const goToLogin = async () => {
-  try {
-    const response = await axios.post(
-      "/ljkj_cloud//user/logout",
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
-
-    if (response.data.code === 200) {
-      ElMessage.success('退出成功');
-      router.push('/');
-    } else {
-      ElMessage.error(`退出失败: ${response.data.msg}`);
-    }
-  } catch (error) {
-    console.error('退出请求失败:', error);
-    ElMessage.error(error.response?.data?.msg || '退出请求异常');
-  }
-};
 </script>
 
 <style scoped>
@@ -185,13 +241,15 @@ const goToLogin = async () => {
   top: 0px;
   height: 100vh; 
   position: fixed; 
-  background: linear-gradient(180deg, #2c3e50, #1a2530);
-  color: #ecf0f1;
+  background: #ffffff;
+  left: 0;
+  color: #000000b6;
   display: flex;
   flex-direction: column;
   box-shadow: 3px 0 15px rgba(0,0,0,0.1);
   overflow-y: auto; 
 }
+
 
 .logo {
   white-space: nowrap;
@@ -201,9 +259,9 @@ const goToLogin = async () => {
   font-weight: 700;
   padding: 24px 20px;
   text-align: center;
-  background-color: rgba(0,0,0,0.15);
+  background-color: rgb(255, 255, 255);
   letter-spacing: 1px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid #e2d1d1;
   margin-bottom: 10px;
 }
 
@@ -228,11 +286,11 @@ const goToLogin = async () => {
 }
 
 .menu-item:hover {
-  background: rgba(255,255,255,0.08);
+  background: rgba(171, 217, 236, 0.767);
 }
 
 .menu-item.active {
-  background: #3498db;
+  background: #6fb1dd;
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
 }
 
@@ -254,9 +312,10 @@ const goToLogin = async () => {
 
 
 .user-status {
+  color: #1a2530;
   padding: 20px 15px;
   background: rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid #e2d1d1;
   backdrop-filter: none; 
   display: flex;
   align-items: center;
@@ -276,10 +335,11 @@ const goToLogin = async () => {
 }
 
 .user-info {
-  color: #ecf0f1;
+  color: #000000;
 }
 
 .username {
+  color: #000000;
   font-size: 14px;
   margin-bottom: 2px;
 }
@@ -311,15 +371,6 @@ const goToLogin = async () => {
   box-shadow: 0 2px 8px rgba(255, 77, 79, 0.2); 
 }
 
-.sidebar {
-  width: 240px;
-  min-width: 240px;
-  height: 100vh;
-  position: fixed;
-  left: 0; 
-  background: linear-gradient(180deg, #2c3e50, #1a2530);
-
-}
 
 
 

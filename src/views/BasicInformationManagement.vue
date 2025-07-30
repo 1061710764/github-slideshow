@@ -17,12 +17,12 @@
               <div class="avatar-wrapper">
                 <div class="avatar-placeholder">
                   <div class="user-icon">👤</div>
-                  <div class="edit-icon">
+                  <!-- <div class="edit-icon">
                     <div class="edit-icon-inner">+</div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
-              <button class="modify-avatar-btn" @click="handleModifyAvatar">修改头像</button>
+              <!-- <button class="modify-avatar-btn" @click="handleModifyAvatar">修改头像</button> -->
             </div>
             
             <!-- 基本信息区域 -->
@@ -42,12 +42,12 @@
                <div class="info-value">{{ phoneNumber }}</div>
              </div>
               
-              <div class="account-info">
+              <!-- <div class="account-info">
                 <div class="info-row">
                   <div class="info-label">身份</div>
                   <div class="info-value">医生</div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
         <div class="section">
           <div class="section-header">
             账户设置
-            <el-button 
+            <!-- <el-button 
              type="primary" 
              size="large"
              class="submit-btn"
@@ -64,7 +64,7 @@
               style="margin-left: auto;"
              >
               编辑信息
-            </el-button>
+            </el-button> -->
             </div>
 
             <el-dialog
@@ -74,10 +74,6 @@
         >
   <div class="settings-form">
     <div class="settings-form">
-            <div class="form-item">
-              <div class="form-label">账户名</div>
-              <div class="form-input account-name">188********</div>
-            </div>
             
             <div class="form-item">
               <div class="form-label">旧密码</div>
@@ -121,8 +117,9 @@
           size="large" 
           class="submit-btn"
           @click="submitmessage"
-        >提交
-      </el-button>
+        >
+          提交
+        </el-button>
         </div>
       </div>
     </div>
@@ -150,8 +147,8 @@ export default {
       userId: '',
       realName: '',
       phoneNumber: '',
-      isEditing: false,
-      editDialogVisible: false,
+      isEditing: true,
+      editDialogVisible: true,
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
@@ -207,8 +204,8 @@ export default {
   }
   },
     async submitmessage() {
-       this.editDialogVisible = false; 
-      this.isEditing = false;          
+       this.editDialogVisible = true; 
+      this.isEditing = true;          
       if (this.newPassword !== this.confirmPassword) {
         ElMessage.error('两次输入密码不一致')
         return
@@ -574,6 +571,7 @@ export default {
 }
 
 .submit-btn {
+  margin-top: 20px;
   background: #409eff;
   color: white;
   border: none;

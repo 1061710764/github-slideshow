@@ -5,11 +5,11 @@
       <h2 class="login-title">登录</h2>
 
       <div class="form-group">
-        <label class="form-label">账号：</label>
+        <label class="form-label">用户名：</label>
         <el-input
           ref="phoneInput"
           v-model="phone"
-          placeholder="  请输入账号"
+          placeholder="  请输入用户名"
           size="large"
           class="input-field"
         />
@@ -42,6 +42,7 @@
           size="large"
           class="login-button"
           @click="goToRegister"
+          accesskey="Enter"
          >
         注册
         </el-button>
@@ -51,65 +52,75 @@
 </template>
 
 <script setup lang="ts">
-
 import { useRouter } from 'vue-router'
-import { ref ,watch, nextTick } from 'vue';
-import { ElInput, ElButton } from 'element-plus';
-import axios from 'axios';
+import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { ElInput, ElButton, ElMessage } from 'element-plus'
+import axios from 'axios'
 
+// ✅ 登录逻辑
 const handleLogin = async () => {
   try {
     const response = await axios.post(
       "/ljkj_cloud/user/login",
       {
-        userName: phone.value,    // 用户名 //需要沟通最后账号形式
-        password: password.value    // 密码
+        userName: phone.value,
+        password: password.value
       },
       {
         headers: {
-          'Content-Type': 'application/json' // 必须设置 JSON 格式
+          'Content-Type': 'application/json'
         }
       }
-    );
-    if(response.data.code === 200) {
-      router.push('/BasicInformationManagement');
+    )
+    if (response.data.code === 200) {
+      router.push('/patient-management')
+    }else{
+      ElMessage.error(response.data.message||'登陆失败'+','+response.data.data)
     }
   } catch (error) {
-    console.error('登录失败:', error);
-    throw error;
+    console.error('登录请求异常',error);
+    // ElMessage.error(error.response?.data?.msg||'登录请求异常')
+    throw error
   }
-};
-
-
-const router = useRouter() // 添加这行
-
-const goToRegister = () => {
-  router.push('/register') // 添加这行
 }
 
+// ✅ 路由
+const router = useRouter()
 
-const password = ref('');
-const passwordInput = ref(null);
-const phone = ref('');
-const phoneInput = ref(null);
-const forbiddenChars = /['"\\\/<>;|=%\s]/g;
+const goToRegister = () => {
+  router.push('/register')
+}
 
+// ✅ 响应式变量
+const password = ref('')
+const phone = ref('')
+const forbiddenChars = /['"\\\/<>;|=%\s]/g
 
-watch(phone, (newVal, oldVal) => {
-  // 过滤非数字字符
-  const filteredValue = newVal.replace(forbiddenChars, '');
-  phone.value = filteredValue;
+// ✅ 输入过滤
+watch(phone, (newVal) => {
+  phone.value = newVal.replace(forbiddenChars, '')
+})
 
+watch(password, (newVal) => {
+  password.value = newVal.replace(forbiddenChars, '')
+})
 
-});
+// ✅ 🔑 监听 Enter 键按下触发 handleLogin
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'Enter') {
+    handleLogin()
+  }
+}
 
-watch(password, (newVal, oldVal) => {
-  // 过滤非数字字符
-  const filteredValue = newVal.replace(forbiddenChars, '');
-  password.value = filteredValue;
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
 
-});
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
 </script>
+
 
 <style scoped>
 /* 基础重置 */
@@ -131,7 +142,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center; /* 新增：水平居中 */
-  background-image: url("/123.png");
+  background-image: url("../assets/background.png");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -139,7 +150,6 @@ body {
   top: 20px;
   bottom:20px;
   left: 0;
-  justify-content: flex-end;  /* 主轴上右对齐 */
   padding-right: 10%;         /* 按图片比例调整右侧间距 */
 }
 
@@ -164,6 +174,7 @@ body {
   background: rgb(245, 242, 242);
   border-radius: 8px;
   padding: 20px;
+  
 }
 
 .login-title {

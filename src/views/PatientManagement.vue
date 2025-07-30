@@ -11,7 +11,7 @@
   :visible="showEditDialog"
   :patient-id="selectedPatientId"
   @close="showEditDialog = false"
-   @update-success="handleUpdateSuccess" 
+  @update-success="handleUpdateSuccess" 
 />
     <!-- 右侧用户信息区域 -->
     <div class="main-content">
@@ -32,10 +32,6 @@
             <div class="card-header">
               <div class="patient-avatar">{{ patient.name.charAt(0) }}</div>
               <div class="patient-name">{{ patient.name }}</div>
-              <div class="patient-id">{{ patient.id }}</div>
-              <span 
-                class="badge" 
-                :class="`status-${patient.status}`">{{ patient.statusText }}</span>
             </div>
             <div class="card-body">
               <div class="patient-detail">
@@ -68,7 +64,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Sidebar from '@/components/Sidebar.vue' // 添加这行
 import AddPatientDialog from '@/components/AddPatientDialog.vue';
 import axios from 'axios';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 import EditPatientDialog from '@/components/EditPatientDialog.vue';
 
 export default {
@@ -137,9 +133,6 @@ export default {
   },
 
   // 保留原有的其他方法
-  async deletePatient(patient) { 
-    /* 原有删除逻辑保持不变 */
-  },
   
     editPatient(patient) {
     this.selectedPatientId = patient.id
@@ -185,6 +178,16 @@ export default {
 
     async deletePatient(patient) {
       try {
+        await ElMessageBox.confirm(
+          '是否删除该病人的信息？此操作带来的结果不可撤销。',
+          '确认删除',
+          {
+            confirmButtonText:'确定',
+            cancelButtonText:'取消',
+            type:'warning'
+          }
+        )
+
         const response = await axios.post(
           "/ljkj_cloud/patient/deletePatient",
           {
@@ -409,8 +412,9 @@ export default {
 }
 
 .patient-card {
-  background: white;
-  border-radius: 10px;
+  background: #F9FAFB;
+  border:1px solid #e5e7eb;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0,0,0,0.07);
   transition: all 0.3s ease;
@@ -422,10 +426,16 @@ export default {
 }
 
 .card-header {
-  background: linear-gradient(to right, #3a7bd5, #00d2ff);
-  color: white;
-  padding: 20px;
+  background-color: #3B82F6;  /* Tailwind 的蓝色 Blue-500，传达专业信任 */
+  color: #FFFFFF;             /* 白色字体 */
+  font-weight: bold;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E5E7EB;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .badge {
@@ -444,7 +454,7 @@ export default {
 }
 
 .priority-medium {
-  background: rgba(241, 196, 15, 0.8);
+  background: rgba(241, 196, 15, 0);
 }
 
 .patient-avatar {
@@ -462,7 +472,9 @@ export default {
 }
 
 .patient-name {
-  font-size: 20px;
+  font-size: 28px;
+  flex-grow: 1;
+  text-align: center;
   margin-bottom: 5px;
   font-weight: 600;
 }
@@ -473,7 +485,11 @@ export default {
 }
 
 .card-body {
-  padding: 20px;
+  background-color: #FFFFFF;
+  color: #374151;   /* 深灰字体，阅读舒适 */
+  padding: 16px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .patient-detail {

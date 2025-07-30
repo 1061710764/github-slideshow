@@ -25,18 +25,18 @@
           </div>
           <div class="form-group">
             <label>问诊时间：</label>
-            <input v-model="formData.sickDay" type="date" required> 
+            <input v-model="formData.sickDay" type="date":max="currentDate" required> 
           </div>
           <div class="form-group">
             <label>居住地：</label>
-            <input v-model="formData.livingPlace" type="text" required>
-            <el-button type="primary" @click="mapVisible = true">选择省份</el-button>
+            <input v-model="formData.livingPlace" type="text"  required>
+            <el-button type="primary" @click="mapVisible = true" class="livingplace-btn">选择省份</el-button>
+          </div>
             <ProvinceMap
               v-if="mapVisible"
               v-model="mapVisible"
               @select="handleProvinceSelect"
             />
-          </div>
           <div class="form-group">
             <label>联系电话：</label>
             <input v-model="formData.contact" type="text" required>
@@ -44,6 +44,10 @@
           <div class="form-group">
             <label>身份证号：</label>
             <input v-model="formData.idNumber" type="text" required>
+          </div>
+          <div class="form-group">
+            <label>疾病：</label>
+            <input v-model="formData.sick" type="text" required>
           </div>
         </div>
         
@@ -81,7 +85,8 @@ export default defineComponent({
       contact: '',
       idNumber: '',
       sickDay: '',
-      livingPlace: ''
+      livingPlace: '',
+      sick:''
     })
 
     const mapVisible = ref(false)
@@ -100,7 +105,8 @@ export default defineComponent({
         contact: '',
         idNumber: '',
         sickDay: '',
-        livingPlace: ''
+        livingPlace: '',
+        sick:''
       }
     }
 
@@ -125,7 +131,8 @@ export default defineComponent({
             contact: data.phoneNumber,
             idNumber: data.idCard,
             sickDay: data.sickDay,
-            livingPlace: data.livingPlace
+            livingPlace: data.livingPlace,
+            sick:data.sick
           }
           console.log('✅ 患者数据加载成功:', formData.value)
         }
@@ -146,7 +153,8 @@ export default defineComponent({
         sickDay: formData.value.sickDay,
         livingPlace: formData.value.livingPlace,
         phoneNumber: formData.value.contact,
-        idCard: formData.value.idNumber
+        idCard: formData.value.idNumber,
+        sick:formData.value.sick
       }
 
       console.log('🚀 请求参数:', payload)
@@ -218,7 +226,24 @@ export default defineComponent({
 }
 
 .form-group {
+  display: flex;
   margin: 15px 0;
+  align-items: center;
+}
+
+.form-group label{
+  flex-shrink: 0;
+  width: 80px;
+  margin-right: 10px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: auto;         /* 修改：从100%改为auto */
+  flex-grow: 1;        /* 新增：填充剩余空间 */
+  padding: 8px;
+  border: 1px solid #ddd;
 }
 
 .form-group input,
@@ -228,6 +253,12 @@ export default defineComponent({
   padding: 8px;
   border: 1px solid #ddd; 
   border-radius: 4px;
+}
+
+.form-group input[type="text"] {
+  flex-grow: 1;
+  width: auto;        /* 允许输入框收缩 */
+  margin-right: 10px; /* 添加右边距 */
 }
 
 .dialog-actions {
@@ -248,5 +279,27 @@ export default defineComponent({
   background-color: #3498db;
   color: white;
   border: none;
+}
+.livingplace-btn {
+  background-color: #3489db;  /* 修改背景色 */
+  color: white;               /* 修改文字颜色 */
+  border-radius: 4px;        /* 添加圆角 */
+  border: none;              /* 移除原有边框 */
+  flex-shrink: 0;     /* 禁止按钮收缩 */
+  width: auto;         /* 自动宽度 */
+  padding: 8px 16px;  /* 调整内边距 */
+  margin-left: 10px;  /* 添加左边距 */
+  transition: all 0.2s ease-in-out;
+}
+.livingplace-btn:hover{
+  background-color: #2980b9; /* 深一点的蓝色 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影提升层次感 */
+  transform: translateY(-2px); /* 稍微上移，模拟“浮起”效果 */
+  user-select: none;
+}
+@media (max-width: 768px) {
+  .dialog-overlay {
+    left: 70px;
+  }
 }
 </style>
