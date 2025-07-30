@@ -19,7 +19,7 @@
             font-size="14"
             text-anchor="middle"
           >
-            {{ ['7月21，大暑','9月21，秋分','11月21，小雪','1月21，大寒','3月21，春分','5月21，小满',][index] }}
+            {{ outerSeasonTexts[index] }}
           </text>
         </g>
       
@@ -129,6 +129,10 @@ export default {
     tianGanDiZhi: {
       type: String,
       required: false
+    },
+    isStartLiChun: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -168,6 +172,11 @@ export default {
   },
 
   computed: {
+    outerSeasonTexts() {
+      return this.isStartLiChun  
+        ?['8月8，立秋','10月8，寒露','12月7，大雪','2月4，立春','4月5，清明','6月6，芒种'] 
+        :['7月23，大暑','9月23，秋分','11月22，小雪','1月21，大寒','3月21，春分','5月21，小满']
+    },
     outerColors() {
       return this.outerTexts.map(text => this.outerColorMap[text] || '#CCCCCC');
     },
@@ -190,11 +199,18 @@ export default {
   watch:{
     siTianQi(newVal) {
       this.initOuterTexts(newVal);
+      console.log('circular-siTianqi', newVal);
+    },
+    isStartLiChun(newVal) {
+      console.log('circular-lichun',newVal);
+      this.$forceUpdate();
     }
   },
   mounted() {
+      console.log("circular-lichun",this.isStartLiChun)
     console.log('组件 mounted，收到的 siTianQi:', this.siTianQi);
     this.initOuterTexts(this.siTianQi);
+
   },
 
   methods: {

@@ -66,7 +66,8 @@ export default {
         birthDate: '',
         livingPlace: '',
         sickDay: '',
-        sick:''
+        sick:'',
+        isStartLiChun:false,
       },
       selectedProvince: '',
       mapVisible: false
@@ -79,20 +80,23 @@ export default {
   },
   methods: {
     async submitForm() {
+      console.log("click_test")
       try {
         const response = await axios.post(
-          "/ljkj_cloud//patient/calculate5y6q",
+          "/ljkj_cloud/patient/calculate5y6q",
           {
             birthday: this.formData.birthDate,
             sickDay: this.formData.sickDay,
             livingPlace: this.formData.livingPlace,
-            sick:this.formData.sick
+            sick:this.formData.sick,
+            isStartLiChun:this.formData.isStartLiChun
           },
           {
             headers: { 'Content-Type': 'application/json' }
           }
         )
         if (response.data.code === 200) {
+          console.log("submit_test")
           this.$emit('submit-success',response.data.data)
           this.$emit('update:visible',false)
           this.resetForm()
@@ -107,7 +111,8 @@ export default {
         birthDate: '',
         livingPlace: '',
         sickDay: '',
-        sick:''
+        sick:'',
+        isStartLiChun:false,
       }
     },
     handleProvinceSelect(name) {

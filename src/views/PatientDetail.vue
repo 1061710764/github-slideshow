@@ -72,7 +72,7 @@
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ getQiTime(currentPatient.lunarData.birth5y6q.jiQi) }}</div>
+        <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.jiQi }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.zangElement }}</div>
@@ -103,7 +103,7 @@
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.yearlyMovement }}</div>
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ getQiTime(currentPatient.lunarData.now5y6q.jiQi) }}</div>
+        <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.jiQi }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
@@ -123,14 +123,15 @@
     </div>
 
     <!-- 当前日期圆图 -->
+    
     <div class="right_part">
       <div class="chart-container">
-      <now-circular-figure :patient-id="$route.params.id" />
+      <now-circular-figure :patient-id="$route.params.id" :is-start-lichun="isStartLiChun" />
       </div>
     </div>
 
   </div>
-
+  <button class="switchLichun" @click="toggleLichun">切换开始节气</button>
 
   
             </div>
@@ -139,7 +140,7 @@
       </div>
     </div>
   </div>
-
+  
 </template>
 
 <script>
@@ -154,6 +155,7 @@ export default {
   },
   data() {
     return {
+      isStartLiChun: false,
       currentPatient: {
         name: '加载中...',
         id: '',
@@ -226,18 +228,11 @@ export default {
     }
   },
   methods: {
-    getQiTime(jiQi){
-      const qiMap ={
-        '1':'初之气',
-        '2':'二之气',
-        '3':'三之气',
-        '4':'四之气',
-        '5':'五之气',
-        '6':'终之气',
-      }
-      return qiMap[jiQi]
-    },
 
+    toggleLichun(){
+        this.isStartLiChun = !this.isStartLiChun
+        this.fetchPatientData()
+    },
     getGradientStyle(zangElement) {
       // 添加更详细的调试信息
       
@@ -361,7 +356,8 @@ export default {
 
         const testRes = await axios.post(
           '/ljkj_cloud/patient/getPatient5y6q',
-          { patientId: this.$route.params.id },
+          { patientId: this.$route.params.id,
+            isStartLiChun:this.isStartLiChun },
           {
             headers: {
               'Content-Type': 'application/json'
@@ -918,7 +914,25 @@ text[font-size="36"] {
   padding: 16px;
   margin-top: 0; /* 保持紧凑 */
 }
+.switchLichun {
+  padding: 8px 16px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 20px;
+  width: 120px;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
 
+.switchLichun:hover {
+  background: #5dade2; /* 稍浅的蓝色 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 轻微阴影 */
+  transform: translateY(-1px); /* 轻微上浮 */
+  transition: all 0.2s ease-in-out;
+}
 /* 移动端终极优化 */
 @media (max-width: 768px) {
   .medical-dashboard {

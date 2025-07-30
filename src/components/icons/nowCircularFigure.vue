@@ -19,7 +19,7 @@
             font-size="14"
             text-anchor="middle"
           >
-            {{ ['7月21，大暑','9月21，秋分','11月21，小雪','1月21，大寒','3月21，春分','5月21，小满',][index] }}
+            {{ outerSeasonTexts[index] }}
           </text>
         </g>
       
@@ -127,6 +127,10 @@ export default {
     patientId: {
       type: Number,
       required: true
+    },
+    isStartLichun: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -173,7 +177,12 @@ export default {
   }
   },
   computed: {
-    outerColors() {
+  outerSeasonTexts(){
+    return this.isStartLichun
+    ? ['7月21，大暑','9月21，秋分','11月21，小雪','1月21，大寒','3月21，春分','5月21，小满',]
+    : ['8月4，立秋','10月4，寒露','12月4，大雪','2月4，立春','4月5，清明','6月4，芒种',]
+  },
+  outerColors() {
     return this.outerTexts.map(text => {
       return this.outerColorMap[text] || '#CCCCCC';
     });
@@ -203,6 +212,12 @@ export default {
           this.fetchData();
         }
       }
+    },
+    isStartLichun: {
+      immediate: true,
+      handler(newVal) {
+        this.fetchData();
+      }
     }
   },
   methods: {
@@ -210,7 +225,9 @@ export default {
       try {
         const response = await axios.post(
           '/ljkj_cloud/patient/getPatient5y6q',
-          { patientId: this.patientId }
+          { patientId: this.patientId,
+            isStartLiChun: false
+           }
         );
         if (response.data.code === 200) {
           this.tianGanDiZhi = response.data.data.now5y6q.tianGanDiZhi;

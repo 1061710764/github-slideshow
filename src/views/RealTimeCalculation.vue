@@ -21,7 +21,7 @@
         <div class="yun-item">{{ currentPatient.birth5y6q.solarDate }}</div>
         <div class="yun-item">{{ currentPatient.birth5y6q.yearlyMovement }}</div>
         <div class="yun-item">{{ currentPatient.birth5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ getQiTime(currentPatient.birth5y6q.jiQi) }}</div>
+        <div class="yun-item-strong">{{ currentPatient.birth5y6q.jiQi }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.birth5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.birth5y6q.zangElement }}</div>
@@ -52,7 +52,7 @@
         <div class="yun-item">{{ currentPatient.now5y6q.solarDate }}</div>
         <div class="yun-item">{{ currentPatient.now5y6q.yearlyMovement }}</div>
         <div class="yun-item">{{ currentPatient.now5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ getQiTime(currentPatient.now5y6q.jiQi) }}</div>
+        <div class="yun-item-strong">{{ currentPatient.now5y6q.jiQi }}</div>
       </div>
       <div class="yun-grid":style="getGradientStyle(currentPatient.now5y6q.zangElement)">
         <div class="yun-item">{{ currentPatient.now5y6q.zangElement }}</div>
@@ -77,12 +77,13 @@
       <realtime-circular-figure 
         v-if="currentPatient.now5y6q.siTianQi"
         :tianGanDiZhi="currentPatient.now5y6q.tianGanDiZhi"
-        :siTianQi="currentPatient.now5y6q.siTianQi" />
+        :siTianQi="currentPatient.now5y6q.siTianQi"
+        :is-start-liChun="isStartLiChun" />
       </div>
     </div>
 
   </div>
-
+<el-button class="switchLichun-btn" @click="toggleLichun">切换开始节气</el-button>
 </div>
 <el-button class="open-dialog-btn" @click="openDialog">实时计算</el-button>
 <RealTimeInfoDialog 
@@ -114,6 +115,7 @@ export default {
   },
   data() {
     return {
+      isStartLiChun :false,
       showContent:false,
       dialogVisible:false,
       currentPatient: {},
@@ -139,24 +141,20 @@ export default {
 //     this.fetchPatientData()
 //   },
   watch: {
-    '$route.params.id': {
-      handler(newId) {
-        if (newId) this.fetchPatientData()
-      }
-    }
+    // '$route.params.id': {
+    //   handler(newId) {
+    //     if (newId) this.fetchPatientData()
+    //   }
+    // }
   },
   methods: {
-    getQiTime(jiQi){
-      const qiMap ={
-        '1':'初之气',
-        '2':'二之气',
-        '3':'三之气',
-        '4':'四之气',
-        '5':'五之气',
-        '6':'终之气',
+    formatDate(datestr){
+      if(!datestr) return ''
+      const match = datestr.match(/(\d+)年(\d{1,2})月(\d{1,2})日/)
+      if(match){
+        return `${match[1]}-${match[2].padStart(2,'0')}-${match[3].padStart(2,'0')}`
       }
-      return qiMap[jiQi]
-    },
+    },    
     openDialog() {
       this.dialogVisible = true;
     },
@@ -168,8 +166,37 @@ export default {
         this.showContent = true;
         
     },
-
-
+    toggleLichun(){
+      this.isStartLiChun = !this.isStartLiChun
+      if(this.showContent){
+        this.handleSwitchSuccess(this.currentPatient)
+      }
+    },
+    async handleSwitchSuccess(dataFromBackend){
+      console.log('切换前',dataFromBackend)
+      console.log(this.formatDate(dataFromBackend.birth5y6q.solarDate))
+      console.log(this.formatDate(dataFromBackend.now5y6q.solarDate))
+      console.log(dataFromBackend.livingPlace)
+      console.log(dataFromBackend.sick)
+      console.log(this.isStartLiChun)
+      try{
+        const res = await axios.post('/ljkj_cloud/patient/calculate5y6q',{
+          birthday:this.formatDate(dataFromBackend.birth5y6q.solarDate),
+          sickDay:this.formatDate(dataFromBackend.now5y6q.solarDate),
+          livingPlace:dataFromBackend.livingPlace,
+          sick:dataFromBackend.sick,
+          isStartLiChun:this.isStartLiChun
+        },
+        {
+          headers: { 'Content-Type': 'application/json' }
+        });
+        if(res.data.code === 200){
+          this.currentPatient = res.data.data
+          console.log('切换节气成功',this.currentPatient)}
+      }catch(error){
+        console.error('切换节气失败:', error)
+      }
+    },
     getGradientStyle(zangElement) {
       // 添加更详细的调试信息
       
@@ -788,9 +815,9 @@ text[font-size="36"] {
   border-radius: 4px;
   cursor: pointer;
   margin-left: 20px;
-  width: 65px;
+  width: 100px;
   transition: all 0.2s ease-in-out;
-
+  text-align: center;
 }
 
 .open-dialog-btn:hover {
@@ -800,5 +827,24 @@ text[font-size="36"] {
   transition: all 0.2s ease-in-out;
 }
 
+.switchLichun-btn {
+  padding: 8px 16px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 20px;
+  width: 120px;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+
+.switchLichun-btn:hover {
+  background: #5dade2; /* 稍浅的蓝色 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 轻微阴影 */
+  transform: translateY(-1px); /* 轻微上浮 */
+  transition: all 0.2s ease-in-out;
+}
 
 </style>
