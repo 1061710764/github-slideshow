@@ -7,14 +7,14 @@
         <div class="header-left">
           <h1 class="patient-name">{{ currentPatient.name }}</h1>
           <div class="patient-meta">
-  <span class="patient-id">ID: {{ currentPatient.id }}</span>
-  <span class="patient-age">{{ currentPatient.age }}岁</span>
-  <span class="patient-gender">{{ currentPatient.gender }}</span>
-  <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
-  <span class="patient-sickday">问诊时间：{{ currentPatient.sickDay }}</span>
-  <span class="patient-idnum">身份证号：{{ currentPatient.idNumber }}</span>
-  <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
-  <span class="patient-living">居住地：{{ currentPatient.livingPlace }}</span>
+            <span class="patient-id">ID: {{ currentPatient.id }}</span>
+            <span class="patient-age">{{ currentPatient.age }}岁</span>
+            <span class="patient-gender">{{ currentPatient.gender }}</span>
+            <span class="patient-birth">出生：{{ currentPatient.birthDate }}</span>
+            <span class="patient-sickday">问诊时间：{{ currentPatient.sickDay }}</span>
+            <span class="patient-idnum">身份证号：{{ currentPatient.idNumber }}</span>
+            <span class="patient-contact">电话：{{ currentPatient.contact }}</span>
+            <span class="patient-living">居住地：{{ currentPatient.livingPlace }}</span>
           </div>
         </div>
         <div class="header-actions">
@@ -62,78 +62,79 @@
     <p><strong>疾病分析：</strong> <span>{{ currentPatient.lunarData.desc }}</span></p>
 </div> -->
 
-<h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
-  <span>该患者出生于{{ currentPatient.lunarData.birth5y6q.solarDate }},{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}年，出生岁运为{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}，常住于{{ currentPatient.livingPlace }}。</span>
-  <span>前来就诊时间为{{ currentPatient.lunarData.now5y6q.solarDate }},{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}年，司天气为{{ currentPatient.lunarData.now5y6q.siTianQi }},在泉气为{{ currentPatient.lunarData.now5y6q.zaiQuanQi }},岁运为{{ currentPatient.lunarData.now5y6q.yearlyMovement }},所患病症为{{ currentPatient.sick }}。</span>
-  <div class="analysis-wrapper">
-    <div class="analysis-section">
-      <div class="yun-grid">
-        <div class="yun-item-strong">谁</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.jiQi }}</div>
-      </div>
-      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.zangElement)">
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.zangElement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
-        <div class="zang-list">
-            <span
-              v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
-              :key="zang"
-            >{{ zang }}</span>
-          </div>
-      </div>
-    </div>
+            <h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
+              <span>该患者出生于{{ currentPatient.lunarData.birth5y6q.solarDate }},{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}年，出生岁运为{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}，常住于{{ currentPatient.livingPlace }}。</span>
+              <span>前来就诊时间为{{ currentPatient.lunarData.now5y6q.solarDate }},{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}年，司天气为{{ currentPatient.lunarData.now5y6q.siTianQi }},在泉气为{{ currentPatient.lunarData.now5y6q.zaiQuanQi }},岁运为{{ currentPatient.lunarData.now5y6q.yearlyMovement }},所患病症为{{ currentPatient.sick }}。</span>
+              
+              <span>弱脏：<span class="insult-organ">{{ isStartLiChun ? currentPatient.lunarData.birth5y6q.weakOrganDesc : currentPatient.lunarData.now5y6q.weakOrganDesc }}</span>&nbsp;&nbsp;&nbsp;&nbsp;强脏：<span class="insult-organ">{{ isStartLiChun ? currentPatient.lunarData.birth5y6q.strongOrganDesc : currentPatient.lunarData.now5y6q.strongOrganDesc }}</span></span>
+              <span>侮脏：<span class="insult-organ">{{ isStartLiChun ? currentPatient.lunarData.birth5y6q.insultOrganDesc : currentPatient.lunarData.now5y6q.insultOrganDesc }}</span>&nbsp;&nbsp;&nbsp;&nbsp;复气：{{ isStartLiChun ? currentPatient.lunarData.birth5y6q.recoveryOrganDesc : currentPatient.lunarData.now5y6q.recoveryOrganDesc }}</span>
+              <div class="analysis-wrapper">
+                <div class="analysis-section">
+                  <div class="yun-grid">
+                    <div class="yun-item-strong">谁</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.solarDate }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
+                    <div class="yun-item-strong">{{ currentPatient.lunarData.birth5y6q.jiQi }}</div>
+                  </div>
+                  <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.birth5y6q.zangElement)">
+                    <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.zangElement }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.birth5y6q.siTianZaiQuan }}</div>
+                    <div class="zang-list">
+                        <span
+                          v-for="zang in currentPatient.lunarData.birth5y6q.zangs"
+                          :key="zang"
+                        >{{ zang }}</span>
+                      </div>
+                  </div>
+                </div>
 
-    <div class="analysis-section">
-      <div class="yun-grid">
-        <div class="yun-item-strong">在</div>
-        <div class="yun-item">{{ currentPatient.livingPlace }}</div>
-      </div>
-      <div class="yun-grid":style="getGradientStyle_season(currentPatient.lunarData.birthSeason)">
-        <div class="yun-item">{{ currentPatient.lunarData.birthSeason }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.birthDisease }}</div>
-      </div>
-    </div>
+                <div class="analysis-section">
+                  <div class="yun-grid">
+                    <div class="yun-item-strong">在</div>
+                    <div class="yun-item">{{ currentPatient.livingPlace }}</div>
+                  </div>
+                  <div class="yun-grid":style="getGradientStyle_season(currentPatient.lunarData.birthSeason)">
+                    <div class="yun-item">{{ currentPatient.lunarData.birthSeason }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.birthDisease }}</div>
+                  </div>
+                </div>
 
-    <div class="analysis-section">
-      <div class="yun-grid">
-        <div class="yun-item-strong">何时</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.yearlyMovement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.jiQi }}</div>
-      </div>
-      <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.zangElement)">
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
-        <div class="yun-item">{{ currentPatient.lunarData.diseaseName }}</div>
-      </div>
-    </div>
-    
-    <div class="analysis-section">
-        <div class="yun-grid">
-          <div class="yun-item-strong">病</div>
-          <div class="yun-item">{{ currentPatient.lunarData.sick }}</div>
-        </div>
-        <div class="yun-grid">
-          <div v-for="(line, index) in splitDesc" :key="index" class="yun-item">{{ line }}</div>
-        </div>
-    </div>
+                <div class="analysis-section">
+                  <div class="yun-grid">
+                    <div class="yun-item-strong">何时</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.now5y6q.solarDate }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.now5y6q.yearlyMovement }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
+                    <div class="yun-item-strong">{{ currentPatient.lunarData.now5y6q.jiQi }}</div>
+                  </div>
+                  <div class="yun-grid":style="getGradientStyle(currentPatient.lunarData.now5y6q.zangElement)">
+                    <div class="yun-item">{{ currentPatient.lunarData.now5y6q.zangElement }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.now5y6q.siTianZaiQuan }}</div>
+                    <div class="yun-item">{{ currentPatient.lunarData.diseaseName }}</div>
+                  </div>
+                </div>
+                
+                <div class="analysis-section">
+                    <div class="yun-grid">
+                      <div class="yun-item-strong">病</div>
+                      <div class="yun-item">{{ currentPatient.lunarData.sick }}</div>
+                    </div>
+                    <div class="yun-grid">
+                      <div v-for="(line, index) in splitDesc" :key="index" class="yun-item">{{ line }}</div>
+                    </div>
+                </div>
 
-    <!-- 当前日期圆图 -->
-    
-    <div class="right_part">
-      <div class="chart-container">
-      <now-circular-figure :patient-id="$route.params.id" :is-start-lichun="isStartLiChun" />
-      </div>
-    </div>
+                <!-- 当前日期圆图 -->
+                
+                <div class="right_part">
+                  <div class="chart-container">
+                  <now-circular-figure :patient-id="$route.params.id" :is-start-lichun="isStartLiChun" />
+                  </div>
+                </div>
 
-  </div>
-  <button class="switchLichun" @click="toggleLichun">切换开始节气</button>
-
-  
+              </div>
+              <button class="switchLichun" @click="toggleLichun">切换开始节气</button> 
             </div>
           </div>
         </div>
@@ -179,6 +180,10 @@ export default {
             siTianZaiQuan: '',
             zangs: [],
             zangElement: '',
+            weakOrganDesc:'',
+            strongOrganDesc:'',
+            insultOrganDesc:'',
+            recoveryOrganDesc:'',
             text: ''  // 确保 text 字段存在
           },
           now5y6q: {
@@ -191,7 +196,11 @@ export default {
             zaiQuanQi: '',
             siTianZaiQuan: '',
             zangs: [],
-            zangElement: ''
+            zangElement: '',
+            weakOrganDesc:'',
+            strongOrganDesc:'',
+            insultOrganDesc:'',
+            recoveryOrganDesc:''
           },
           birthSeason: '',
           birthDisease: '',
@@ -304,6 +313,10 @@ export default {
             siTianZaiQuan: data.birth5y6q?.siTianZaiQuan || '',
             zangs: data.birth5y6q?.zangs || [],
             zangElement: data.birth5y6q?.zangElement || '',
+            weakOrganDesc: data.birth5y6q?.weakOrganDesc || '',
+            strongOrganDesc: data.birth5y6q?.strongOrganDesc || '',
+            insultOrganDesc: data.birth5y6q?.insultOrganDesc || '',
+            recoveryOrganDesc: data.birth5y6q?.recoveryOrganDesc || '',
             text: data.birth5y6q?.text || '' // 确保取到文字段
           },
           now5y6q: {
@@ -316,7 +329,11 @@ export default {
             zaiQuanQi: data.now5y6q?.zaiQuanQi || '',
             siTianZaiQuan: data.now5y6q?.siTianZaiQuan || '',
             zangs: data.now5y6q?.zangs || [],
-            zangElement: data.now5y6q?.zangElement || ''
+            zangElement: data.now5y6q?.zangElement || '',
+            weakOrganDesc: data.now5y6q?.weakOrganDesc || '',
+            strongOrganDesc: data.now5y6q?.strongOrganDesc || '',
+            insultOrganDesc: data.now5y6q?.insultOrganDesc || '',
+            recoveryOrganDesc: data.now5y6q?.recoveryOrganDesc || ''
           },
           birthSeason: data?.birthSeason || '',
           birthDisease: data?.birthDisease || '',
@@ -948,6 +965,9 @@ text[font-size="36"] {
     width: calc(100% + 20px);
     margin: 0 -10px;
   }
+}
+.insult-organ {
+  color: #05af2a; /* 绿色 */
 }
 </style>
 
