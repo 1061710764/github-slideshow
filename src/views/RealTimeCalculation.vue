@@ -10,10 +10,43 @@
         <div class="main-panel">
           <div class="medical-card five-elements-card">
             <div class="five-elements-grid">
-<h3><i class="fas fa-cloud-sun"></i> 五运六气分析</h3>
 <div v-if="showContent" class="five-elements-grid">
-  <span>该患者出生于{{ currentPatient.birth5y6q.solarDate }},{{ currentPatient.birth5y6q.tianGanDiZhi }}年，出生岁运为{{ currentPatient.birth5y6q.yearlyMovement }}，常住于{{ currentPatient.livingPlace }}。</span>
-  <span>前来就诊时间为{{ currentPatient.now5y6q.solarDate }},{{ currentPatient.now5y6q.tianGanDiZhi }}年，司天气为{{ currentPatient.now5y6q.siTianQi }},在泉气为{{ currentPatient.now5y6q.zaiQuanQi }},岁运为{{ currentPatient.now5y6q.yearlyMovement }},所患病症为{{ currentPatient.sick }}。</span>
+  <div class="kapian">
+    <h3><i class="fas fa-cloud-sun"></i> 出生信息：</h3>
+    <span class="all-juti">
+      
+      <span class="juti">出生时间：{{ currentPatient.birth5y6q.solarDate }}&nbsp;&nbsp;{{ currentPatient.birth5y6q.tianGanDiZhi }}年</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">岁运：{{ currentPatient.birth5y6q.yearlyMovement }}</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">居住于：{{ currentPatient.livingPlace }}</span>
+    </span>
+    <span class="all-juti">
+      <span class="juti_2">弱脏：{{currentPatient.birth5y6q.weakOrganDesc}}</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">强脏：{{  currentPatient.birth5y6q.strongOrganDesc }}</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">侮脏：{{currentPatient.birth5y6q.insultOrganDesc}}</span>
+      <span v-if="currentPatient.birth5y6q.recoveryOrganDesc">
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">复气：{{currentPatient.birth5y6q.recoveryOrganDesc}}</span>
+      </span>
+    </span>
+  </div>
+  <div class="kapian">
+    <h3><i class="fas fa-cloud-sun"></i> 就诊信息：</h3>
+    <span class="all-juti">
+      <span class="juti">就诊时间：{{ currentPatient.now5y6q.solarDate }}&nbsp;&nbsp;{{ currentPatient.now5y6q.tianGanDiZhi }}年</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">岁运：{{ currentPatient.now5y6q.yearlyMovement }}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">司天气：{{ currentPatient.now5y6q.siTianQi }}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">在泉气：{{ currentPatient.now5y6q.zaiQuanQi }}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">病症：{{ currentPatient.sick }}</span>
+    </span>
+    <span class="all-juti">
+      <span class="juti_2">弱脏：{{currentPatient.now5y6q.weakOrganDesc}}</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">强脏：{{  currentPatient.now5y6q.strongOrganDesc }}</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">侮脏：{{currentPatient.now5y6q.insultOrganDesc}}</span>
+      <span v-if="currentPatient.now5y6q.recoveryOrganDesc">
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">复气：{{currentPatient.now5y6q.recoveryOrganDesc}}</span>
+      </span>
+    </span>
+  </div>
+ 
   <div class="analysis-wrapper">
     <div class="analysis-section">
       <div class="yun-grid">
@@ -845,6 +878,35 @@ text[font-size="36"] {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 轻微阴影 */
   transform: translateY(-1px); /* 轻微上浮 */
   transition: all 0.2s ease-in-out;
+}
+.all-juti{
+  white-space: nowrap;
+  display: flex;         
+  flex-wrap: wrap;      
+  gap: 12px;        
+  margin-left: 50px;
+}
+.juti{
+  background: #ffffff;   
+  border-radius: 4px;
+  display: inline;  
+}
+.juti_2{
+  background: #ffffff;   
+  border-radius: 4px;
+  display: inline;  
+}
+.kapian {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: #ffffff;
+  margin-bottom: 20px;
+  /* 添加最大宽度限制和居中显示 */
+  border: none !important;
+  max-width: 1000px;
+
 }
 
 </style>
