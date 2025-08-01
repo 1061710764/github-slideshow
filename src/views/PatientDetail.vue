@@ -92,7 +92,9 @@
       <span class="juti_2">弱脏：{{currentPatient.lunarData.now5y6q.weakOrganDesc}}</span>
       &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">强脏：{{  currentPatient.lunarData.now5y6q.strongOrganDesc }}</span>
       &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">侮脏：{{currentPatient.lunarData.now5y6q.insultOrganDesc}}</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">复气：{{currentPatient.lunarData.now5y6q.recoveryOrganDesc}}</span>
+             <span v-if="currentPatient.lunarData.now5y6q.recoveryOrganDesc">
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">复气：{{currentPatient.lunarData.now5y6q.recoveryOrganDesc}}</span>
+      </span>
     </span>
   </div>
   <div class="analysis-wrapper">
