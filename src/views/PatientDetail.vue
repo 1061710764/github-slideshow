@@ -67,15 +67,15 @@
     <span class="all-juti">
       
       <span class="juti">出生时间：{{ currentPatient.lunarData.birth5y6q.solarDate }}&nbsp;&nbsp;{{ currentPatient.lunarData.birth5y6q.tianGanDiZhi }}年</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">岁运：{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">居住于：{{ currentPatient.livingPlace }}</span>
+       &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti-suiyuan" >岁运：<span :style="{ color: getYearlyMovementColor(currentPatient.lunarData.birth5y6q.yearlyMovement) }">{{ currentPatient.lunarData.birth5y6q.yearlyMovement }}</span></span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti-zhuzhi">居住于：{{ currentPatient.livingPlace }}</span>
     </span>
     <span class="all-juti">
-      <span class="juti_2">弱脏：{{currentPatient.lunarData.birth5y6q.weakOrganDesc}}</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">强脏：{{  currentPatient.lunarData.birth5y6q.strongOrganDesc }}</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">侮脏：{{currentPatient.lunarData.birth5y6q.insultOrganDesc}}</span>
+      <span class="juti_2-ruozhang" >弱脏：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.birth5y6q.weakOrganDesc) }">{{currentPatient.lunarData.birth5y6q.weakOrganDesc}}</span></span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2-qiangzhang" >强脏：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.birth5y6q.strongOrganDesc) }">{{  currentPatient.lunarData.birth5y6q.strongOrganDesc }}</span></span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2-wuzhang" >侮脏：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.birth5y6q.insultOrganDesc) }">{{currentPatient.lunarData.birth5y6q.insultOrganDesc}}</span></span>  
        <span v-if="currentPatient.lunarData.birth5y6q.recoveryOrganDesc">
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">复气：{{currentPatient.lunarData.birth5y6q.recoveryOrganDesc}}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2-fuqi" >复气：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.birth5y6q.recoveryOrganDesc) }">{{currentPatient.lunarData.birth5y6q.recoveryOrganDesc}}</span></span>
       </span>
     </span>
   </div>
@@ -83,17 +83,20 @@
     <h3><i class="fas fa-cloud-sun"></i> 就诊信息：</h3>
     <span class="all-juti">
       <span class="juti">就诊时间：{{ currentPatient.lunarData.now5y6q.solarDate }}&nbsp;&nbsp;{{ currentPatient.lunarData.now5y6q.tianGanDiZhi }}年</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">岁运：{{ currentPatient.lunarData.now5y6q.yearlyMovement }}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">司天气：{{ currentPatient.lunarData.now5y6q.siTianQi }}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">在泉气：{{ currentPatient.lunarData.now5y6q.zaiQuanQi }}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti" >岁运：<span :style="{ color: getYearlyMovementColor(currentPatient.lunarData.now5y6q.yearlyMovement) }">{{ currentPatient.lunarData.now5y6q.yearlyMovement }}</span></span>
+
+
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti" >司天气：<span :style="{ color: getYearlyMovementColor4(currentPatient.lunarData.now5y6q.siTianQi) }">{{ currentPatient.lunarData.now5y6q.siTianQi }}</span></span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti" >在泉气：<span :style="{ color: getYearlyMovementColor4(currentPatient.lunarData.now5y6q.zaiQuanQi) }">{{ currentPatient.lunarData.now5y6q.zaiQuanQi }}</span></span>
         &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti">病症：{{ currentPatient.sick }}</span>
     </span>
     <span class="all-juti">
-      <span class="juti_2">弱脏：{{currentPatient.lunarData.now5y6q.weakOrganDesc}}</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">强脏：{{  currentPatient.lunarData.now5y6q.strongOrganDesc }}</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">侮脏：{{currentPatient.lunarData.now5y6q.insultOrganDesc}}</span>
+      <span class="juti_2">弱脏：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.now5y6q.weakOrganDesc) }">{{currentPatient.lunarData.now5y6q.weakOrganDesc}}</span></span>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">强脏：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.now5y6q.strongOrganDesc) }">{{  currentPatient.lunarData.now5y6q.strongOrganDesc }}</span></span>  
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">侮脏：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.now5y6q.insultOrganDesc) }">{{currentPatient.lunarData.now5y6q.insultOrganDesc}}</span></span>
              <span v-if="currentPatient.lunarData.now5y6q.recoveryOrganDesc">
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">复气：{{currentPatient.lunarData.now5y6q.recoveryOrganDesc}}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="juti_2">复气：<span :style="{ color: getYearlyMovementColor2(currentPatient.lunarData.now5y6q.recoveryOrganDesc) }">{{currentPatient.lunarData.now5y6q.recoveryOrganDesc}}</span></span>
+
       </span>
     </span>
   </div>
@@ -269,6 +272,48 @@ export default {
   },
   methods: {
 
+     getYearlyMovementColor(yearlyMovement) {
+      if (!yearlyMovement) return 'inherit';
+      
+      const firstChar = yearlyMovement.charAt(0);
+      const colorMap = {
+        '火': '#f80707',    // 红色
+        '金': '#909a9c',    // 金色
+        '水': '#0000ff',    // 蓝色
+        '木': '#05af2a',   // 绿色
+        '土': '#998304'    // 黄色
+      };
+      
+      return colorMap[firstChar] || 'inherit';
+    },
+    getYearlyMovementColor2(yearlyMovement) {
+      if (!yearlyMovement) return 'inherit';
+      
+      const firstChar = yearlyMovement.charAt(1);
+      const colorMap = {
+        '火': '#f80707',    // 红色
+        '金': '#909a9c',    // 金色
+        '水': '#0000ff',    // 蓝色
+        '木': '#05af2a',   // 绿色
+        '土': '#998304'    // 黄色
+      };
+      
+      return colorMap[firstChar] || 'inherit';
+    },
+    getYearlyMovementColor4(yearlyMovement) {
+      if (!yearlyMovement) return 'inherit';
+      
+      const firstChar = yearlyMovement.charAt(3);
+      const colorMap = {
+        '火': '#f80707',    // 红色
+        '金': '#909a9c',    // 金色
+        '水': '#0000ff',    // 蓝色
+        '木': '#05af2a',   // 绿色
+        '土': '#998304'    // 黄色
+      };
+      
+      return colorMap[firstChar] || 'inherit';
+    },
     toggleLichun(){
         this.isStartLiChun = !this.isStartLiChun
         this.fetchPatientData()
@@ -921,6 +966,7 @@ export default {
 text[font-size="36"] {
   dominant-baseline: middle; /* 新增垂直居中 */
 }
+
 </style>
 
 
@@ -1003,20 +1049,25 @@ text[font-size="36"] {
   display: flex;         
   flex-wrap: wrap;      
   gap: 12px;        
-  margin-left: 50px;
+  margin-left: 40px;
 }
 .juti{
   background: #ffffff;   
   border-radius: 4px;
   display: inline;  
+  font-weight: bold; /* 文字加粗 */
+
 }
 .juti_2{
   background: #ffffff;   
   border-radius: 4px;
   display: inline;  
+  font-weight: bold; /* 文字加粗 */
 }
 .kapian {
   display: flex;
+  font-weight: bold;
+  font-size: 20px; 
   flex-direction: column;
   gap: 12px;
   padding: 16px;
@@ -1024,9 +1075,10 @@ text[font-size="36"] {
   margin-bottom: 20px;
   /* 添加最大宽度限制和居中显示 */
   border: none !important;
-  max-width: 1000px;
+
 
 }
+
 
 </style>
 
